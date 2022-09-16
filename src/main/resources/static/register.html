@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Account</title>
+    <link href="style/colour.css" type="text/css" rel="stylesheet">
+    <link href="style/navbar.css" type="text/css" rel="stylesheet">
+    <link href="style/register.css" type="text/css" rel="stylesheet">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+</head>
+<body>
+<div class="nav-bar">
+    <div class="nav-bar-left">
+        <div class="logo">
+            TodayUsyd
+        </div>
+    </div>
+    <div class="nav-bar-search">
+        <div class="nav-search-container">
+            <form class="search-form">
+                <div class="search-form-input">
+                    <input type="text" maxlength="60" placeholder="Search" id="nav-search">
+                </div>
+                <div class="search-form-btn">
+                    <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="8" cy="8" r="5" style="stroke:#aaa;stroke-width:2; fill: none"></circle>
+                        <line x1="11.5" y1="11.5" x2="15" y2="15" style="stroke:#aaa;stroke-width:2"></line>
+                    </svg>
+                </div>
+            </form>
+            <div class="search-panel" id="search-panel">
+            </div>
+        </div>
+    </div>
+    <div class="nav-bar-right">
+        <div class="nav-user">
+            <div class="nav-user-icon icon-small">
+                <a href="https://" target="_blank">
+                    <img src="img/testIcon.webp">
+                </a>
+            </div>
+            <div class="nav-user-portal">
+                <a class="user-name popup-item" style="margin-top: 25px; font-weight: bold;">test UN</a>
+                <a class="user-home popup-item" style="margin-top: 5px">Home</a>
+                <a class="user-friends popup-item">Friends</a>
+                <a class="user-history popup-item">History</a>
+                <a class="user-setting popup-item" style="margin-bottom: 25px">Setting</a>
+            </div>
+        </div>
+
+        <div class="nav-notification">Message</div>
+        <div></div>
+    </div>
+</div>
+    <main>
+        <div class="user-info-cul">
+            <div class="cul-item">
+                <div class="cul-item-head-container">
+                    <div class="cul-item-head"></div>
+                </div>
+                <div class="cul-item-input">
+                    <input id="set-name">
+                    <span class="cul-item-placeholder">User name</span>
+                </div>
+            </div>
+        </div>
+        <div class="user-info-cul">
+            <div class="cul-item">
+                <div class="cul-item-head-container">
+                    <div class="cul-item-head">You will need your email address to login</div>
+                </div>
+
+                <div class="cul-item-input">
+                    <input id="set-email">
+                    <span class="cul-item-placeholder">E-mail address</span>
+                </div>
+            </div>
+        </div>
+        <div class="item-space"></div>
+        <div class="user-info-cul">
+            <div class="cul-item">
+                <div class="cul-item-head-container">
+                    <div class="cul-item-head">You password should 8 - 16 characters long and at least one number.</div>
+                </div>
+                <div class="cul-item-input">
+                    <input type="password" id="set-password">
+                    <span class="cul-item-placeholder">Password</span>
+                </div>
+            </div>
+        </div>
+        <div class="user-info-cul">
+            <div class="cul-item">
+                <div class="cul-item-input">
+                    <input type="password" id="set-confirm-password">
+                    <span class="cul-item-placeholder">Confirm Password</span>
+                </div>
+            </div>
+        </div>
+    </main>
+<script src="./script/register.js"></script>
+</body>
+</html>

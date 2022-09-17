@@ -18,13 +18,14 @@ public class MailUtil {
     @Autowired
     private JavaMailSender mailSender;
 
+
     /**
      * 文本邮件的发送
      * @param to  接收邮件者
      * @param subject  主题
      * @param content   内容
      */
-    public void  sendSimpleMail(String to,String subject,String content){
+    public void  sendSimpleMail(String to,String subject,String  content){
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
         message.setSubject(subject);

@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
         user.setUserpwd(DigestUtils.md5DigestAsHex(user.getUserpwd().getBytes()));
 //         UUID
-        user.setUserid(UUID.randomUUID().toString().replace("-", ""));
+        //user.setUserid(UUID.randomUUID().toString().replace("-", ""));
         User us = userDao.save(user);
         if (null != us) {
             return 1;

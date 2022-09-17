@@ -55,6 +55,11 @@
             <artifactId>spring-boot-starter-mail</artifactId>
             <version>2.6.3</version>
         </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>jakarta.mail</artifactId>
+            <version>1.6.7</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -86,7 +91,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.3.7.RELEASE</version>
                 <configuration>
-                    <mainClass>com.mj.Case916Application</mainClass>
+                    <mainClass>com.example.demo.DemoApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

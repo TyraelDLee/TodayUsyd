@@ -52,7 +52,7 @@ main div{
 
 .button-area button{
     margin-right: 20px;
-    border-radius: 5px;
+    border-radius: 8px;
     border: 1px solid var(--Ga2);
     background-color: var(--bili-blue);
     padding: 0 20px;

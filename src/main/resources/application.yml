@@ -21,6 +21,9 @@ spring:
         new_generator_mappings: false
         format_sql: true
     show-sql: true
-
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .html
 
 

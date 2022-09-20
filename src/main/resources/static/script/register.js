@@ -105,10 +105,15 @@
     }
 
     function postUserInfo(email, uname, upass, verify){
-        return  fetch(`http://localhost:8085/addUser?username=${uname}&usercode=${email}&userpwd=${upass}&securityCode=${verify}`, {
+        let form = new FormData();
+        form.append('username', uname);
+        form.append('usercode', email);
+        form.append('userpwd', upass);
+
+        return  fetch(`http://localhost:8085/addUser?uname=${uname}&ueamil=${email}&passw=${upass}securityCode=${verify}`, {
             method:"POST",
             credentials:"include",
-            body:null
+            body:form
         }).then(r=>r.json())
             .then(json=>{
                 console.log(json)

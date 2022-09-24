@@ -3,6 +3,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Post;
 import com.example.demo.service.PostService;
+import com.example.demo.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,18 +18,21 @@ public class PostController {
 
 
     @GetMapping("/getPosts")
-    public List<Post> findAllPost() {
-        return (List<Post>) postService.getAllPosts();
+    public Result findAllPost() {
+        return new Result((List<Post>) postService.getAllPosts());
     }
 
     @PostMapping("/createPost")
-    public Post createPost(@RequestBody Post post){
-        return postService.savePost(post);
+    public Result createPost(@RequestBody Post post){
+        return new Result(postService.savePost(post));
     }
 
     @GetMapping("/likeThePost")
-    public Post likeThePost(@RequestParam("PostID") String PostID, @RequestParam("UserID") String UserID){
-        return postService.likeThePost(PostID);
+    public Result likeThePost(@RequestParam("PostID") String PostID, @RequestParam("UserID") String UserID){
+        return new Result(postService.likeThePost(PostID));
+        // To-Do
+        // user should be only able to like a post once,
+        // and every time the user log in, the above rule should remain working
     }
 
 }

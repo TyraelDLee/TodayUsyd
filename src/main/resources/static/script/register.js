@@ -107,10 +107,10 @@
     function postUserInfo(email, uname, upass, verify){
         let form = new FormData();
         form.append('username', uname);
-        form.append('usercode', email);
+        form.append('uemail', email);
         form.append('userpwd', upass);
 
-        return  fetch(`http://localhost:8085/addUser?uname=${uname}&ueamil=${email}&passw=${upass}securityCode=${verify}`, {
+        return  fetch(`http://localhost:8085/addUser?uname=${uname}&uemail=${email}&passw=${upass}&securityCode=${verify}`, {
             method:"POST",
             credentials:"include",
             body:form

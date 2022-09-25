@@ -39,7 +39,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public Post likeThePost(String postID) {
         Post post  = postDao.findById(postID).orElseThrow(() -> new EntityNotFoundException(postID));
-        post.setNumOfLikes(post.getNumOfLikes()+1);
+        //post.setNumOfLikes(post.getNumOfLikes()+1);
         return postDao.save(post);
     }
 }

@@ -48,4 +48,13 @@ public class CoursePostServiceImpl implements CoursePostService {
         coursePost.setNumOfLikes(coursePost.getNumOfLikes() + 1);
         return coursePostDao.save(coursePost);
     }
+
+    @Override
+    public CoursePost updateTheCoursePost(String coursePostID, CoursePost newCoursePost) {
+        CoursePost coursePost = coursePostDao.findById(coursePostID).orElseThrow(() -> new EntityNotFoundException(coursePostID));
+        coursePost.setCourseID(newCoursePost.getCourseID());
+        coursePost.setTitle(newCoursePost.getTitle());
+        coursePost.setDetails(newCoursePost.getDetails());
+        return coursePostDao.save(coursePost);
+    }
 }

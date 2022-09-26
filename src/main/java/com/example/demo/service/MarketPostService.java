@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 
+import com.example.demo.entity.CoursePost;
 import com.example.demo.entity.MarketPost;
 
 import java.util.Optional;
@@ -15,4 +16,6 @@ public interface MarketPostService {
     Boolean deleteMarketPostById(String MarketPostID);
 
     MarketPost likeTheMarketPost(String MarketPostID);
+
+    MarketPost updateTheMarketPost(String marketPostID, MarketPost newMarketPost);
 }

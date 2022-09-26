@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.entity.CoursePost;
 import com.example.demo.entity.MarketPost;
 import com.example.demo.service.MarketPostService;
 import com.example.demo.utils.Result;
@@ -33,6 +34,16 @@ public class MarketPostController {
         // To-Do
         // user should be only able to like a post once,
         // and every time the user log in, the above rule should remain working
+    }
+
+    @PostMapping("/updateThePost")
+    public Result updateThePost(@RequestParam("marketPostID") String marketPostID, @RequestParam("category") String category, @RequestParam("subject") String subject, @RequestParam("details") String details) {
+        return new Result(marketPostService.updateTheMarketPost(marketPostID, new MarketPost(category, subject, details)));
+    }
+
+    @PostMapping("/deleteThePost")
+    public Result deleteThePost(@RequestParam("marketPostID") String marketPostID) {
+        return new Result(marketPostService.deleteMarketPostById(marketPostID));
     }
 
 }

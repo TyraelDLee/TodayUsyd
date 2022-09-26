@@ -15,4 +15,6 @@ public interface CoursePostService {
     Boolean deleteCoursePostById(String coursePostID);
 
     CoursePost likeTheCoursePost(String coursePostID);
+
+    CoursePost updateTheCoursePost(String coursePostID, CoursePost newCoursePost);
 }

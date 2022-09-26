@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.dao.MarketPostDao;
+import com.example.demo.entity.CoursePost;
 import com.example.demo.entity.MarketPost;
 import com.example.demo.service.MarketPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,15 @@ public class MarketPostServiceImpl implements MarketPostService {
     public MarketPost likeTheMarketPost(String marketPostID) {
         MarketPost marketPost = marketPostDao.findById(marketPostID).orElseThrow(() -> new EntityNotFoundException(marketPostID));
         marketPost.setNumOfLikes(marketPost.getNumOfLikes() + 1);
+        return marketPostDao.save(marketPost);
+    }
+
+    @Override
+    public MarketPost updateTheMarketPost(String marketPostID, MarketPost newMarketPost) {
+        MarketPost marketPost = marketPostDao.findById(marketPostID).orElseThrow(() -> new EntityNotFoundException(marketPostID));
+        marketPost.setCategory(newMarketPost.getCategory());
+        marketPost.setSubject(newMarketPost.getSubject());
+        marketPost.setDetails(newMarketPost.getDetails());
         return marketPostDao.save(marketPost);
     }
 }

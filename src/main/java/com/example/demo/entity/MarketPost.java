@@ -34,6 +34,12 @@ public class MarketPost {
         this.numOfLikes = 0;
     }
 
+    public MarketPost(String category, String subject, String details) {
+        this.category = category;
+        this.subject = subject;
+        this.details = details;
+    }
+
     public MarketPost() {
 
     }

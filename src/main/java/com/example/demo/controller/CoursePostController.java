@@ -34,4 +34,14 @@ public class CoursePostController {
         // and every time the user log in, the above rule should remain working
     }
 
+    @PostMapping("/updateThePost")
+    public Result updateThePost(@RequestParam("coursePostID") String coursePostID, @RequestParam("courseID") String courseID, @RequestParam("title") String title, @RequestParam("details") String details) {
+        return new Result(coursePostService.updateTheCoursePost(coursePostID, new CoursePost(courseID, title, details)));
+    }
+
+    @PostMapping("/deleteThePost")
+    public Result deleteThePost(@RequestParam("coursePostID") String coursePostID) {
+        return new Result(coursePostService.deleteCoursePostById(coursePostID));
+    }
+
 }

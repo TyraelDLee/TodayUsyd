@@ -34,6 +34,12 @@ public class CoursePost {
         this.numOfLikes = 0;
     }
 
+    public CoursePost(String courseID, String title, String details) {
+        this.courseID = courseID;
+        this.title = title;
+        this.details = details;
+    }
+
     public CoursePost() {
 
     }

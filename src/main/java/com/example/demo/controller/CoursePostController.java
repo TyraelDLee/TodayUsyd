@@ -26,7 +26,7 @@ public class CoursePostController {
         return new Result(coursePostService.saveCoursePost(new CoursePost(userID, courseID, title, details)));
     }
 
-    @PostMapping("/likeThePost")
+    @PutMapping("/likeThePost")
     public Result likeThePost(@RequestParam("coursePostID") String coursePostID, @RequestParam("userID") String userID) {
         return new Result(coursePostService.likeTheCoursePost(coursePostID));
         // To-Do
@@ -34,14 +34,19 @@ public class CoursePostController {
         // and every time the user log in, the above rule should remain working
     }
 
-    @PostMapping("/updateThePost")
+    @PutMapping("/updateThePost")
     public Result updateThePost(@RequestParam("coursePostID") String coursePostID, @RequestParam("courseID") String courseID, @RequestParam("title") String title, @RequestParam("details") String details) {
         return new Result(coursePostService.updateTheCoursePost(coursePostID, new CoursePost(courseID, title, details)));
     }
 
-    @PostMapping("/deleteThePost")
+    @DeleteMapping("/deleteThePost")
     public Result deleteThePost(@RequestParam("coursePostID") String coursePostID) {
         return new Result(coursePostService.deleteCoursePostById(coursePostID));
+    }
+
+    @GetMapping("filterByCourseID")
+    public Result getMarketPostsByCategory(@RequestParam("courseID") String courseID) {
+        return new Result(coursePostService.getCoursePostsByCourseID(courseID));
     }
 
 }

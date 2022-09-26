@@ -28,7 +28,7 @@ public class MarketPostController {
         return new Result(marketPostService.saveMarketPost(new MarketPost(userID, category, subject, details)));
     }
 
-    @PostMapping("/likeThePost")
+    @PutMapping("/likeThePost")
     public Result likeThePost(@RequestParam("marketPostID") String marketPostID, @RequestParam("userID") String userID) {
         return new Result(marketPostService.likeTheMarketPost(marketPostID));
         // To-Do
@@ -36,14 +36,19 @@ public class MarketPostController {
         // and every time the user log in, the above rule should remain working
     }
 
-    @PostMapping("/updateThePost")
+    @PutMapping("/updateThePost")
     public Result updateThePost(@RequestParam("marketPostID") String marketPostID, @RequestParam("category") String category, @RequestParam("subject") String subject, @RequestParam("details") String details) {
         return new Result(marketPostService.updateTheMarketPost(marketPostID, new MarketPost(category, subject, details)));
     }
 
-    @PostMapping("/deleteThePost")
+    @DeleteMapping("/deleteThePost")
     public Result deleteThePost(@RequestParam("marketPostID") String marketPostID) {
         return new Result(marketPostService.deleteMarketPostById(marketPostID));
+    }
+
+    @GetMapping("filterByCategory")
+    public Result getMarketPostsByCategory(@RequestParam("category") String category) {
+        return new Result(marketPostService.getMarketPostsByCategory(category));
     }
 
 }

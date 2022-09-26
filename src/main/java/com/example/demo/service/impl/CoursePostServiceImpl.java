@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -56,5 +57,10 @@ public class CoursePostServiceImpl implements CoursePostService {
         coursePost.setTitle(newCoursePost.getTitle());
         coursePost.setDetails(newCoursePost.getDetails());
         return coursePostDao.save(coursePost);
+    }
+
+    @Override
+    public List<CoursePost> getCoursePostsByCourseID(String courseID) {
+        return coursePostDao.findByCourseID(courseID);
     }
 }

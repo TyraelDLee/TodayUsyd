@@ -1,7 +1,6 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.dao.MarketPostDao;
-import com.example.demo.entity.CoursePost;
 import com.example.demo.entity.MarketPost;
 import com.example.demo.service.MarketPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +56,10 @@ public class MarketPostServiceImpl implements MarketPostService {
         marketPost.setSubject(newMarketPost.getSubject());
         marketPost.setDetails(newMarketPost.getDetails());
         return marketPostDao.save(marketPost);
+    }
+
+    @Override
+    public Iterable<MarketPost> getMarketPostsByCategory(String category) {
+        return marketPostDao.findByCategory(category);
     }
 }

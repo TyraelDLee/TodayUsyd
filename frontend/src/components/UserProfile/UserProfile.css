@@ -1,0 +1,39 @@
+.flex-column {
+    height: 100%;
+    width: 200px;
+    position: absolute;
+    background-color: white;
+    border-right: 0.5px solid gray;
+}
+
+.profile-block{
+    display:block;
+    margin-left: 200px;
+}
+
+.image-name-discrition-block {
+    width: 100%;
+    height: 300px;
+}
+
+.photo-block {
+    float:left;
+    height: 150px;
+    width: 150px;
+    margin: 75px;
+    position: absolute;
+    border: 0.5px solid gray;
+}
+
+.name-description-block {
+    float:right;
+    height: 300px;
+    width: 70%;
+    margin-top: 150px;
+    vertical-align:top;
+    text-align:center;
+}
+
+.posts-block {
+    display:block;
+}

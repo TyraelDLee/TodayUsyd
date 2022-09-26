@@ -110,10 +110,10 @@
         form.append('uemail', email);
         form.append('userpwd', upass);
 
-        return  fetch(`http://localhost:8085/addUser?uname=${uname}&uemail=${email}&passw=${upass}&securityCode=${verify}`, {
+        return  fetch(`http://localhost:8085/addUser?username=${uname}&usercode=${email}&userpwd=${upass}&securityCode=${verify}`, {
             method:"POST",
             credentials:"include",
-            body:form
+            body:null
         }).then(r=>r.json())
             .then(json=>{
                 console.log(json)

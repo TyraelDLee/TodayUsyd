@@ -27,19 +27,14 @@ public class UserController {
     }
 
     @PostMapping("addUser")
-    public Result addUser(@ModelAttribute User user,@RequestParam("uname") String uname,@RequestParam("uemail") String uemail,@RequestParam("passw") String passw,@RequestParam("securityCode") String securityCode,HttpSession session) {
+    public Result addUser(@ModelAttribute User user,@RequestParam("securityCode") String securityCode, HttpSession session) {
         // 获取验证码
-
         String sc = session.getAttribute("SecurityCode").toString();
         if(sc.equals(securityCode)){
             // 添加用户到数据库
-            user.setUsername(uname);
-            user.setUserpwd(passw);
-            user.setUsercode(uemail);
             int row = userService.addUser(user);
             if(row ==1){
                 return new Result(200,"添加成功");
-
             } else{
                 return new Result(500,"添加失败,系统错误");
             }

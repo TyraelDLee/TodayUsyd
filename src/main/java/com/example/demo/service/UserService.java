@@ -11,6 +11,8 @@ public interface UserService {
    */
   User queryUserCode(String userCode, String userPwd);
 
+  User getUserInfo(String userID);
+
   /**
    * 添加用户 --注册
    * @param user

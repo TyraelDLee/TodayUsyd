@@ -21,8 +21,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "move-build": "ren build static2 && move static2 ../src/main/resources/",
-    "clean-old-build": "rmdir /s /q ..\\src\\main\\resources\\static2",
+    "move-build": "ren build static && move static ../src/main/resources/",
+    "clean-old-build": "rmdir /s /q ..\\src\\main\\resources\\static",
     "postbuild": "npm run clean-old-build && npm run move-build"
   },
   "eslintConfig": {

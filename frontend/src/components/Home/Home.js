@@ -5,7 +5,7 @@ import Navigation from '../Navigation/Navigation';
 class Home extends Component {
     render() {
       return (
-
+        <div></div>
       );
     }
 }

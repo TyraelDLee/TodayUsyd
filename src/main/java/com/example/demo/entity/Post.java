@@ -7,18 +7,20 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "coursePost")
+@Table(name = "post")
 @SuppressWarnings("all")
-public class CoursePost {
+public class Post {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(name = "coursePostID")
-    private String coursePostID;
+    @Column(name = "postID")
+    private String postID;
     @Column(name = "userid")
     private String userid;
-    @Column(name = "courseID")
-    private String courseID;
+    @Column(name = "type")
+    private String type;
+    @Column(name = "category")
+    private String category;
     @Column(name = "title")
     private String title;
     @Column(name = "details")
@@ -26,30 +28,31 @@ public class CoursePost {
     @Column(name = "numOfLikes")
     private Integer numOfLikes;
 
-    public CoursePost(String userid, String courseID, String title, String details) {
+    public Post(String userid, String type, String category, String title, String details) {
         this.userid = userid;
-        this.courseID = courseID;
+        this.type = type;
+        this.category = category;
         this.title = title;
         this.details = details;
         this.numOfLikes = 0;
     }
 
-    public CoursePost(String courseID, String title, String details) {
-        this.courseID = courseID;
+    public Post(String category, String title, String details) {
+        this.category = category;
         this.title = title;
         this.details = details;
     }
 
-    public CoursePost() {
+    public Post() {
 
     }
 
-    public String getCoursePostID() {
-        return coursePostID;
+    public String getPostID() {
+        return postID;
     }
 
-    public void setCoursePostID(String coursePostID) {
-        this.coursePostID = coursePostID;
+    public void setPostID(String postID) {
+        this.postID = postID;
     }
 
     public String getUserid() {
@@ -60,12 +63,20 @@ public class CoursePost {
         this.userid = userid;
     }
 
-    public String getCourseID() {
-        return courseID;
+    public String getType() {
+        return type;
     }
 
-    public void setCourseID(String courseID) {
-        this.courseID = courseID;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getTitle() {
@@ -96,12 +107,12 @@ public class CoursePost {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CoursePost that = (CoursePost) o;
-        return coursePostID.equals(that.coursePostID);
+        Post that = (Post) o;
+        return postID.equals(that.postID);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(coursePostID);
+        return Objects.hash(postID);
     }
 }

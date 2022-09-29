@@ -10,19 +10,18 @@ spring:
   mail:
     host: smtp.qq.com
     username: 269929756@qq.com
-    password: hnrzzifehxcpcbdh
+    password: rouyeoutnlgnbjdg
     port: 465
     protocol: smtps
     default-encoding: UTF-8
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
         new_generator_mappings: false
         format_sql: true
     show-sql: true
     generate-ddl: true
-
   mvc:
     view:
       prefix: /templates/

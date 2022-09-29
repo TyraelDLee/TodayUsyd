@@ -17,6 +17,12 @@ public class Result {
         this.object = object;
     }
 
+    public Result(int code, String msg, Object o){
+        this.code = code;
+        this.msg = msg;
+        this.object = o;
+    }
+
     public String getMsg() {
         return msg;
     }

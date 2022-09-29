@@ -4,7 +4,7 @@ main{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 150px;
+    margin-top: 150px!important;
     width: var(--width);
     margin-left: calc(50% - (var(--width)/2));
 }
@@ -69,6 +69,7 @@ main{
 
 .cul-item-input button{
     height: 100%;
+    width: 170px;
     border-radius: 5px;
     border: 1px solid var(--Ga2);
     background-color: var(--bili-blue);
@@ -78,7 +79,7 @@ main{
     transition: 0.4s;
 }
 
-.cul-item-input button:hover{
+.cul-item-input button:hover:not([disabled]){
     opacity: 0.8;
 }
 
@@ -108,4 +109,8 @@ main{
 .item-space{
     width: 100%;
     margin: 15px 0;
+}
+
+.button-disabled{
+    opacity: 0.4;
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.4.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 74 74" style="enable-background:new 0 0 74 74;" xml:space="preserve">
+<style type="text/css">
+	.st0{clip-path:url(#SVGID_00000002365794579602905470000012284520948483063943_);}
+	.st1{fill:#B3B3B3;}
+	.st2{clip-path:url(#SVGID_00000002365794579602905470000012284520948483063943_);fill:#FFFFFF;}
+</style>
+<g>
+	<defs>
+		<circle id="SVGID_1_" cx="37" cy="37" r="37"/>
+	</defs>
+	<clipPath id="SVGID_00000000919733327844334600000012632735986115169189_">
+		<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+	</clipPath>
+	<g style="clip-path:url(#SVGID_00000000919733327844334600000012632735986115169189_);">
+		<circle class="st1" cx="37" cy="37" r="37"/>
+	</g>
+	
+		<circle style="clip-path:url(#SVGID_00000000919733327844334600000012632735986115169189_);fill:#FFFFFF;" cx="37" cy="62" r="30"/>
+	
+		<circle style="clip-path:url(#SVGID_00000000919733327844334600000012632735986115169189_);fill:#FFFFFF;" cx="37" cy="17" r="10"/>
+</g>
+</svg>

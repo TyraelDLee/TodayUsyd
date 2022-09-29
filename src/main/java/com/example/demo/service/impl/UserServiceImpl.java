@@ -21,9 +21,19 @@ public class UserServiceImpl implements UserService {
         User user = userDao.getUserByUsercode(userCode);
 //         使用 MD5加密
         userPwd = DigestUtils.md5DigestAsHex(userPwd.getBytes());
-        System.out.println(userPwd);
 
         if (null != user && userPwd.equals(user.getUserpwd())) {
+            return user;
+        }
+        return null;
+    }
+
+    @Override
+    public User getUserInfo(String userID) {
+        User user = userDao.getUserByUserid(userID);
+
+        if (user != null){
+            user.setUserpwd("");
             return user;
         }
         return null;

@@ -68,6 +68,47 @@ public class UserController {
         }
     }
 
+    @RequestMapping("authSecurityCode/{code}")
+    public Result authSecurityCode(@PathVariable("code") String code, HttpServletRequest request, HttpSession session) {
+        String myCode = session.getAttribute("SecurityCode").toString();
+        if (myCode.equals(code)) {
+            // 被验证的邮箱
+            String mail = session.getAttribute("SecurityMail").toString();
+            String exPath1 = "uni.sydney.edu.au";// USYD学生
+            String exPath2 = "sydney.edu.au";// USYD员工
+            //  获取用户的ID
+            String userId = getCookieUserId(request);
+            int row = 0;
+            if (mail.lastIndexOf(exPath1) != -1) {
+                // 修改  为USYD学生
+                row = userService.updateLabelUser(userId,1);
+
+            } else if (mail.lastIndexOf(exPath2) != -1) {
+                // 修改  为USYD员工
+                row = userService.updateLabelUser(userId,2);
+            }else{
+                // 不是USYD学生  也不是不是USYD员工
+                row = userService.updateLabelUser(userId,3);
+            }
+            return new Result(row, "验证码正确");
+
+        } else {
+            return new Result(201, "验证码错误");
+        }
+    }
+
+    public String getCookieUserId(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (null != cookies && cookies.length > 0) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("UID")) {
+                    return cookie.getValue();
+                }
+            }
+        }
+        return "";
+    }
+
     private void setCookie(@ModelAttribute User user, HttpServletResponse response) {
         Cookie sessdata = new Cookie("SESSDATA", DigestUtils.md5DigestAsHex(user.getUserpwd().getBytes()));
         sessdata.setHttpOnly(true);
@@ -98,6 +139,8 @@ public class UserController {
         String sc = SecurityCode.getCharAndNumr(6);
         // 验证码保存在了session中
         session.setAttribute("SecurityCode", sc);
+        //to 被验证的邮箱
+        session.setAttribute("SecurityMail", to);
         StringBuffer html = new StringBuffer();
         html.append("<html>");
         html.append("<body>");
@@ -113,4 +156,7 @@ public class UserController {
         }
         return new Result("发送成功");
     }
+
+
+
 }

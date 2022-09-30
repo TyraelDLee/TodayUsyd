@@ -9,12 +9,16 @@ public class User {
     //@Column(name="userid")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String userid;
-    @Column(name="username")
+    @Column(name="username",updatable = false)
     private String username;
-    @Column(name="usercode")
+    @Column(name="usercode",updatable = false)
     private String usercode;
-    @Column(name="userpwd")
+    @Column(name="userpwd",updatable = false)
     private String userpwd;
+
+    @Column(name="labeldesc")
+    private int labeldesc;
+
 
     public String getUserid() {
         return userid;
@@ -46,5 +50,13 @@ public class User {
 
     public void setUserpwd(String userpwd) {
         this.userpwd = userpwd;
+    }
+
+    public int getLabeldesc() {
+        return labeldesc;
+    }
+
+    public void setLabeldesc(int labeldesc) {
+        this.labeldesc = labeldesc;
     }
 }

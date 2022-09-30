@@ -202,17 +202,17 @@ class Navbar extends React.Component {
                 <div className="nav-bar-right">
                     <div className="nav-user">
                         <div className="nav-user-icon icon-small">
-                            <a href="./index.html" target="_blank">
+                            <a href="./userprofile" target="_blank">
                                 <img src={testAvatar}/>
                             </a>
                         </div>
                         <div className="nav-user-portal">
-                            <a className="user-name popup-item" style={{marginTop: "25px", fontWeight: "bold"}}>test UN</a>
-                            <a className="user-home popup-item" style={{marginTop: "5px"}}>Home</a>
-                            <a className="user-friends popup-item">Friends</a>
-                            <a className="user-history popup-item">History</a>
-                            <a className="user-setting popup-item">Setting</a>
-                            <a className="user-setting popup-item">Log out</a>
+                            <a href="./userprofile" className="user-name popup-item" style={{marginTop: "25px", fontWeight: "bold"}}>test UN</a>
+                            <a href="./" className="user-home popup-item" style={{marginTop: "5px"}}>Home</a>
+                            <a href="./friends" className="user-friends popup-item">Friends</a>
+                            <a href="./history" className="user-history popup-item">History</a>
+                            <a href="./setting" className="user-setting popup-item">Setting</a>
+                            <a href="./logout" className="user-setting popup-item">Log out</a>
                         </div>
                     </div>
                     <div className="nav-notification">Message</div>

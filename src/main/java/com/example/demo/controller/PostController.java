@@ -36,6 +36,16 @@ public class PostController {
         return new Result(postService.updatePost(postID, new Post(category, title, details)));
     }
 
+    @PutMapping("/updatePostInvisible")
+    public Result updatePostInisible(@RequestParam("postID") String postID) {
+        return new Result(postService.updatePostInvisible(postID));
+    }
+
+    @PutMapping("/updatePostIsTop")
+    public Result updateThePostTop(@RequestParam("postID") String postID) {
+        return new Result(postService.updatePostTop(postID));
+    }
+
     @PutMapping("/likeThePost")
     public Result likeThePost(@RequestParam("postID") String postID, @RequestParam("userID") String userID) {
         return new Result(postService.likeThePost(postID));

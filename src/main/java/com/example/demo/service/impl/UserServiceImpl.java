@@ -52,4 +52,18 @@ public class UserServiceImpl implements UserService {
             return 0;
         }
     }
+
+    @Override
+    public int updateLabelUser(String userId, int labelDesc) {
+
+        User user = userDao.findById(userId).get();
+        if (null != user) {
+            user.setLabeldesc(labelDesc);
+            userDao.save(user);
+        } else {
+            return 0;
+        }
+        return 1;
+
+    }
 }

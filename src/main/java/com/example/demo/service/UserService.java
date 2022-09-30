@@ -19,4 +19,6 @@ public interface UserService {
    * @return
    */
   int addUser(User user);
+
+  int updateLabelUser(String userId,int type);
 }

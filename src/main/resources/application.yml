@@ -10,7 +10,7 @@ spring:
   mail:
     host: smtp.qq.com
     username: 269929756@qq.com
-    password: rouyeoutnlgnbjdg
+    password: hpktqfiybohfcahb
     port: 465
     protocol: smtps
     default-encoding: UTF-8
@@ -26,5 +26,3 @@ spring:
     view:
       prefix: /templates/
       suffix: .html
-
-

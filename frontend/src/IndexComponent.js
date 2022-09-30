@@ -4,10 +4,44 @@ import './colour.css';
 import React from "react";
 
 class IndexComponent extends React.Component{
+
+    constructor(p) {
+        super(p);
+        this.courseSize = React.createRef();
+        this.marketSize = React.createRef();
+        this.findSize();
+    }
+
     componentDidMount() {
         if(document.body.scrollTop===0){
             document.getElementsByClassName('nav-bar-search')[0].style.opacity = '0';
             document.getElementById('nav-search').setAttribute("disabled", 'true');
+        }
+        window.addEventListener("resize", ()=>{
+            this.findSize();
+        });
+    }
+
+    findSize(){
+        if (window.innerHeight > window.innerWidth){
+            try{
+                this.courseSize.current.style.width =  window.innerWidth / 3 + "px";
+                this.courseSize.current.style.height =  window.innerWidth / 3 + "px";
+                this.marketSize.current.style.width =  window.innerWidth / 3 + "px";
+                this.marketSize.current.style.height =  window.innerWidth / 3 + "px";
+            }catch (e){}
+
+            this.size = window.innerWidth / 3 + "px";
+        }
+        else{
+            try{
+                this.courseSize.current.style.width = window.innerHeight / 3 + "px";
+                this.courseSize.current.style.height = window.innerHeight / 3 + "px";
+                this.marketSize.current.style.width =  window.innerHeight / 3 + "px";
+                this.marketSize.current.style.height =  window.innerHeight / 3 + "px";
+            }catch (e) {}
+
+            this.size = window.innerHeight / 3 + "px";
         }
     }
 
@@ -35,8 +69,8 @@ class IndexComponent extends React.Component{
                 </section>
                 <section>
                     <div className="main-entry">
-                        <div className="main-entry-item">Course</div>
-                        <div className="main-entry-item">Market</div>
+                        <div className="main-entry-item" style={{width: `${this.size}`, height: `${this.size}`}} ref={this.courseSize}>Course</div>
+                        <div className="main-entry-item" style={{width: `${this.size}`, height: `${this.size}`}} ref={this.marketSize}>Market</div>
                     </div>
                 </section>
                 <section>

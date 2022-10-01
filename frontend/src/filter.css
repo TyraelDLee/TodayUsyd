@@ -1,0 +1,54 @@
+.filter-host{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+
+}
+
+.filter{
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    background-color: var(--bg2_float);
+    padding: 0 10px;
+    width: 65%;
+    min-height: 100px;
+}
+
+.filter-loading{
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 100px;
+}
+
+.area, .code{
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0;
+    overflow: scroll;
+}
+
+.area-item{
+    font-weight: bold;
+}
+
+.area-item, .code-item{
+    margin: 0 10px;
+    padding: 4px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.4s;
+    background-color: transparent;
+}
+
+.area-item:hover, .code-item:hover{
+    background-color: var(--brand_blue);
+    color: var(--text_white);
+}
+
+.area-item-select, .code-item-select{
+    background-color: var(--text_link);
+    color: var(--text_white);
+}

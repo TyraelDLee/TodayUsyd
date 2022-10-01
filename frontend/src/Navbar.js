@@ -2,8 +2,7 @@ import './navbar.css';
 import testAvatar from './avatar.svg';
 import './colour.css';
 import React from "react";
-import ReactDOM from "react-dom/client";
-import Portal from "./Portal";
+
 
 class Navbar extends React.Component {
 
@@ -18,10 +17,9 @@ class Navbar extends React.Component {
 
         let courseInfo;
 
-        const logoffA = document.createElement("a");
 
         let info = async function () {
-            let info = await getCourseList(1, 1);
+            let info = await getCourseList(1, 12);
             courseInfo = await getCourseList(1, info['resultsSummary']['fullyMatching']);
         };
         info();

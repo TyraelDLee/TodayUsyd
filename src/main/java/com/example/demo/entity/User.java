@@ -19,6 +19,8 @@ public class User {
     @Column(name="labeldesc")
     private int labeldesc;
 
+    @Column(name="userauth")//普通用户或者Admin
+    private int userauth;
 
     public String getUserid() {
         return userid;
@@ -58,5 +60,13 @@ public class User {
 
     public void setLabeldesc(int labeldesc) {
         this.labeldesc = labeldesc;
+    }
+
+    public int getUserAuth() {
+        return userauth;
+    }
+
+    public void setUserAuth(int userauth) {
+        this.userauth = userauth;
     }
 }

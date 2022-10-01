@@ -27,6 +27,10 @@ public class Post {
     private String details;
     @Column(name = "numOfLikes")
     private Integer numOfLikes;
+    @Column(name = "istop")//是否置顶，默认为1没置顶，2置顶
+    private int istop;
+    @Column(name = "isvisible")//是否可见，默认为1可见，不可见为2
+    private int isvisible;
 
     public Post(String userid, String type, String category, String title, String details) {
         this.userid = userid;
@@ -101,6 +105,22 @@ public class Post {
 
     public void setNumOfLikes(Integer numOfLikes) {
         this.numOfLikes = numOfLikes;
+    }
+
+    public int getIstop() {
+        return istop;
+    }
+
+    public void setIstop(int istop) {
+        this.istop = istop;
+    }
+
+    public int getIsVisible() {
+        return isvisible;
+    }
+
+    public void setIsVisible(int isvisible) {
+        this.isvisible = isvisible;
     }
 
     @Override

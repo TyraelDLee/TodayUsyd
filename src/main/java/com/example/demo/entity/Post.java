@@ -1,9 +1,11 @@
 package com.example.demo.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -27,6 +29,9 @@ public class Post {
     private String details;
     @Column(name = "numOfLikes")
     private Integer numOfLikes;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "createdTime")
+    private LocalDateTime createdTime;
     @Column(name = "istop")//是否置顶，默认为1没置顶，2置顶
     private int istop;
     @Column(name = "isvisible")//是否可见，默认为1可见，不可见为2
@@ -39,6 +44,7 @@ public class Post {
         this.title = title;
         this.details = details;
         this.numOfLikes = 0;
+        this.createdTime = LocalDateTime.now();
     }
 
     public Post(String category, String title, String details) {
@@ -105,6 +111,14 @@ public class Post {
 
     public void setNumOfLikes(Integer numOfLikes) {
         this.numOfLikes = numOfLikes;
+    }
+
+    public LocalDateTime getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(LocalDateTime createdTime) {
+        this.createdTime = createdTime;
     }
 
     public int getIstop() {

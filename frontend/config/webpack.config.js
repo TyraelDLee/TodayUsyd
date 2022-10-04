@@ -204,6 +204,7 @@ module.exports = function (webpackEnv) {
       index: isEnvDevelopment && !shouldUseReactRefresh ? [ webpackDevClientEntry, paths.appIndexJs, ] : paths.appIndexJs,
       login : isEnvDevelopment && !shouldUseReactRefresh ? [ webpackDevClientEntry, paths.appIndexJs, ] : paths.appLoginJs,
       register : isEnvDevelopment && !shouldUseReactRefresh ? [ webpackDevClientEntry, paths.appIndexJs, ] : paths.appRegisterJs,
+      friends : isEnvDevelopment && !shouldUseReactRefresh ? [ webpackDevClientEntry, paths.appIndexJs, ] : paths.appFriendsJs,
     },
     output: {
       // The build folder.
@@ -630,6 +631,33 @@ module.exports = function (webpackEnv) {
                 template: paths.appRegisterHtml,
                 filename: 'register.html',
                 chunks: ['register']
+              },
+              isEnvProduction
+                  ? {
+                    minify: {
+                      removeComments: true,
+                      collapseWhitespace: true,
+                      removeRedundantAttributes: true,
+                      useShortDoctype: true,
+                      removeEmptyAttributes: true,
+                      removeStyleLinkTypeAttributes: true,
+                      keepClosingSlash: true,
+                      minifyJS: true,
+                      minifyCSS: true,
+                      minifyURLs: true,
+                    },
+                  }
+                  : undefined
+          )
+      ),
+      new HtmlWebpackPlugin(
+          Object.assign(
+              {},
+              {
+                inject: true,
+                template: paths.appFriendsHtml,
+                filename: 'friends.html',
+                chunks: ['friends']
               },
               isEnvProduction
                   ? {

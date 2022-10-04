@@ -62,6 +62,8 @@ module.exports = {
   appLoginJs: resolveModule(resolveApp, 'src/Login'),
   appRegisterHtml: resolveApp('public/register.html'),
   appRegisterJs: resolveModule(resolveApp, 'src/Register'),
+  appFriendsHtml: resolveApp('public/friends.html'),
+  appFriendsJs: resolveModule(resolveApp, 'src/Friends'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   appTsConfig: resolveApp('tsconfig.json'),

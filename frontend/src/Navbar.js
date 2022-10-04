@@ -130,11 +130,11 @@ class Navbar extends React.Component {
             }).then(r=>r.json())
                 .then(json=>{
                     if (json['code']===200){
-                        userPortal.innerHTML = `<a className="user-name popup-item" style="margin-top: 25px; font-weight: bold">${json['object']['username']}</a>
-                            <a className="user-home popup-item" style="margin-top: 5px">Home</a>
-                            <a className="user-friends popup-item">Friends</a>
-                            <a className="user-history popup-item">History</a>
-                            <a className="user-setting popup-item">Setting</a>
+                        userPortal.innerHTML = `<a href="./userprofile" className="user-name popup-item" style="margin-top: 25px; font-weight: bold">${json['object']['username']}</a>
+                            <a href="./" className="user-home popup-item" style="margin-top: 5px">Home</a>
+                            <a href="./friends" className="user-friends popup-item">Friends</a>
+                            <a href="./history" className="user-history popup-item">History</a>
+                            <a href="./setting" className="user-setting popup-item">Setting</a>
                             <a className="user-setting popup-item" id="log-out">Log out</a>`;
                         const logout = document.getElementById('log-out');
                         logout.addEventListener('click', ()=>{
@@ -150,17 +150,6 @@ class Navbar extends React.Component {
                     }
                 });
 
-        }
-
-        function getUserInfo() {
-            fetch(``, {
-                method: "GET",
-                credentials: "include",
-                body: null
-            }).then(r => r.json())
-                .then(json => {
-                    //name and icon and uid here.
-                });
         }
 
         function getCookie(name) {
@@ -205,12 +194,7 @@ class Navbar extends React.Component {
                             </a>
                         </div>
                         <div className="nav-user-portal">
-                            <a href="./userprofile" className="user-name popup-item" style={{marginTop: "25px", fontWeight: "bold"}}>test UN</a>
-                            <a href="./" className="user-home popup-item" style={{marginTop: "5px"}}>Home</a>
-                            <a href="./friends" className="user-friends popup-item">Friends</a>
-                            <a href="./history" className="user-history popup-item">History</a>
-                            <a href="./setting" className="user-setting popup-item">Setting</a>
-                            <a href="./logout" className="user-setting popup-item">Log out</a>
+                            {/**/}
                         </div>
                     </div>
                     <div className="nav-notification">Message</div>

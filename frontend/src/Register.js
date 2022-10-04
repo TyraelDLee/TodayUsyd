@@ -67,7 +67,20 @@ class Register extends React.Component{
 
         create.addEventListener('click', (e)=>{
             if (userPassword.value.length > 0 && userName.value.length > 0 && userPassword.value.length > 0 && verify.value.length > 0)
-                postUserInfo(userEmail.value, userName.value, userPassword.value, verify.value);
+                postUserInfo(userEmail.value, userName.value, userPassword.value, verify.value).then(code=>{
+                    if (code===200){
+                        fetch(`./authSecurityCode/${verify.value}`, {
+                            method:'GET',
+                            credentials:'include',
+                            body:null
+                        }).then(r=>r.json())
+                            .then(json=>{
+                                if (json['code']===1){
+                                    window.location.href = './';
+                                }
+                            })
+                    }
+                });
         });
 
         function inputEvent(e){
@@ -140,8 +153,10 @@ class Register extends React.Component{
             }).then(r=>r.json())
                 .then(json=>{
                     if(json['code'] === 200){
-                        window.location.href="./index.html";
+                        return 200;
                     }
+                }).catch(e=>{
+                    return 400;
                 });
         }
     }

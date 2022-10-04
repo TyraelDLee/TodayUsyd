@@ -17,7 +17,7 @@ class Login extends React.Component{
         });
 
         reg.addEventListener('click', (e)=>{
-            window.location.href= "./register.html";
+            window.top.location.href= "./register.html";
         });
 
         function post(email, passw){

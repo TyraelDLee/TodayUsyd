@@ -72,7 +72,10 @@ class Filter extends React.Component{
                     }
                     if (codeNode.classList.contains('code-item-select'))
                         codeNode.classList.remove('code-item-select');
-                    else codeNode.classList.add('code-item-select');
+                    else {
+                        codeNode.classList.add('code-item-select');
+                        //update here.
+                    }
                 });
                 document.getElementsByClassName('code')[0].appendChild(codeNode);
             }

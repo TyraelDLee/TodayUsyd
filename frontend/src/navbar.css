@@ -105,6 +105,8 @@ body {
     font-size: 18px;
     line-height: 50px;
     cursor: pointer;
+    text-decoration: none;
+    color: var(--text1);
 }
 
 .popup-item {

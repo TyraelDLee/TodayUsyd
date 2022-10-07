@@ -12,6 +12,14 @@ class IndexComponent extends React.Component{
         this.findSize();
     }
 
+    onClickMarket = () => {
+        window.location.href = "./market.html"
+    }
+
+    onClickCourse = () => {
+        window.location.href = "./course.html"
+    }
+
     componentDidMount() {
         if(document.body.scrollTop===0){
             document.getElementsByClassName('nav-bar-search')[0].style.opacity = '0';
@@ -69,8 +77,12 @@ class IndexComponent extends React.Component{
                 </section>
                 <section>
                     <div className="main-entry">
-                        <div className="main-entry-item" style={{width: `${this.size}`, height: `${this.size}`}} ref={this.courseSize}>Course</div>
-                        <div className="main-entry-item" style={{width: `${this.size}`, height: `${this.size}`}} ref={this.marketSize}>Market</div>
+                        <div onClick={this.onClickCourse} className="main-entry-item" style={{width: `${this.size}`, height: `${this.size}`}} ref={this.courseSize}>
+                            Course
+                        </div>
+                        <div onClick={this.onClickMarket} className="main-entry-item" style={{width: `${this.size}`, height: `${this.size}`}} ref={this.marketSize}>
+                            Market
+                        </div>
                     </div>
                 </section>
                 <section>

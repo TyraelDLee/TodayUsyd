@@ -105,7 +105,7 @@ class Navbar extends React.Component {
         });
 
         let userPortal = document.getElementsByClassName('nav-user-portal')[0];
-        console.log(typeof getCookie("UID")!=='undefined')
+        //console.log(typeof getCookie("UID")!=='undefined')
         if (typeof getCookie("UID")==='undefined'){
             userPortal.innerHTML = `<a>Login</a>`;
             userPortal.getElementsByTagName('a')[0].addEventListener('click', ()=>{
@@ -189,7 +189,7 @@ class Navbar extends React.Component {
                 <div className="nav-bar-right">
                     <div className="nav-user">
                         <div className="nav-user-icon icon-small">
-                            <a href="./userprofile" target="_blank">
+                            <a href="./userprofile.html" target="_blank">
                                 <img src={testAvatar}/>
                             </a>
                         </div>

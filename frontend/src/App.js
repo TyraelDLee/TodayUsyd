@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import {createBrowserRouter,RouterProvider} from "react-router-dom";
 import Home from './Home';
 import Post from './components/Post/Post';
@@ -9,7 +10,7 @@ import Setting from './components/Setting/Setting';
 import Market from './components/Market/Market';
 import Course from './components/Course/Course';
 
-const router = createBrowserRouter([
+/*const router = createBrowserRouter([
   {
     path: "/",
     element: <Home/>,
@@ -43,13 +44,26 @@ const router = createBrowserRouter([
     element: <Course/>,
   },
 ]);
+*/
 
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Home} />
+        </Switch>
+      </Router>
+    );
+  }
+}
+/*
 class App extends Component {
   render() {
     return (
       <RouterProvider router={router} />
     );
   }
-}
+}*/
 
 export default App;

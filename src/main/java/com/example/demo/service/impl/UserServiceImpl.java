@@ -66,4 +66,19 @@ public class UserServiceImpl implements UserService {
         return 1;
 
     }
+    
+    @Override
+    public User queryUserByUserid(String userid) {
+        return userDao.findById(userid).get();
+    }
+    
+    @Override
+    public int updateUser(User user) {
+        User us = userDao.save(user);
+        if(us != null){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
 }

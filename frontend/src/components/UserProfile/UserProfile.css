@@ -1,0 +1,78 @@
+.verticalBar {
+    float: left;
+    position: fixed;
+    margin-top: 60px;
+    width:12%;
+    height: 100vh;
+    border-right: solid 0.8px #dee2e6;
+}
+
+.userHome {
+    height: 60px;
+    border-bottom: solid 0.8px #dee2e6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
+
+.userHome:hover{
+    background-color: #e5e5e5;
+    cursor: pointer;
+}
+
+.friends {
+    height: 60px;
+    border-bottom: solid 0.8px #dee2e6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
+
+.friends:hover{
+    background-color: #e5e5e5;
+    cursor: pointer;
+}
+
+.history {
+    height: 60px;
+    border-bottom: solid 0.8px #dee2e6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
+
+.history:hover{
+    background-color: #e5e5e5;
+    cursor: pointer;
+}
+
+.setting {
+    height: 60px;
+    border-bottom: solid 0.8px #dee2e6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
+
+.setting:hover{
+    background-color: #e5e5e5;
+    cursor: pointer;
+}
+
+.contents {
+    float: right;
+    margin-top: 60px;
+    width:88%;
+    height: 100vh;
+}
+
+.test {
+    margin: 200px;
+    width:200px;
+    height:200px;
+    border: 0.8px solid gray;
+}

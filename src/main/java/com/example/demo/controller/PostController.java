@@ -37,7 +37,7 @@ public class PostController {
     }
 
     @PutMapping("/updatePostInvisible")
-    public Result updatePostInisible(@RequestParam("postID") String postID) {
+    public Result updatePostInvisible(@RequestParam("postID") String postID) {
         return new Result(postService.updatePostInvisible(postID));
     }
 

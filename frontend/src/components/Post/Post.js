@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Button } from 'react-bootstrap';
 import './Post.css'
+import Cookies from 'js-cookie';
 
 class Post extends Component {
     constructor(props){
         super(props);
         this.state = {
-            userID: "",
-            courseID: "",
+            category: "",
             title: "",
             details: "",
             selectedFile: null
@@ -21,14 +21,16 @@ class Post extends Component {
     }
 
     handleClickSave = () => {
-        const { userID, courseID, title, details } = this.state;
+        const { category, title, details } = this.state;
+        const { type } = this.props;
         var formData = new FormData();
-        formData.append("userID", userID);
-        formData.append("courseID", courseID);
+        formData.append("userID", Cookies.get('UID'));
+        formData.append("type", type);
+        formData.append("category", category);
         formData.append("title", title);
         formData.append("details", details);
 
-        fetch('http://localhost:8085/Course/createPost', {
+        fetch('http://localhost:8085/Post/createPost', {
             method: 'POST',
             body: formData
         }).then(response => {
@@ -47,21 +49,14 @@ class Post extends Component {
     };
 
     render() {
-        const { userID, courseID, title, details} = this.state;
+        const { category, title, details} = this.state;
         return(
             <div className="postEditor">
                 <input
-                    name="userID"
+                    name="category"
                     type="text"
-                    value={userID}
-                    placeholder="userID"
-                    onChange={this.handleChange}
-                />
-                <input
-                    name="courseID"
-                    type="text"
-                    value={courseID}
-                    placeholder="courseID"
+                    value={category}
+                    placeholder="category"
                     onChange={this.handleChange}
                 />
                 <textarea className="title"

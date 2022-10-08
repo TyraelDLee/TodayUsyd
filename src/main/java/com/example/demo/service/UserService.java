@@ -21,4 +21,8 @@ public interface UserService {
   int addUser(User user);
 
   int updateLabelUser(String userId,int type);
+  
+  User queryUserByUserid(String userid);
+  
+  int updateUser(User user);
 }

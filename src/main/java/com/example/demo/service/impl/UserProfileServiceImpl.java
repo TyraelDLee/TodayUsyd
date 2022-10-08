@@ -6,18 +6,25 @@ import com.example.demo.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * UserProfile服务接口实现
- */
 @Service
 public class UserProfileServiceImpl implements UserProfileService {
-
+    
     @Autowired
     private UserProfileDao userProfileDao;
-
-
+    
+    
     @Override
-    public UserProfile findUserProfileByUserid(String userId) {
+    public UserProfile findUserProfleByUserid(String userId) {
         return userProfileDao.findUserProfleByUserid(userId);
+    }
+    
+    @Override
+    public int updateInfo(UserProfile info) {
+        UserProfile entity = userProfileDao.save(info);
+        if(entity != null){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 }

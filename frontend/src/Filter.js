@@ -65,15 +65,16 @@ class Filter extends React.Component{
             document.getElementsByClassName('code')[0].innerHTML="";
             for(let code of area){
                 let codeNode = document.createElement('div');
-                codeNode.classList.add('area-item');
+                codeNode.classList.add('code-item');
                 codeNode.innerText = code;
                 codeNode.addEventListener('click', (e)=>{
+
                     for (let node of document.getElementsByClassName('code-item')){
                         node.classList.remove('code-item-select');
+                        window.history.pushState(null,null,window.location.href.replace(`&course=${node.innerText}`,''));
                     }
                     if (codeNode.classList.contains('code-item-select')) {
                         codeNode.classList.remove('code-item-select');
-                        window.history.pushState(null,null,window.location.href.replace(`&course=${code}`,''));
                     }
                     else {
                         codeNode.classList.add('code-item-select');

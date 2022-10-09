@@ -26,7 +26,7 @@
 .area, .code{
     display: flex;
     flex-direction: row;
-    margin: 10px 0;
+    padding: 10px 0;
     overflow: scroll;
 }
 

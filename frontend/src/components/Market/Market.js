@@ -21,8 +21,9 @@ class Market extends Component {
         }).then(
             response => response.json()
         ).then(data => data.object 
-        )/*.then(object => object.map((post) => post.userId)
-        );*/
+        ).then(object => object.map(
+            (post) => post.userId)
+        );
     }
 
     onClickOpenPost = () => {
@@ -53,8 +54,8 @@ class Market extends Component {
                     }
                     <div className="postlist">
                         <div className="singlePost">
-
-
+                            <div className="profileImage"></div>
+                            <div className="profileUserName">Test</div>
                         </div>
                         {
                             //post.map((post) => <div className="singlePost"></div>)

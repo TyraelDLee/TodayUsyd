@@ -17,6 +17,22 @@
 }
 
 .singlePost {
+    height: 200px;
     border: 0.8px solid gray;
     border-radius: 20px;
+}
+
+.profileImage{
+    float: left;
+    margin: 20px;
+    height: 80px;
+    width: 80px;
+    border: 0.8px solid gray;
+    border-radius: 50%;
+}
+
+.profileUserName{
+    float: left;
+    margin: 20px;
+    font-size: 20px;
 }

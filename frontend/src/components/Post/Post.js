@@ -41,7 +41,7 @@ class Post extends Component {
             formData.append("title", title);
             formData.append("details", details);
 
-            fetch('http://localhost:8085/Post/createPost', {
+            fetch('./Post/createPost', {
                 method: 'POST',
                 body: formData
             }).then(response => {

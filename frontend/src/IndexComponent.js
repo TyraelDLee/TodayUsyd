@@ -2,6 +2,8 @@ import './navbar.css';
 import './index.css';
 import './colour.css';
 import React from "react";
+import Item from "./components/SearchItem/Item";
+import avatar from './avatar.svg';
 
 class IndexComponent extends React.Component{
 
@@ -21,10 +23,24 @@ class IndexComponent extends React.Component{
     }
 
     componentDidMount() {
-        if(document.body.scrollTop===0){
+        if(document.documentElement.scrollTop===0) {
             document.getElementsByClassName('nav-bar-search')[0].style.opacity = '0';
             document.getElementById('nav-search').setAttribute("disabled", 'true');
         }
+        window.addEventListener('scroll',()=>{
+            //console.log(document.documentElement.scrollTop)
+            if (document.documentElement.scrollTop>180){
+                document.getElementsByClassName('nav-bar-search')[0].style.opacity = '1';
+                document.getElementById('nav-search').removeAttribute("disabled");
+                document.getElementsByClassName('nav-bar-search')[1].style.opacity = '0';
+                document.getElementsByClassName('nav-bar-search')[1].getElementsByTagName('input')[0].setAttribute("disabled", 'true');
+            }else{
+                document.getElementsByClassName('nav-bar-search')[0].style.opacity = '0';
+                document.getElementById('nav-search').setAttribute("disabled", 'true');
+                document.getElementsByClassName('nav-bar-search')[1].style.opacity = '1';
+                document.getElementsByClassName('nav-bar-search')[1].getElementsByTagName('input')[0].removeAttribute("disabled");
+            }
+        })
         window.addEventListener("resize", ()=>{
             this.findSize();
         });

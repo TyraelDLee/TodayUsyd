@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import './Market.css'
 import './../../colour.css'
 import Navbar from '../../Navbar'
+import Filter from "../../Filter";
 import ReactDOM from "react-dom/client";
 import Button from 'react-bootstrap/Button';
 import Post from './../Post/Post';
@@ -30,6 +31,7 @@ class Market extends Component {
         return(
             <div>
                 <Navbar />
+                <Filter/>
                 <div className="MarketPost">
                     {this.state.showPost ?
                         <div>

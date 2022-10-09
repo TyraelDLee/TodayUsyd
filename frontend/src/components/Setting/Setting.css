@@ -1,0 +1,24 @@
+.settingBar {
+    float: left;
+    width:15%;
+    height: 100vh;
+    border-right: solid 0.8px #dee2e6;
+}
+
+.singleSetting {
+    height: 120px;
+    border-bottom: solid 0.8px #dee2e6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.settingName {
+    margin: 30px auto;
+    font-size: 18px;
+}
+
+.singleSetting:hover{
+    background-color: #e5e5e5;
+    cursor: pointer;
+}

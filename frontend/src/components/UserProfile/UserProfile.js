@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import './UserProfile.css'
 import Navbar from '../../Navbar'
 import ReactDOM from "react-dom/client";
+import Friends from "../Friends/Friends";
+import Setting from "../Setting/Setting";
 
 class UserProfile extends Component {
     constructor(props){
@@ -52,37 +54,36 @@ class UserProfile extends Component {
 
     render() {
         const {userHome, friends, history, setting} = this.state;
-        let test;
+        let contents;
         if (userHome && !friends && !history && !setting){
-            test = 
+            contents = 
             <div>
                 <div className="Person">
                     <div className="image"></div>
-                    <div className="username"></div>
-                    <div className="description"></div>
+                    <div className="username">UserName</div>
+                    <div className="description">This is a sample description</div>
                 </div>
-                <div className="PostArea">
-                    
+                <div className="postArea">
                 </div>
             </div>
         } else if (!userHome && friends && !history && !setting){
-            test = <div>friends</div>
+            contents = <Friends/>
         } else if (!userHome && !friends && history && !setting){
-            test = <div>history</div>
+            contents = <div>history</div>
         } else {
-            test = <div>setting</div>
+            contents = <Setting/>
         }
         return(
             <div>
                 <Navbar />
                 <div>
                     <div className="verticalBar">
-                        <div onClick={this.handleClickUserHome} className="userHome">User Home</div>
+                        <div onClick={this.handleClickUserHome} className="userHome">User Profile</div>
                         <div onClick={this.handleClickFriends} className="friends">Friends</div>
                         <div onClick={this.handleClickHistory} className="history">Visited History</div>
                         <div onClick={this.handleClickSetting} className="setting">Setting</div>
                     </div>
-                    <div className="contents">{test}
+                    <div className="contents">{contents}
                     </div>
                 </div>
             </div>

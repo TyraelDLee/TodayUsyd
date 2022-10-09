@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import './Course.css'
+import './../../colour.css'
 import Navbar from '../../Navbar'
 import Filter from "../../Filter";
 import ReactDOM from "react-dom/client";
@@ -35,10 +36,10 @@ class Course extends Component {
                 <div className="CoursePost">
                     {this.state.showPost ?
                         <div>
-                            <Button onClick={this.onClickCancelPost} className="button">Cancel</Button>
-                            <Post type="course"/>
+                            <Button variant="outline-dark" onClick={this.onClickCancelPost} className="button">Cancel Post</Button>
+                            <Post catrgories={["ELEC5619"]} type="course"/>
                         </div> :
-                        <Button onClick={this.onClickOpenPost} className="button">Add</Button>
+                        <Button variant="outline-dark" onClick={this.onClickOpenPost} className="button">Add Post</Button>
                     }
                     <div className="post">
 

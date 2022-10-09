@@ -67,7 +67,6 @@
     float: right;
     margin-top: 60px;
     width:88%;
-    height: 100vh;
 }
 
 .test {
@@ -75,4 +74,43 @@
     width:200px;
     height:200px;
     border: 0.8px solid gray;
+}
+
+.Person{
+    margin: 40px auto;
+    width: 60%;
+    height: 240px;
+}
+
+.image{
+    float: left;
+    margin: 40px;
+    height: 160px;
+    width: 160px;
+    border: 0.8px solid gray;
+    border-radius: 50%;
+}
+
+.username{
+    float: right;
+    margin: 40px 20px 20px 0px;
+    width: 70%;
+    height: 60px;
+    font-size: 35px;
+}
+
+.description{
+    float: right;
+    margin:5px 20px 20px 0px;
+    width: 70%;
+    height: 70px;
+    font-size: 20px;
+    border: 0.8px solid gray;
+}
+
+.postArea {
+    border: 0.8px solid gray;
+    width: 60%;
+    height: 400px;
+    margin: 40px auto;
 }

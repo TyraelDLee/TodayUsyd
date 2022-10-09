@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import './Course.css'
 import Navbar from '../../Navbar'
+import Filter from "../../Filter";
 import ReactDOM from "react-dom/client";
 import Button from 'react-bootstrap/Button';
 import Post from './../Post/Post';
@@ -30,6 +31,7 @@ class Course extends Component {
         return(
             <div>
                 <Navbar />
+                <Filter/>
                 <div className="CoursePost">
                     {this.state.showPost ?
                         <div>
@@ -50,6 +52,7 @@ class Course extends Component {
 const root = ReactDOM.createRoot(document.getElementsByTagName('body')[0]);
 root.render(
     <React.StrictMode>
+
         <Course/>
     </React.StrictMode>
 );

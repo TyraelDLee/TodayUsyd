@@ -51,11 +51,12 @@ class Filter extends React.Component{
                         node.classList.remove('area-item-select');
                     }
                     areaNode.classList.add('area-item-select');
+                    window.history.pushState(null,null,window.location['pathname']+`?category=${area}`);
                     renderCode(courses[area]);
                 });
                 document.getElementsByClassName('area')[0].appendChild(areaNode);
             }
-            document.getElementsByClassName('area-item')[0].classList.add('area-item-select');
+            //document.getElementsByClassName('area-item')[0].classList.add('area-item-select');
             renderCode(courses[document.getElementsByClassName('area-item')[0].innerText]);
         }
 
@@ -70,11 +71,14 @@ class Filter extends React.Component{
                     for (let node of document.getElementsByClassName('code-item')){
                         node.classList.remove('code-item-select');
                     }
-                    if (codeNode.classList.contains('code-item-select'))
+                    if (codeNode.classList.contains('code-item-select')) {
                         codeNode.classList.remove('code-item-select');
+                        window.history.pushState(null,null,window.location.href.replace(`&course=${code}`,''));
+                    }
                     else {
                         codeNode.classList.add('code-item-select');
                         //update here.
+                        window.history.pushState(null,null,window.location.href+`&course=${code}`);
                     }
                 });
                 document.getElementsByClassName('code')[0].appendChild(codeNode);

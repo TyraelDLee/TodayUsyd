@@ -14,6 +14,7 @@ class Navbar extends React.Component {
         let searchBar = document.getElementById('nav-search');
         let navPopupIn = false, iconIn = false;
         let searchField = document.getElementsByClassName('nav-bar-search');
+        let searchButton = document.getElementsByClassName('search-form-btn');
 
         let courseInfo;
 
@@ -30,10 +31,6 @@ class Navbar extends React.Component {
             });
         }
 
-// searchBar.addEventListener("keyup", ()=>{
-//     console.log(searchBar.value);
-//     putResult(searchBar.value);
-// });
         function putResult(inputString, node) {
             node.innerHTML = '';
 
@@ -47,11 +44,16 @@ class Navbar extends React.Component {
                         break;
                 }
                 for (let obj of result) {
-                    let template = `<a class="course-item" href="./indxe.html">
+                    let template = `<a class="course-item" href='./course.html?category=${obj['uosCode'].substring(0,4)}&course=${obj['uosCode']}'>
                     <div>${obj['uosCode']}</div>
                     <div>${obj['title']}</div>
                 </a>`;
                     node.innerHTML += template;
+                }
+                for (let i = 0; i < searchButton.length; i++) {
+                    searchButton[i].addEventListener('click', ()=>{
+                        window.location.href = `./search?keyword=${inputString}`;
+                    });
                 }
             }
         }
@@ -169,9 +171,9 @@ class Navbar extends React.Component {
                 </div>
                 <div className="nav-bar-search">
                     <div className="nav-search-container">
-                        <form className="search-form">
+                        <form className="search-form" action='./search'>
                             <div className="search-form-input">
-                                <input type="text" maxLength="60" placeholder="Search" id="nav-search"/>
+                                <input type="text" maxLength="60" placeholder="Search" id="nav-search" name="keyword"/>
                             </div>
                             <div className="search-form-btn">
                                 <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">

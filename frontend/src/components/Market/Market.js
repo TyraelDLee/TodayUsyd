@@ -12,7 +12,18 @@ class Market extends Component {
         super(props);
         this.state = {
             showPost: false,
+            post: [],
         }
+    }
+
+    componentDidMount(){
+        fetch('http://localhost:8085/Post/getAllPostsByType?type=course', {
+        }).then(
+            response => response.json()
+        ).then(data => data.object 
+        ).then(object => object.map(
+            (post) => post.userId)
+        );
     }
 
     onClickOpenPost = () => {
@@ -28,6 +39,7 @@ class Market extends Component {
     }
 
     render() {
+        const { post } = this.state;
         return(
             <div>
                 <Navbar />
@@ -35,13 +47,19 @@ class Market extends Component {
                 <div className="MarketPost">
                     {this.state.showPost ?
                         <div>
-                            <Button onClick={this.onClickCancelPost} className="button">Cancel</Button>
-                            <Post type="market"/>
+                            <Button variant="outline-dark" onClick={this.onClickCancelPost} className="button">Cancel Post</Button>
+                            <Post catrgories={["Rental", "Services", "Book Market", "Cars", "Careers"]} type="market"/>
                         </div> :
-                        <Button onClick={this.onClickOpenPost} className="button">Add</Button>
+                        <Button variant="outline-dark" onClick={this.onClickOpenPost} className="button">Add Post</Button>
                     }
-                    <div className="post">
-
+                    <div className="postlist">
+                        <div className="singlePost">
+                            <div className="profileImage"></div>
+                            <div className="profileUserName">Test</div>
+                        </div>
+                        {
+                            //post.map((post) => <div className="singlePost"></div>)
+                        }
                     </div>
                 </div>
             </div>

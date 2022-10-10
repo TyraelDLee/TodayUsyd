@@ -196,7 +196,7 @@ body {
     z-index: 99;
 }
 
-.search-form:focus-within ~ .search-panel {
+.search-form:focus-within ~ .search-panel , .search-panel:hover,  .search-panel a:focus{
     display: flex;
     height: auto;
     width: 100%;

@@ -31,4 +31,4 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
 
 upload:
-  path: D:\upload\5619
+  path: Desktop/ELEC5619

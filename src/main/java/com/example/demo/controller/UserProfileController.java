@@ -54,7 +54,7 @@ public class UserProfileController {
     @ResponseBody
     public Result home(String userid) {
         Result result = new Result();
-        UserProfile userProfile = userProfileService.findUserProfleByUserid(userid);
+        UserProfile userProfile = userProfileService.findUserProfileByUserid(userid);
         if(userProfile == null){
             userProfile = new UserProfile();
         }
@@ -113,7 +113,7 @@ public class UserProfileController {
         return result;
     }
     
-    //-----------------friend模块start---------------------------------
+    //-----------------friend模块end---------------------------------
     
     //-----------------History模块start---------------------------------
     
@@ -158,7 +158,7 @@ public class UserProfileController {
         return result;
     }
     
-    //-----------------History模块start---------------------------------
+    //-----------------History模块end---------------------------------
     
     //-----------------Setting模块start---------------------------------
     
@@ -183,7 +183,7 @@ public class UserProfileController {
             return result;
         }
         
-        UserProfile userProfile = userProfileService.findUserProfleByUserid(userid);
+        UserProfile userProfile = userProfileService.findUserProfileByUserid(userid);
         if(userProfile == null){
             result.setCode(500);
             result.setObject("操作失败，获取用户详细信息失败");
@@ -252,7 +252,7 @@ public class UserProfileController {
     @ResponseBody
     public byte[] showImg(String userid) throws Exception {
         byte[] bytes = null;
-        UserProfile userProfile = userProfileService.findUserProfleByUserid(userid);
+        UserProfile userProfile = userProfileService.findUserProfileByUserid(userid);
         if(userProfile != null && userProfile.getImgurl() != null){
             File file = new File(userProfile.getImgurl());
             if(file!=null && file.exists()){
@@ -264,5 +264,5 @@ public class UserProfileController {
         return bytes;
     }
     
-    //-----------------Setting模块start---------------------------------
+    //-----------------Setting模块end---------------------------------
 }

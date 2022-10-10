@@ -1,7 +1,11 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.Comment;
+import com.example.demo.entity.Notice;
 import com.example.demo.entity.Post;
+import com.example.demo.entity.Take;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface PostService {
@@ -22,4 +26,19 @@ public interface PostService {
 
     Boolean deletePostById(String postID);
 
+    List<Post> findLatestPost();
+
+    List<Post> findLikestPost();
+
+    List<Post> findPostByTitle(String title);
+
+    int saveComment(Comment comment);
+
+    List<Comment> findLatestPostComment();
+
+    int takeuser(Take take);
+
+    int saveNotice(Notice notice);
+
+    List<Notice> findNoticeByUserid(String userid);
 }

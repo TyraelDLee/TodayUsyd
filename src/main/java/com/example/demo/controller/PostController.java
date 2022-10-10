@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Post;
 import com.example.demo.service.PostService;
+import com.example.demo.service.UserProfileService;
 import com.example.demo.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +16,13 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-
     @GetMapping("/getAllPostsByType")
     public Result findAllPost(@RequestParam("type") String type) {
         return new Result((List<Post>) postService.getPostsByType(type));
     }
 
-    @GetMapping("filterByCategory")
-        public Result getMarketPostsByCategory(@RequestParam("category") String category) {
+    @GetMapping("/filterByCategory")
+    public Result getMarketPostsByCategory(@RequestParam("category") String category) {
         return new Result(postService.getPostsByCategory(category));
     }
 

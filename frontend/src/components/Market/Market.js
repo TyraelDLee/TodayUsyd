@@ -6,6 +6,8 @@ import Filter from "../../Filter";
 import ReactDOM from "react-dom/client";
 import Button from 'react-bootstrap/Button';
 import Post from './../Post/Post';
+import Item from './../SearchItem/Item';
+import avatar from './../../avatar.svg';
 
 class Market extends Component {
     constructor(props){
@@ -52,15 +54,29 @@ class Market extends Component {
                         </div> :
                         <Button variant="outline-dark" onClick={this.onClickOpenPost} className="button">Add Post</Button>
                     }
+                    <Item userFace={avatar} userName={'Name'} postTitle={'test'} postCat={'ELEC5619'} postBody={'post body'} postLike={'0'}/>
                     <div className="postlist">
                         <div className="singlePost">
                             <div className="profileImage"></div>
                             <div className="profileUserName">Test</div>
+                            <div className="profileTitle">Title</div>
+                            <div className="profileDate">posted on 2022-10-09</div>
+                        </div>
+                        <div className="singlePost">
+                            <div className="profileImage"></div>
+                            <div className="profileUserName">Test</div>
+                        </div>
+
+                        <div className="singlePost">
+                            <div className="profileImage"></div>
+                            <div className="profileUserName">Test</div>
+                            <div className="profileDate">posted on 2022-10-09</div>
                         </div>
                         {
                             //post.map((post) => <div className="singlePost"></div>)
                         }
                     </div>
+                    <br/><br/><br/><br/>
                 </div>
             </div>
         );

@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import './Friends.css'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Cookies from 'js-cookie';
+import Alert from 'react-bootstrap/Alert';
+import Item from './../SearchItem/Item';
+import avatar from './../../avatar.svg';
 
 class Friends extends Component {
     constructor(props){
@@ -12,8 +14,12 @@ class Friends extends Component {
         }
     }
 
+    componentDidMount(){
+        var element = document.getElementById("dialogueBar");
+        element.scrollTop = element.scrollHeight;
+    }
+
     handleClickSendMessage = () => {
-        
     }
 
     render() {
@@ -37,8 +43,50 @@ class Friends extends Component {
                         <div className="friendName">Friend 4</div>
                     </div>
                 </div>
-                <div className="dialogueBar">
-                    
+                <div id="dialogueBar" className="dialogueBar">
+                    <div className="topspace"></div>
+                    <div className="block">
+                        <div className="dialogueReceiveImage">
+                        </div>
+                        <Alert className="dialogueReceiveMessage" variant="secondary">
+                            Sample Receive Message Sample
+                        </Alert>
+                    </div>
+                    <div className="block">
+                        <div className="dialogueSendImage">
+                        </div>
+                        <Alert className="dialogueSendMessage" variant="success">
+                            Sample Send Message
+                        </Alert>
+                    </div>
+                    <div className="block">
+                        <div className="dialogueReceiveImage">
+                        </div>
+                        <Alert className="dialogueReceiveMessage" variant="secondary">
+                            Sample Receive Message 2
+                        </Alert>
+                    </div>
+                    <div className="block">
+                        <div className="dialogueSendImage">
+                        </div>
+                        <Alert className="dialogueSendMessage" variant="success">
+                            Sample Send Message 2
+                        </Alert>
+                    </div>
+                    <div className="block">
+                        <div className="dialogueReceiveImage">
+                        </div>
+                        <Alert className="dialogueReceiveMessage" variant="secondary">
+                            Sample Receive Message 3
+                        </Alert>
+                    </div>
+                    <div className="block">
+                        <div className="dialogueSendImage">
+                        </div>
+                        <Alert className="dialogueSendMessage" variant="success">
+                            Sample Send Message 3
+                        </Alert>
+                    </div>
                 </div>
                 <div className="messageBar">
                     <Form.Control as="textarea" cols={120} rows={4} className="FriendText" size="lg" onChange={this.handleChange}/>

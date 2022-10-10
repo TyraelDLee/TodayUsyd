@@ -17,7 +17,8 @@
 }
 
 .singlePost {
-    height: 200px;
+    margin:30px 0;
+    height: 300px;
     border: 0.8px solid gray;
     border-radius: 20px;
 }
@@ -32,7 +33,25 @@
 }
 
 .profileUserName{
+    border: 0.8px solid gray;
     float: left;
+    width: 250px;
     margin: 20px;
     font-size: 20px;
+}
+
+.profileTitle {
+    border: 0.8px solid gray;
+    float: left;
+    width: 500px;
+    margin: 30px;
+    font-size: 30px;
+}
+
+.profileDate {
+    float: left;
+    width: 160px;
+    margin: 40px 0;
+    font-size: 14px;
+    color: gray;
 }

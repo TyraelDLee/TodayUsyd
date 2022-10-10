@@ -1,11 +1,15 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Post;
+import com.example.demo.service.FileService;
 import com.example.demo.service.PostService;
-import com.example.demo.service.UserProfileService;
 import com.example.demo.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -15,6 +19,9 @@ import java.util.List;
 public class PostController {
     @Autowired
     private PostService postService;
+
+    @Autowired
+    private FileService fileService;
 
     @GetMapping("/getAllPostsByType")
     public Result findAllPost(@RequestParam("type") String type) {
@@ -27,8 +34,20 @@ public class PostController {
     }
 
     @PostMapping("/createPost")
-    public Result createPost(@RequestParam("userID") String userID, @RequestParam("type") String type, @RequestParam("category") String category, @RequestParam("title") String title, @RequestParam("details") String details) {
-        return new Result(postService.savePost(new Post(userID, type, category, title, details)));
+    public Result createPost(@RequestParam("userID") String userID,
+                             @RequestParam("type") String type, @RequestParam("category") String category,
+                             @RequestParam("title") String title, @RequestParam("details") String details,
+                             @RequestParam("file") MultipartFile file) {
+        Post post = postService.savePost(new Post(userID, type, category, title, details));
+        String postID = post.getPostID();
+        String message = "";
+        try {
+            fileService.storeFile(file, postID);
+            message = "Uploaded the file successfully: " + file.getOriginalFilename();
+        } catch (Exception e) {
+            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+        }
+        return new Result(200, message, post);
     }
 
     @PutMapping("/updatePost")

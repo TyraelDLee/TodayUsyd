@@ -9,5 +9,5 @@ public interface UserProfileDao extends JpaRepository<UserProfile,String> {
      * @param userId
      * @return
      */
-    UserProfile findUserProfleByUserid(String userId);
+    UserProfile findUserProfileByUserid(String userId);
 }

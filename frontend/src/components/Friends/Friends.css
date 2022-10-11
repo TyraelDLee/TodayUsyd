@@ -42,6 +42,11 @@
     margin-left: 20.5%;
     height: 65vh;
     border-bottom: solid 0.8px #dee2e6;
+    overflow-y: scroll;
+}
+
+.dialogueBar::-webkit-scrollbar {
+    display: none;
 }
 
 .messageBar {
@@ -64,4 +69,42 @@
     height: 50px;
     width: 80px;
     font-size: 20px;
+}
+
+.topspace{
+    height: 50px;
+}
+
+.block{
+    overflow: auto;
+}
+
+.dialogueReceiveImage{
+    float: left;
+    height: 60px;
+    width: 60px;
+    border: 0.8px solid gray;
+    border-radius: 50%;
+    margin:0 20px 50px 40px;
+}
+
+.dialogueReceiveMessage{
+    float: left;
+    margin: 0 20px 50px 20px;
+    max-width:79%;
+}
+
+.dialogueSendMessage{
+    float: right;
+    margin: 0 20px 50px 20px;
+    max-width:79%;
+}
+
+.dialogueSendImage{
+    float: right;
+    height: 60px;
+    width: 60px;
+    border: 0.8px solid gray;
+    border-radius: 50%;
+    margin:0 40px 50px 20px;
 }

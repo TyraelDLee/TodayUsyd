@@ -4,11 +4,13 @@ import com.example.demo.entity.Comment;
 import com.example.demo.entity.Notice;
 import com.example.demo.entity.Post;
 import com.example.demo.entity.Take;
+import com.example.demo.service.FileService;
 import com.example.demo.service.PostService;
 import com.example.demo.service.TakeService;
 import com.example.demo.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -23,6 +25,8 @@ public class PostController {
     private PostService postService;
     @Autowired
     private TakeService takeService;
+    @Autowired
+    private FileService fileService;
 
     /**
      * 获取最新的帖子

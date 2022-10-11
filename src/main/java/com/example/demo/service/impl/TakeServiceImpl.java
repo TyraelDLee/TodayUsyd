@@ -19,4 +19,9 @@ public class TakeServiceImpl implements TakeService {
     public List<Take> findTakeByTakeuserid(String takeuserid) {
         return takeDao.findTakeByTakeuserid(takeuserid);
     }
+
+    @Override
+    public List<Take> findTakeByUserid(String userid) {
+        return takeDao.findTakeByUserid(userid);
+    }
 }

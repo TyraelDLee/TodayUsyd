@@ -768,7 +768,7 @@ module.exports = function (webpackEnv) {
               {},
               {
                 inject: true,
-                template: paths.appCourseHtml,
+                template: paths.appSearchHtml,
                 filename: 'search.html',
                 chunks: ['search']
               },
@@ -795,7 +795,7 @@ module.exports = function (webpackEnv) {
               {},
               {
                 inject: true,
-                template: paths.appCourseHtml,
+                template: paths.appDynamicHtml,
                 filename: 'dynamic.html',
                 chunks: ['dynamic']
               },

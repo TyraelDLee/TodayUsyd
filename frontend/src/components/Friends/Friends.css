@@ -1,0 +1,110 @@
+.friendsBar {
+    float: left;
+    position: fixed;
+    width:18%;
+    height: 100vh;
+    overflow-y: scroll;
+    border-right: solid 0.8px #dee2e6;
+}
+
+.friendsBar::-webkit-scrollbar {
+    display: none;
+}
+
+.friend {
+    height: 120px;
+    border-bottom: solid 0.8px #dee2e6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.friendImage {
+    margin: 30px 20px 30px 20px;
+    height: 80px;
+    width: 80px;
+    border: 0.8px solid gray;
+    border-radius: 50%;
+}
+
+.friendName {
+    margin: 30px auto;
+    font-size: 18px;
+}
+
+.friend:hover{
+    background-color: #e5e5e5;
+    cursor: pointer;
+}
+
+.dialogueBar {
+    margin-left: 20.5%;
+    height: 65vh;
+    border-bottom: solid 0.8px #dee2e6;
+    overflow-y: scroll;
+}
+
+.dialogueBar::-webkit-scrollbar {
+    display: none;
+}
+
+.messageBar {
+    position: fixed;
+    margin-left: 20.7%;
+    height: 35vh;
+}
+
+.FriendText{
+    margin: 40px 40px 20px 15px;
+    resize: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sendButton{
+    float: right;
+    margin: 10px -15px 0 0;
+    height: 50px;
+    width: 80px;
+    font-size: 20px;
+}
+
+.topspace{
+    height: 50px;
+}
+
+.block{
+    overflow: auto;
+}
+
+.dialogueReceiveImage{
+    float: left;
+    height: 60px;
+    width: 60px;
+    border: 0.8px solid gray;
+    border-radius: 50%;
+    margin:0 20px 50px 40px;
+}
+
+.dialogueReceiveMessage{
+    float: left;
+    margin: 0 20px 50px 20px;
+    max-width:79%;
+}
+
+.dialogueSendMessage{
+    float: right;
+    margin: 0 20px 50px 20px;
+    max-width:79%;
+}
+
+.dialogueSendImage{
+    float: right;
+    height: 60px;
+    width: 60px;
+    border: 0.8px solid gray;
+    border-radius: 50%;
+    margin:0 40px 50px 20px;
+}

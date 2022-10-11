@@ -6,7 +6,6 @@ public enum FilterType {
     adminUSer(2,"Admin用户");
 
 
-
     private final int type;
     private final String desc;
 

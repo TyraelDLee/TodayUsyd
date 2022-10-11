@@ -3,16 +3,25 @@ import './colour.css'
 import React from "react";
 
 class Filter extends React.Component{
+    constructor(props) {
+        super(props);
+    }
+
     componentDidMount() {
-        let selectedCourse = '', selectedCode='';
+        const marketCat = {'Book Market':[],'Cars':[],'Careers':[],'Rental':[],'Services':[]};
+        const type = this.props.type;
+        let selectedCat = '', selectedCode='';
 
         new MutationObserver(()=>{
-            selectedCourse = new URLSearchParams(window.location["search"]).get("category");
-            selectedCode = new URLSearchParams(window.location["search"]).get("course");
-            if (typeof selectedCourse === 'undefined' || selectedCourse === null)
-                selectedCourse = '';
-            if (typeof selectedCode === 'undefined' || selectedCode === null)
-                selectedCode = '';
+            selectedCat = new URLSearchParams(window.location["search"]).get("category");
+            if (typeof selectedCat === 'undefined' || selectedCat === null)
+                selectedCat = '';
+
+            if(type === 'course'){
+                selectedCode = new URLSearchParams(window.location["search"]).get("course");
+                if (typeof selectedCode === 'undefined' || selectedCode === null)
+                    selectedCode = '';
+            }
         }).observe(document, {subtree: true, childList: true});
 
         async function loadClassList(){
@@ -22,7 +31,13 @@ class Filter extends React.Component{
             getCourseCode(courseList);
         }
 
-        loadClassList();
+        function loadMarketCat(){
+            renderArea(marketCat);
+            document.getElementsByClassName('filter-loading')[0].setAttribute('style', 'display: none;');
+        }
+
+        if (type==='course')loadClassList();
+        if (type==='market')loadMarketCat();
 
         function getCourseList(start, size) {
             return fetch(`./requestClassList?startRank=${start}&rankSize=${size}`, {
@@ -64,13 +79,13 @@ class Filter extends React.Component{
                     window.history.pushState(null,null,window.location['pathname']+`?category=${area}`);
                     renderCode(courses[area]);
                 });
-                if (areaNode.innerText === selectedCourse)
+                if (areaNode.innerText === selectedCat)
                     areaNode.classList.add('area-item-select');
 
                 document.getElementsByClassName('area')[0].appendChild(areaNode);
             }
-            //document.getElementsByClassName('area-item')[0].classList.add('area-item-select');
-            renderCode(selectedCourse===''?courses[document.getElementsByClassName('area-item')[0].innerText]:courses[selectedCourse]);
+            if (type==='course')
+                renderCode(selectedCat===''?courses[document.getElementsByClassName('area-item')[0].innerText]:courses[selectedCat]);
         }
 
         function renderCode(area){

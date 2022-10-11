@@ -52,7 +52,7 @@ class Navbar extends React.Component {
                 }
                 for (let i = 0; i < searchButton.length; i++) {
                     searchButton[i].addEventListener('click', ()=>{
-                        window.location.href = `./search?keyword=${inputString}`;
+                        window.location.href = `./search.html?keyword=${inputString}`;
                     });
                 }
             }
@@ -133,7 +133,7 @@ class Navbar extends React.Component {
                 .then(json=>{
                     if (json['code']===200){
                         userPortal.innerHTML = `<a href="./userprofile" className="user-name popup-item" style="margin-top: 25px; font-weight: bold">${json['object']['username']}</a>
-                            <a href="./" className="user-home popup-item" style="margin-top: 5px">Home</a>
+                            <a href="./dynamic.html" className="user-home popup-item" style="margin-top: 5px">Dynamic</a>
                             <a href="./friends.html" className="user-friends popup-item">Friends</a>
                             <a href="./history.html" className="user-history popup-item">History</a>
                             <a href="./setting.html" className="user-setting popup-item">Setting</a>
@@ -171,7 +171,7 @@ class Navbar extends React.Component {
                 </div>
                 <div className="nav-bar-search">
                     <div className="nav-search-container">
-                        <form className="search-form" action='./search'>
+                        <form className="search-form" action='./search.html'>
                             <div className="search-form-input">
                                 <input type="text" maxLength="60" placeholder="Search" id="nav-search" name="keyword"/>
                             </div>

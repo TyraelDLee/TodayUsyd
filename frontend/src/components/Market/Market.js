@@ -45,7 +45,7 @@ class Market extends Component {
         return(
             <div>
                 <Navbar />
-                <Filter/>
+                <Filter type={'market'}/>
                 <div className="MarketPost">
                     {this.state.showPost ?
                         <div>
@@ -54,6 +54,9 @@ class Market extends Component {
                         </div> :
                         <Button variant="outline-dark" onClick={this.onClickOpenPost} className="button">Add Post</Button>
                     }
+                    {/* Item added postId. i.e.
+                    <Item userFace=img_URL postId=POST_ID postTitle=title postCat=Cat postBody=Body postLike=0/>
+                    */}
                     <Item userFace={avatar} userName={'Name'} postTitle={'test'} postCat={'ELEC5619'} postBody={'post body'} postLike={'0'}/>
                     <div className="postlist">
                         <div className="singlePost">

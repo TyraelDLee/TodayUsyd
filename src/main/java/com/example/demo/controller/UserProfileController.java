@@ -113,7 +113,7 @@ public class UserProfileController {
         return result;
     }
 
-    //-----------------friend模块start---------------------------------
+    //-----------------friend模块end---------------------------------
 
     //-----------------History模块start---------------------------------
 
@@ -264,5 +264,5 @@ public class UserProfileController {
         return bytes;
     }
 
-    //-----------------Setting模块start---------------------------------
+    //-----------------Setting模块end---------------------------------
 }

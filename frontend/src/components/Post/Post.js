@@ -9,6 +9,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Alert from 'react-bootstrap/Alert';
+import Modal from 'react-bootstrap/Modal';
 
 class Post extends Component {
     constructor(props){
@@ -31,7 +32,7 @@ class Post extends Component {
     }
 
     handleClickSave = () => {
-        const { category, title, details } = this.state;
+        const { category, title, details, selectedFile } = this.state;
         const { type } = this.props;
         if (category.length !== 0 && title.length !== 0 && details.length !== 0){
             var formData = new FormData();
@@ -40,6 +41,7 @@ class Post extends Component {
             formData.append("category", category);
             formData.append("title", title);
             formData.append("details", details);
+            formData.append("file", selectedFile);
 
             fetch('./Post/createPost', {
                 method: 'POST',

@@ -19,9 +19,6 @@ class Friends extends Component {
         element.scrollTop = element.scrollHeight;
     }
 
-    handleClickSendMessage = () => {
-    }
-
     render() {
         return(
             <div>

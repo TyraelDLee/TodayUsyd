@@ -1,9 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Comment;
-import com.example.demo.entity.Notice;
-import com.example.demo.entity.Post;
-import com.example.demo.entity.Take;
+import com.example.demo.entity.*;
 import com.example.demo.service.FileService;
 import com.example.demo.service.PostService;
 import com.example.demo.service.TakeService;
@@ -221,13 +218,23 @@ public class PostController {
     }
 
     @PutMapping("/updatePostInvisible")
-    public Result updatePostInvisible(@RequestParam("postID") String postID) {
-        return new Result(postService.updatePostInvisible(postID));
+    public Result updatePostInvisible(@RequestParam("postID") String postID,@ModelAttribute User user) {
+        if (user!=null) {
+            if (user.getUserAuth() == 2) {
+                return new Result(postService.updatePostInvisible(postID));
+            } else return new Result("The user is not admin and does not have right to set the post invisaible");
+        }
+        return new Result("The user has not login");
     }
 
     @PutMapping("/updatePostIsTop")
-    public Result updateThePostTop(@RequestParam("postID") String postID) {
-        return new Result(postService.updatePostTop(postID));
+    public Result updateThePostTop(@RequestParam("postID") String postID,@ModelAttribute User user) {
+        if (user!=null) {
+            if (user.getUserAuth() == 2) {
+                return new Result(postService.updatePostTop(postID));
+            } else return new Result("The user is not admin and does not have right to set the post top");
+        }
+        return new Result("The user has not login");
     }
 
     @PutMapping("/likeThePost")
@@ -242,6 +249,4 @@ public class PostController {
     public Result deleteThePost(@RequestParam("postID") String postID) {
         return new Result(postService.deletePostById(postID));
     }
-
-
 }

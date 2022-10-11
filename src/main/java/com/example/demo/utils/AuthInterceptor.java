@@ -1,5 +1,4 @@
 package com.example.demo.utils;
-
 import com.example.demo.dao.UserDao;
 import com.example.demo.entity.User;
 import org.json.JSONObject;
@@ -12,7 +11,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
-
 @Configuration
 public class AuthInterceptor implements AsyncHandlerInterceptor {
     @Autowired
@@ -21,13 +19,13 @@ public class AuthInterceptor implements AsyncHandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Auth filterAnnotation = handlerMethod.getMethod().getAnnotation(Auth.class);
-        if(filterAnnotation==null){//没有加注解的权限
+        if(filterAnnotation==null){
             return true;
         }
-        if(filterAnnotation.type().equals(FilterType.anno)){//开放权限
+        if(filterAnnotation.type().equals(FilterType.anno)){
             return true;
         }
-        if(filterAnnotation.type().equals(FilterType.normalUser)){//普通用户权限
+        if(filterAnnotation.type().equals(FilterType.normalUser)){
             request.setCharacterEncoding("UTF-8");
             response.setCharacterEncoding("UTF-8");
             String userid =  getCookieUserId(request);
@@ -38,7 +36,7 @@ public class AuthInterceptor implements AsyncHandlerInterceptor {
             }
             JSONObject res = new JSONObject();
             res.put("success", false);
-            res.put("message", "用户未登录");
+            res.put("message", "The user has not login");
             PrintWriter out = response.getWriter();
             out.append(res.toString());
             return false;
@@ -54,7 +52,7 @@ public class AuthInterceptor implements AsyncHandlerInterceptor {
                 if(user.getUserAuth()==2) {
                     JSONObject res = new JSONObject();
                     res.put("success", true);
-                    res.put("message", "该用户是管理员");
+                    res.put("message", "The user is admin");
                     PrintWriter out = response.getWriter();
                     out.append(res.toString());
                     return true;
@@ -62,7 +60,7 @@ public class AuthInterceptor implements AsyncHandlerInterceptor {
                 else{
                     JSONObject res = new JSONObject();
                     res.put("success", false);
-                    res.put("message", "该用户是普通用户");
+                    res.put("message", "The uder is normal user");
                     PrintWriter out = response.getWriter();
                     out.append(res.toString());
                     return false;
@@ -70,7 +68,7 @@ public class AuthInterceptor implements AsyncHandlerInterceptor {
             }
             JSONObject res = new JSONObject();
             res.put("success", false);
-            res.put("message", "用户未登录");
+            res.put("message", "The user has not login");
             PrintWriter out = response.getWriter();
             out.append(res.toString());
             return false;
@@ -90,9 +88,4 @@ public class AuthInterceptor implements AsyncHandlerInterceptor {
         return "";
     }
 
-
-
-
-
 }
-

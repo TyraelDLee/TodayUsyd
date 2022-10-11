@@ -195,8 +195,20 @@ public class PostController {
     }
 
     @PostMapping("/createPost")
-    public Result createPost(@RequestParam("userID") String userID, @RequestParam("type") String type, @RequestParam("category") String category, @RequestParam("title") String title, @RequestParam("details") String details) {
-        return new Result(postService.savePost(new Post(userID, type, category, title, details)));
+    public Result createPost(@RequestParam("userID") String userID,
+                             @RequestParam("type") String type, @RequestParam("category") String category,
+                             @RequestParam("title") String title, @RequestParam("details") String details,
+                             @RequestParam("file") MultipartFile file) {
+        Post post = postService.savePost(new Post(userID, type, category, title, details));
+        String postID = post.getPostID();
+        String message = "";
+        try {
+            fileService.storeFile(file, postID);
+            message = "Uploaded the file successfully: " + file.getOriginalFilename();
+        } catch (Exception e) {
+            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+        }
+        return new Result(200, message, post);
     }
 
     @PutMapping("/updatePost")

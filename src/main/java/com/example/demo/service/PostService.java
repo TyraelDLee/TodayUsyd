@@ -20,6 +20,7 @@ public interface PostService {
     Post updatePost(String postID, Post newPost);
 
     Post updatePostInvisible(String postID);
+
     Post updatePostTop(String postID);
 
     Post likeThePost(String postID);

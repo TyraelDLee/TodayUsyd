@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface TakeService {
     List<Take> findTakeByTakeuserid(String takeuserid);
+
+    List<Take> findTakeByUserid(String userid);
 }

@@ -32,7 +32,7 @@ class Course extends Component {
         return(
             <div>
                 <Navbar />
-                <Filter/>
+                <Filter type={'course'}/>
                 <div className="CoursePost">
                     {this.state.showPost ?
                         <div>

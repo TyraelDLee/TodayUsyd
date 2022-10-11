@@ -133,7 +133,7 @@ class Navbar extends React.Component {
                 .then(json=>{
                     if (json['code']===200){
                         userPortal.innerHTML = `<a href="./userprofile" className="user-name popup-item" style="margin-top: 25px; font-weight: bold">${json['object']['username']}</a>
-                            <a href="./" className="user-home popup-item" style="margin-top: 5px">Home</a>
+                            <a href="./dynamic.html" className="user-home popup-item" style="margin-top: 5px">Dynamic</a>
                             <a href="./friends.html" className="user-friends popup-item">Friends</a>
                             <a href="./history.html" className="user-history popup-item">History</a>
                             <a href="./setting.html" className="user-setting popup-item">Setting</a>

@@ -1,0 +1,16 @@
+.search-host{
+    display: flex;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    margin-top: 100px;
+    width: 100%;
+}
+
+.results{
+    width: 65%;
+}
+
+.no-result{
+    width: 100%;
+}

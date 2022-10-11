@@ -20,7 +20,6 @@ public interface PostService {
     Post updatePost(String postID, Post newPost);
 
     Post updatePostInvisible(String postID);
-
     Post updatePostTop(String postID);
 
     Post likeThePost(String postID);
@@ -40,6 +39,8 @@ public interface PostService {
     int takeuser(Take take);
 
     int saveNotice(Notice notice);
+
+    int updateNotice(String noticeId);
 
     List<Notice> findNoticeByUserid(String userid);
 }

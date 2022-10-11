@@ -4,12 +4,15 @@ import Navbar from "./Navbar";
 import Item from "./components/SearchItem/Item";
 import React from "react";
 import ReactDOM from "react-dom/client";
+import avatar from './avatar.svg';
 
 class Search extends React.Component{
 
     constructor(props) {
         super(props);
-        this.posts = [];
+        this.state = {
+            posts : []
+        };
     }
 
     componentDidMount() {
@@ -20,6 +23,16 @@ class Search extends React.Component{
         }).then(r=>r.json())
             .then(json=>{
                if (json['code']===200){
+                   if (json['object'].length>0){
+
+                       this.setState({
+                           posts: json['object']
+                       });
+                   }else{
+                       document.getElementsByClassName('results')[0].innerHTML += `
+                       <div class="no-result">There no result for <b>${new URLSearchParams(window.location["search"]).get("keyword")}</b></div>`;
+                       // no result found here.
+                   }
                }
             })
     }
@@ -27,9 +40,11 @@ class Search extends React.Component{
     render() {
         return(
             <main>
-                <Navbar/>
-                <div className={'search-host'}>
 
+                <div className={'search-host'}>
+                    <div className={'results'}>
+                        {this.state.posts.map((post)=> <Item userFace={avatar} userName={post['userId']} postId={post['postID']} postTitle={post['title']} postCat={post['category']} postBody={post['details']} postLike={post['numOfLikes']}></Item>)}
+                    </div>
                 </div>
             </main>
         );
@@ -40,6 +55,7 @@ class Search extends React.Component{
 const root = ReactDOM.createRoot(document.getElementsByTagName('body')[0]);
 root.render(
     <React.StrictMode>
+        <Navbar/>
         <Search/>
     </React.StrictMode>
 );

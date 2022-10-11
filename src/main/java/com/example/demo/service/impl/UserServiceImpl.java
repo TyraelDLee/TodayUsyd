@@ -66,12 +66,12 @@ public class UserServiceImpl implements UserService {
         return 1;
 
     }
-    
+
     @Override
     public User queryUserByUserid(String userid) {
-        return userDao.findById(userid).get();
+        return userDao.getUserByUserid(userid);
     }
-    
+
     @Override
     public int updateUser(User user) {
         User us = userDao.save(user);

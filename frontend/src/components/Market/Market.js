@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/Button';
 import Post from './../Post/Post';
 import Item from './../SearchItem/Item';
 import avatar from './../../avatar.svg';
+import axios from 'axios';
 
 class Market extends Component {
     constructor(props){
@@ -19,13 +20,16 @@ class Market extends Component {
     }
 
     componentDidMount(){
-        fetch('http://localhost:8085/Post/getAllPostsByType?type=course', {
+        axios.get('http://localhost:8085/Post/getAllPostsByType?type=course').then((response) => {
+            console.log(response.data)
+        })
+        /*fetch('http://localhost:8085/Post/getAllPostsByType?type=course', {
         }).then(
             response => response.json()
         ).then(data => data.object 
         ).then(object => object.map(
             (post) => post.userId)
-        );
+        );*/
     }
 
     onClickOpenPost = () => {

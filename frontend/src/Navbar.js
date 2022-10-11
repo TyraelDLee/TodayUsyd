@@ -191,7 +191,7 @@ class Navbar extends React.Component {
                 <div className="nav-bar-right">
                     <div className="nav-user">
                         <div className="nav-user-icon icon-small">
-                            <a href="./userprofile.html" target="_blank">
+                            <a href="./userprofile.html">
                                 <img src={testAvatar}/>
                             </a>
                         </div>

@@ -14,8 +14,8 @@ public class UserProfileServiceImpl implements UserProfileService {
     
     
     @Override
-    public UserProfile findUserProfleByUserid(String userId) {
-        return userProfileDao.findUserProfleByUserid(userId);
+    public UserProfile findUserProfileByUserid(String userId) {
+        return userProfileDao.findUserProfileByUserid(userId);
     }
     
     @Override

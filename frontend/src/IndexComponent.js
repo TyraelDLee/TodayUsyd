@@ -102,12 +102,6 @@ class IndexComponent extends React.Component{
                     </div>
                 </section>
                 <section>
-                    <React.Fragment>
-                        <Item userFace={avatar} userName={'Name'} postTitle={'test'} postCat={'ELEC5619'} postBody={'post body'} postLike={'0'}/>
-                        <Item userFace={avatar} userName={'Name'} postTitle={'test'} postCat={'ELEC5619'} postBody={'post body'} postLike={'0'}/>
-                        <Item userFace={avatar} userName={'Name'} postTitle={'test'} postCat={'ELEC5619'} postBody={'post body'} postLike={'0'}/>
-                        <Item userFace={avatar} userName={'Name'} postTitle={'test'} postCat={'ELEC5619'} postBody={'post body'} postLike={'0'}/>
-                    </React.Fragment>
                 </section>
             </main>
         );

@@ -52,7 +52,7 @@ class Navbar extends React.Component {
                 }
                 for (let i = 0; i < searchButton.length; i++) {
                     searchButton[i].addEventListener('click', ()=>{
-                        window.location.href = `./search?keyword=${inputString}`;
+                        window.location.href = `./search.html?keyword=${inputString}`;
                     });
                 }
             }
@@ -171,7 +171,7 @@ class Navbar extends React.Component {
                 </div>
                 <div className="nav-bar-search">
                     <div className="nav-search-container">
-                        <form className="search-form" action='./search'>
+                        <form className="search-form" action='./search.html'>
                             <div className="search-form-input">
                                 <input type="text" maxLength="60" placeholder="Search" id="nav-search" name="keyword"/>
                             </div>

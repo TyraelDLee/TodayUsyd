@@ -32,6 +32,8 @@ public interface PostService {
 
     List<Post> findPostByTitle(String title);
 
+    List<Post> findPostByUserId(String uid);
+
     int saveComment(Comment comment);
 
     List<Comment> findLatestPostComment();

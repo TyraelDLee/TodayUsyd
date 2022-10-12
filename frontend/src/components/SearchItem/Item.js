@@ -34,7 +34,7 @@ class Item extends React.Component{
                     <div className={'post-item-title-host'}>
                         <div className={'post-item-title'}>{this.props.postTitle}</div>
                         {/*searched Title*/}
-                        <div className={'post-item-cat'}>{this.props.postCat}</div>
+                        <div className={'post-item-cat'}>Category: {this.props.postCat} {typeof this.props.postDate==='undefined'?'':' Post Date: '+this.props.postDate}</div>
                         {/*category*/}
                     </div>
                     <div className={'post-item-body'}>

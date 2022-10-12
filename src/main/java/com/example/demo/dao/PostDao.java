@@ -9,6 +9,8 @@ import java.util.List;
 public interface PostDao extends CrudRepository<Post, String> {
     List<Post> findByType(String type);
     List<Post> findByCategory(String category);
+
+    List<Post> findByUserid(String userid);
     @Query(value = "select postid,category,created_time,details,istop,isvisible,num_of_likes,title,type,userid from post order by created_time desc",nativeQuery = true)
     List<Post> findLatestPost();
 

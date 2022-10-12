@@ -71,6 +71,23 @@ public class PostController {
         return result;
     }
 
+    /**
+     * Get the all posts send by the given userID.
+     *
+     * @param userid the given UID.
+     * @return the REST result with the list of posts from database
+     * */
+    @GetMapping("/findPostById")
+    public Result findPostById(String userid){
+        Result result = new Result();
+        List<Post> posts = postService.findPostByUserId(userid);
+        if(posts == null){
+            posts = new ArrayList<>();
+        }
+        result.setObject(posts);
+        return result;
+    }
+
 
     /**
      * 保存用户对帖子的评论

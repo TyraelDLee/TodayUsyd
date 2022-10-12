@@ -1,0 +1,12 @@
+.dynamic-body{
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.dynamic-host{
+    width: 65%;
+}

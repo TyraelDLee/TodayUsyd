@@ -43,7 +43,7 @@ class Search extends React.Component{
 
                 <div className={'search-host'}>
                     <div className={'results'}>
-                        {this.state.posts.map((post)=> <Item userFace={avatar} userName={post['userId']} postId={post['postID']} postTitle={post['title']} postCat={post['category']} postBody={post['details']} postLike={post['numOfLikes']}></Item>)}
+                        {this.state.posts.map((post)=> <Item userFace={avatar} userName={post['userId']} postId={post['postID']} postTitle={post['title']} postCat={post['category']} postBody={post['details']} postLike={post['numOfLikes']} postDate={post['createdTime']}></Item>)}
                     </div>
                 </div>
             </main>

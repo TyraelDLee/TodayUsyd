@@ -107,6 +107,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public List<Post> findPostByUserId(String uid) {
+        return postDao.findByUserid(uid);
+    }
+
+    @Override
     public int saveComment(Comment comment) {
         Comment entity = commentDao.save(comment);
         if(entity != null){

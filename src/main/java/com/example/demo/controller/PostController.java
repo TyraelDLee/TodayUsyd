@@ -35,10 +35,11 @@ public class PostController {
 
     @PostMapping("/createPost")
     public Result createPost(@RequestParam("userID") String userID,
+                             @RequestParam("userName") String userName,
                              @RequestParam("type") String type, @RequestParam("category") String category,
                              @RequestParam("title") String title, @RequestParam("details") String details,
                              @RequestParam("file") MultipartFile file) {
-        Post post = postService.savePost(new Post(userID, type, category, title, details));
+        Post post = postService.savePost(new Post(userID, userName, type, category, title, details));
         String postID = post.getPostID();
         String message = "";
         try {

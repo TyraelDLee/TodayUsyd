@@ -39,12 +39,12 @@ public class UserProfileController {
     private PostsHistoryService postsHistoryService;
     @Autowired
     private ChatRecordService chatRecordService;
-    
+
     @Value("${upload.path}")
     private String uploadPath;//此路径为文件上传路径，可根据实际部署路径进行更换
-    
+
     //-----------------home模块start---------------------------------
-    
+
     /**
      * 根据用户id返回用户的详细信息（用户名，照片地址，个人描述，地址）
      * @param userid 用户id
@@ -61,11 +61,11 @@ public class UserProfileController {
         result.setObject(userProfile);
         return result;
     }
-    
+
     //-----------------home模块end---------------------------------
-    
+
     //-----------------friend模块start---------------------------------
-    
+
     /**
      * 获取聊天记录列表（根据创建时间倒叙）
      * @param fromuser 发送者用户id
@@ -76,7 +76,7 @@ public class UserProfileController {
     @ResponseBody
     public Result recordList(String fromuser,String touser) {
         Result result = new Result();
-        
+
         List<ChatRecord> recordList = chatRecordService.findRecordListById(fromuser,touser);
         if(recordList == null){
             recordList = new ArrayList<>();
@@ -84,7 +84,7 @@ public class UserProfileController {
         result.setObject(recordList);
         return result;
     }
-    
+
     /**
      * 保存聊天记录
      * @param fromuser 发送者用户id
@@ -103,20 +103,20 @@ public class UserProfileController {
         record.setContent(content);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         record.setCreatetime(sdf.format(new Date()));
-        
+
         int rows = chatRecordService.saveInfo(record);
         if(rows != 1){
             result.setCode(500);
             result.setMsg("操作失败，保存聊天记录失败");
         }
-        
+
         return result;
     }
-    
+
     //-----------------friend模块end---------------------------------
-    
+
     //-----------------History模块start---------------------------------
-    
+
     /**
      * 查看帖子观看记录
      * @param userid 用户id
@@ -133,7 +133,7 @@ public class UserProfileController {
         result.setObject(postsList);
         return result;
     }
-    
+
     /**
      * 保存帖子观看记录
      * @param userid 用户id
@@ -157,11 +157,11 @@ public class UserProfileController {
         }
         return result;
     }
-    
+
     //-----------------History模块end---------------------------------
-    
+
     //-----------------Setting模块start---------------------------------
-    
+
     /**
      * 更新用户信息
      * @param userid 用户id
@@ -182,18 +182,18 @@ public class UserProfileController {
             result.setObject("操作失败，获取用户信息失败");
             return result;
         }
-        
+
         UserProfile userProfile = userProfileService.findUserProfileByUserid(userid);
         if(userProfile == null){
-            result.setCode(500);
-            result.setObject("操作失败，获取用户详细信息失败");
-            return result;
+            userProfile = new UserProfile();
+            userProfile.setId(UUID.randomUUID().toString());
+            userProfile.setUserid(userid);
         }
-        
+
         user.setUsername(username);
         user.setUserpwd(userpwd);
         int r1 = userService.updateUser(user);
-        
+
         if(r1 != 1){
             result.setCode(500);
             result.setObject("操作失败，更新用户信息失败");
@@ -204,7 +204,7 @@ public class UserProfileController {
         userProfile.setAddress(address);
         userProfile.setImgurl(imgurl);
         int r2 = userProfileService.updateInfo(userProfile);
-        
+
         if(r2 != 1){
             result.setCode(500);
             result.setObject("操作失败，更新用户详细信息失败");
@@ -212,7 +212,7 @@ public class UserProfileController {
         }
         return result;
     }
-    
+
     /**
      * 上传个人照片（目前支持JPG,PNG格式）
      * 上传成功会返回照片文件所在的绝对路径
@@ -238,10 +238,10 @@ public class UserProfileController {
             result.setCode(500);
             result.setMsg("上传失败，"+e.getMessage());
         }
-        
+
         return result;
     }
-    
+
     /**
      * 查看个人照片（目前支持JPG,PNG格式）
      * @param userid 用户id
@@ -263,6 +263,6 @@ public class UserProfileController {
         }
         return bytes;
     }
-    
+
     //-----------------Setting模块end---------------------------------
 }

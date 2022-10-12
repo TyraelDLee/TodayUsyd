@@ -141,4 +141,18 @@ public class PostServiceImpl implements PostService {
         return 0;
     }
 
+    @Override
+    public int updateNotice(String noticeId) {
+        Notice notice = noticeDao.findById(noticeId).get();
+        if(notice == null || notice.getId() == null){
+            return 0;
+        }
+        notice.setIsread(1);
+        Notice entity = noticeDao.save(notice);
+        if(entity != null){
+            return 1;
+        }
+        return 0;
+    }
+
 }

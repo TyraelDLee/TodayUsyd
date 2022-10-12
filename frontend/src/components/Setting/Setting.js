@@ -1,7 +1,6 @@
 import React, { Component, useCallback, useState } from "react";
 import './Setting.css'
 import Form from 'react-bootstrap/Form';
-import Cropper from 'react-easy-crop'
 
 class Setting extends Component {
 /*    onCropChange = (crop) => {

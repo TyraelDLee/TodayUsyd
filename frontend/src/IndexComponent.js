@@ -4,6 +4,7 @@ import './colour.css';
 import React from "react";
 import Item from "./components/SearchItem/Item";
 import avatar from './avatar.svg';
+import Weather from "./components/Weather/Weather";
 
 class IndexComponent extends React.Component{
 
@@ -86,6 +87,7 @@ class IndexComponent extends React.Component{
                                     </svg>
                                 </div>
                             </form>
+                            <div><Weather/></div>
                             <div className="search-panel">
                             </div>
                         </div>

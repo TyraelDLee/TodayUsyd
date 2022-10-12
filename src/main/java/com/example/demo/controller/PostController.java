@@ -1,13 +1,14 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.*;
-import com.example.demo.service.FileService;
+import com.example.demo.entity.Comment;
+import com.example.demo.entity.Notice;
+import com.example.demo.entity.Post;
+import com.example.demo.entity.Take;
 import com.example.demo.service.PostService;
 import com.example.demo.service.TakeService;
 import com.example.demo.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,8 +23,6 @@ public class PostController {
     private PostService postService;
     @Autowired
     private TakeService takeService;
-    @Autowired
-    private FileService fileService;
 
     /**
      * 获取最新的帖子
@@ -137,6 +136,38 @@ public class PostController {
     }
 
     /**
+     * 查询当前用户订阅了哪些用户
+     * @param userid 当前用户id
+     * @return
+     */
+    @RequestMapping("/findTakeuser")
+    public Result findTakeuser(String userid) {
+        Result result = new Result();
+        List<Take> takeList = takeService.findTakeByUserid(userid);
+        if(takeList == null){
+            takeList = new ArrayList<>();
+        }
+        result.setObject(takeList);
+        return result;
+    }
+
+    /**
+     * 查询当前用户订阅了被哪些用户订阅了
+     * @param userid 当前用户id
+     * @return
+     */
+    @RequestMapping("/findUserByTake")
+    public Result findUserByTake(String userid) {
+        Result result = new Result();
+        List<Take> takeList = takeService.findTakeByTakeuserid(userid);
+        if(takeList == null){
+            takeList = new ArrayList<>();
+        }
+        result.setObject(takeList);
+        return result;
+    }
+
+    /**
      * 保存关注用户发帖通知
      * @param pubuserid  发帖用户
      * @param pubusername 发帖用户名称
@@ -171,6 +202,23 @@ public class PostController {
     }
 
     /**
+     * 更新发帖通知为已读
+     * @param id 通知主键id
+     * @return
+     */
+    @RequestMapping("/updateNotice")
+    public Result updateNotice(String id) {
+        Result result = new Result();
+        int flag = postService.updateNotice(id);
+        if(flag == 0){
+            result.setCode(500);
+            result.setMsg("操作异常");
+        }
+        return result;
+    }
+
+
+    /**
      * 查找关注者发布的帖子的通知信息
      * @return
      */
@@ -196,20 +244,8 @@ public class PostController {
     }
 
     @PostMapping("/createPost")
-    public Result createPost(@RequestParam("userID") String userID,
-                             @RequestParam("type") String type, @RequestParam("category") String category,
-                             @RequestParam("title") String title, @RequestParam("details") String details,
-                             @RequestParam("file") MultipartFile file) {
-        Post post = postService.savePost(new Post(userID, type, category, title, details));
-        String postID = post.getPostID();
-        String message = "";
-        try {
-            fileService.storeFile(file, postID);
-            message = "Uploaded the file successfully: " + file.getOriginalFilename();
-        } catch (Exception e) {
-            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-        }
-        return new Result(200, message, post);
+    public Result createPost(@RequestParam("userID") String userID, @RequestParam("type") String type, @RequestParam("category") String category, @RequestParam("title") String title, @RequestParam("details") String details) {
+        return new Result(postService.savePost(new Post(userID, type, category, title, details)));
     }
 
     @PutMapping("/updatePost")
@@ -218,23 +254,13 @@ public class PostController {
     }
 
     @PutMapping("/updatePostInvisible")
-    public Result updatePostInvisible(@RequestParam("postID") String postID,@ModelAttribute User user) {
-        if (user!=null) {
-            if (user.getUserAuth() == 2) {
-                return new Result(postService.updatePostInvisible(postID));
-            } else return new Result("The user is not admin and does not have right to set the post invisaible");
-        }
-        return new Result("The user has not login");
+    public Result updatePostInvisible(@RequestParam("postID") String postID) {
+        return new Result(postService.updatePostInvisible(postID));
     }
 
     @PutMapping("/updatePostIsTop")
-    public Result updateThePostTop(@RequestParam("postID") String postID,@ModelAttribute User user) {
-        if (user!=null) {
-            if (user.getUserAuth() == 2) {
-                return new Result(postService.updatePostTop(postID));
-            } else return new Result("The user is not admin and does not have right to set the post top");
-        }
-        return new Result("The user has not login");
+    public Result updateThePostTop(@RequestParam("postID") String postID) {
+        return new Result(postService.updatePostTop(postID));
     }
 
     @PutMapping("/likeThePost")
@@ -249,4 +275,6 @@ public class PostController {
     public Result deleteThePost(@RequestParam("postID") String postID) {
         return new Result(postService.deletePostById(postID));
     }
+
+
 }

@@ -10,4 +10,7 @@ import java.util.List;
 public interface TakeDao extends JpaRepository<Take,String> {
     @Query(value = "select id,userid,takeuserid from take where takeuserid=?1",nativeQuery = true)
     List<Take> findTakeByTakeuserid(String takeuserid);
+
+    @Query(value = "select id,userid,takeuserid from take where userid=?1",nativeQuery = true)
+    List<Take> findTakeByUserid(String userid);
 }

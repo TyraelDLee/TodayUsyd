@@ -282,6 +282,16 @@ public class PostController {
         return new Result(200, message, post);
     }
 
+    /**
+     * find post by post id
+     * @param id postID
+     * @return
+     */
+    @GetMapping("/getPostByID")
+    public Result getPost(@RequestParam("postID") String postID) {
+        return new Result(postService.findPostByPostId(postID));
+    }
+
     @PutMapping("/updatePost")
     public Result updateThePost(@RequestParam("postID") String postID, @RequestParam("category") String category, @RequestParam("title") String title, @RequestParam("details") String details) {
         return new Result(postService.updatePost(postID, new Post(category, title, details)));

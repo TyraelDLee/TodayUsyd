@@ -45,9 +45,9 @@ class Post extends Component {
                 method: 'POST',
                 body: formData
             }).then(response => {
-                console.log(response);
                 if (response.ok){
-                    console.log("success");
+                    window.alert("success");
+                    window.location.reload(false)
                 } else {
                     console.log("failed");
                 }
@@ -147,7 +147,7 @@ class Post extends Component {
                 </Form.Group>
                 <div className="spacePost"></div>
                 <div className="d-grid">
-                    <Button size="lg" className="" onClick={this.handleClickSave} variant="outline-dark">Post</Button>
+                    <Button size="lg" onClick={this.handleClickSave} variant="outline-dark">Post</Button>
                 </div>
                 
                 <div className="spacePost"></div>

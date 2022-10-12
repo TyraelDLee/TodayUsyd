@@ -9,7 +9,7 @@ public interface UserProfileService {
      * @param userId
      * @return
      */
-     UserProfile findUserProfleByUserid(String userId);
+     UserProfile findUserProfileByUserid(String userId);
 
      int updateInfo(UserProfile info);
      

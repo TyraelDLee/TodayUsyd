@@ -1,11 +1,11 @@
 package com.example.demo.controller;
 
-//import com.example.demo.entity.ChatRecord;
-//import com.example.demo.entity.PostsHistory;
+import com.example.demo.entity.ChatRecord;
+import com.example.demo.entity.PostsHistory;
 import com.example.demo.entity.User;
 import com.example.demo.entity.UserProfile;
-//import com.example.demo.service.ChatRecordService;
-//import com.example.demo.service.PostsHistoryService;
+import com.example.demo.service.ChatRecordService;
+import com.example.demo.service.PostsHistoryService;
 import com.example.demo.service.UserProfileService;
 import com.example.demo.service.UserService;
 import com.example.demo.utils.Result;
@@ -35,10 +35,10 @@ public class UserProfileController {
     private UserService userService;
     @Autowired
     private UserProfileService userProfileService;
-//    @Autowired
-//    private PostsHistoryService postsHistoryService;
-//    @Autowired
-//    private ChatRecordService chatRecordService;
+    @Autowired
+    private PostsHistoryService postsHistoryService;
+    @Autowired
+    private ChatRecordService chatRecordService;
 
     @Value("${upload.path}")
     private String uploadPath;//此路径为文件上传路径，可根据实际部署路径进行更换
@@ -54,7 +54,7 @@ public class UserProfileController {
     @ResponseBody
     public Result home(String userid) {
         Result result = new Result();
-        UserProfile userProfile = userProfileService.findUserProfleByUserid(userid);
+        UserProfile userProfile = userProfileService.findUserProfileByUserid(userid);
         if(userProfile == null){
             userProfile = new UserProfile();
         }
@@ -72,18 +72,18 @@ public class UserProfileController {
      * @param touser 接收者用户id
      * @return
      */
-//    @RequestMapping("/userProfile/friend/recordList")
-//    @ResponseBody
-//    public Result recordList(String fromuser,String touser) {
-//        Result result = new Result();
-//
-//        List<ChatRecord> recordList = chatRecordService.findRecordListById(fromuser,touser);
-//        if(recordList == null){
-//            recordList = new ArrayList<>();
-//        }
-//        result.setObject(recordList);
-//        return result;
-//    }
+    @RequestMapping("/userProfile/friend/recordList")
+    @ResponseBody
+    public Result recordList(String fromuser,String touser) {
+        Result result = new Result();
+
+        List<ChatRecord> recordList = chatRecordService.findRecordListById(fromuser,touser);
+        if(recordList == null){
+            recordList = new ArrayList<>();
+        }
+        result.setObject(recordList);
+        return result;
+    }
 
     /**
      * 保存聊天记录
@@ -92,28 +92,28 @@ public class UserProfileController {
      * @param content 内容
      * @return
      */
-//    @RequestMapping("/userProfile/friend/saveRecord")
-//    @ResponseBody
-//    public Result saveRecord(String fromuser,String touser,String content) {
-//        Result result = new Result();
-//        ChatRecord record = new ChatRecord();
-//        record.setId(UUID.randomUUID().toString());
-//        record.setFromuser(fromuser);
-//        record.setTouser(touser);
-//        record.setContent(content);
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        record.setCreatetime(sdf.format(new Date()));
-//
-//        int rows = chatRecordService.saveInfo(record);
-//        if(rows != 1){
-//            result.setCode(500);
-//            result.setMsg("操作失败，保存聊天记录失败");
-//        }
-//
-//        return result;
-//    }
+    @RequestMapping("/userProfile/friend/saveRecord")
+    @ResponseBody
+    public Result saveRecord(String fromuser,String touser,String content) {
+        Result result = new Result();
+        ChatRecord record = new ChatRecord();
+        record.setId(UUID.randomUUID().toString());
+        record.setFromuser(fromuser);
+        record.setTouser(touser);
+        record.setContent(content);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        record.setCreatetime(sdf.format(new Date()));
 
-    //-----------------friend模块start---------------------------------
+        int rows = chatRecordService.saveInfo(record);
+        if(rows != 1){
+            result.setCode(500);
+            result.setMsg("操作失败，保存聊天记录失败");
+        }
+
+        return result;
+    }
+
+    //-----------------friend模块end---------------------------------
 
     //-----------------History模块start---------------------------------
 
@@ -122,17 +122,17 @@ public class UserProfileController {
      * @param userid 用户id
      * @return
      */
-//    @RequestMapping("/userProfile/history/historyList")
-//    @ResponseBody
-//    public Result historyList(String userid) {
-//        Result result = new Result();
-//        List<PostsHistory> postsList = postsHistoryService.queryListByUserid(userid);
-//        if(postsList == null){
-//            postsList = new ArrayList<>();
-//        }
-//        result.setObject(postsList);
-//        return result;
-//    }
+    @RequestMapping("/userProfile/history/historyList")
+    @ResponseBody
+    public Result historyList(String userid) {
+        Result result = new Result();
+        List<PostsHistory> postsList = postsHistoryService.queryListByUserid(userid);
+        if(postsList == null){
+            postsList = new ArrayList<>();
+        }
+        result.setObject(postsList);
+        return result;
+    }
 
     /**
      * 保存帖子观看记录
@@ -141,27 +141,27 @@ public class UserProfileController {
      * @param createtime 观看时间
      * @return
      */
-//    @RequestMapping("/userProfile/history/saveHistory")
-//    @ResponseBody
-//    public Result saveHistory(String userid,String postsname,String createtime) {
-//        Result result = new Result();
-//        PostsHistory postsHistory = new PostsHistory();
-//        postsHistory.setId(UUID.randomUUID().toString());
-//        postsHistory.setUserid(userid);
-//        postsHistory.setPostsname(postsname);
-//        postsHistory.setCreatetime(createtime);
-//        int rows = postsHistoryService.saveInfo(postsHistory);
-//        if(rows != 1){
-//            result.setCode(500);
-//            result.setMsg("操作失败，保存历史记录失败");
-//        }
-//        return result;
-//    }
-    
-    //-----------------History模块start---------------------------------
-    
+    @RequestMapping("/userProfile/history/saveHistory")
+    @ResponseBody
+    public Result saveHistory(String userid,String postsname,String createtime) {
+        Result result = new Result();
+        PostsHistory postsHistory = new PostsHistory();
+        postsHistory.setId(UUID.randomUUID().toString());
+        postsHistory.setUserid(userid);
+        postsHistory.setPostsname(postsname);
+        postsHistory.setCreatetime(createtime);
+        int rows = postsHistoryService.saveInfo(postsHistory);
+        if(rows != 1){
+            result.setCode(500);
+            result.setMsg("操作失败，保存历史记录失败");
+        }
+        return result;
+    }
+
+    //-----------------History模块end---------------------------------
+
     //-----------------Setting模块start---------------------------------
-    
+
     /**
      * 更新用户信息
      * @param userid 用户id
@@ -182,18 +182,18 @@ public class UserProfileController {
             result.setObject("操作失败，获取用户信息失败");
             return result;
         }
-        
-        UserProfile userProfile = userProfileService.findUserProfleByUserid(userid);
+
+        UserProfile userProfile = userProfileService.findUserProfileByUserid(userid);
         if(userProfile == null){
-            result.setCode(500);
-            result.setObject("操作失败，获取用户详细信息失败");
-            return result;
+            userProfile = new UserProfile();
+            userProfile.setId(UUID.randomUUID().toString());
+            userProfile.setUserid(userid);
         }
-        
+
         user.setUsername(username);
         user.setUserpwd(userpwd);
         int r1 = userService.updateUser(user);
-        
+
         if(r1 != 1){
             result.setCode(500);
             result.setObject("操作失败，更新用户信息失败");
@@ -204,7 +204,7 @@ public class UserProfileController {
         userProfile.setAddress(address);
         userProfile.setImgurl(imgurl);
         int r2 = userProfileService.updateInfo(userProfile);
-        
+
         if(r2 != 1){
             result.setCode(500);
             result.setObject("操作失败，更新用户详细信息失败");
@@ -212,7 +212,7 @@ public class UserProfileController {
         }
         return result;
     }
-    
+
     /**
      * 上传个人照片（目前支持JPG,PNG格式）
      * 上传成功会返回照片文件所在的绝对路径
@@ -238,10 +238,10 @@ public class UserProfileController {
             result.setCode(500);
             result.setMsg("上传失败，"+e.getMessage());
         }
-        
+
         return result;
     }
-    
+
     /**
      * 查看个人照片（目前支持JPG,PNG格式）
      * @param userid 用户id
@@ -252,7 +252,7 @@ public class UserProfileController {
     @ResponseBody
     public byte[] showImg(String userid) throws Exception {
         byte[] bytes = null;
-        UserProfile userProfile = userProfileService.findUserProfleByUserid(userid);
+        UserProfile userProfile = userProfileService.findUserProfileByUserid(userid);
         if(userProfile != null && userProfile.getImgurl() != null){
             File file = new File(userProfile.getImgurl());
             if(file!=null && file.exists()){
@@ -263,6 +263,6 @@ public class UserProfileController {
         }
         return bytes;
     }
-    
-    //-----------------Setting模块start---------------------------------
+
+    //-----------------Setting模块end---------------------------------
 }

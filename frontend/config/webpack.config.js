@@ -208,6 +208,9 @@ module.exports = function (webpackEnv) {
       userprofile : isEnvDevelopment && !shouldUseReactRefresh ? [ webpackDevClientEntry, paths.appIndexJs, ] : paths.appUserProfileJs,
       market : isEnvDevelopment && !shouldUseReactRefresh ? [ webpackDevClientEntry, paths.appIndexJs, ] : paths.appMarketJs,
       course : isEnvDevelopment && !shouldUseReactRefresh ? [ webpackDevClientEntry, paths.appIndexJs, ] : paths.appCourseJs,
+      search : isEnvDevelopment && !shouldUseReactRefresh ? [ webpackDevClientEntry, paths.appIndexJs, ] : paths.appSearchJs,
+      dynamic : isEnvDevelopment && !shouldUseReactRefresh ? [ webpackDevClientEntry, paths.appIndexJs, ] : paths.appDynamicJs,
+      comment : isEnvDevelopment && !shouldUseReactRefresh ? [ webpackDevClientEntry, paths.appIndexJs, ] : paths.appCommentJs,
     },
     output: {
       // The build folder.
@@ -760,6 +763,87 @@ module.exports = function (webpackEnv) {
               }
               : undefined
       )
+    ),
+      new HtmlWebpackPlugin(
+          Object.assign(
+              {},
+              {
+                inject: true,
+                template: paths.appSearchHtml,
+                filename: 'search.html',
+                chunks: ['search']
+              },
+              isEnvProduction
+                  ? {
+                    minify: {
+                      removeComments: true,
+                      collapseWhitespace: true,
+                      removeRedundantAttributes: true,
+                      useShortDoctype: true,
+                      removeEmptyAttributes: true,
+                      removeStyleLinkTypeAttributes: true,
+                      keepClosingSlash: true,
+                      minifyJS: true,
+                      minifyCSS: true,
+                      minifyURLs: true,
+                    },
+                  }
+                  : undefined
+          )
+      ),
+      new HtmlWebpackPlugin(
+          Object.assign(
+              {},
+              {
+                inject: true,
+                template: paths.appDynamicHtml,
+                filename: 'dynamic.html',
+                chunks: ['dynamic']
+              },
+              isEnvProduction
+                  ? {
+                    minify: {
+                      removeComments: true,
+                      collapseWhitespace: true,
+                      removeRedundantAttributes: true,
+                      useShortDoctype: true,
+                      removeEmptyAttributes: true,
+                      removeStyleLinkTypeAttributes: true,
+                      keepClosingSlash: true,
+                      minifyJS: true,
+                      minifyCSS: true,
+                      minifyURLs: true,
+                    },
+                  }
+                  : undefined
+          )
+      ),
+      new HtmlWebpackPlugin(
+        Object.assign(
+            {},
+            {
+              inject: true,
+              template: paths.appCommentHtml,
+              filename: 'comment.html',
+              chunks: ['comment']
+            },
+            isEnvProduction
+                ? {
+                  minify: {
+                    removeComments: true,
+                    collapseWhitespace: true,
+                    removeRedundantAttributes: true,
+                    useShortDoctype: true,
+                    removeEmptyAttributes: true,
+                    removeStyleLinkTypeAttributes: true,
+                    keepClosingSlash: true,
+                    minifyJS: true,
+                    minifyCSS: true,
+                    minifyURLs: true,
+                  },
+                }
+                : undefined
+        )
     ),
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.

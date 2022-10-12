@@ -1,17 +1,20 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.Comment;
+import com.example.demo.entity.Notice;
 import com.example.demo.entity.Post;
 import com.example.demo.service.FileService;
+import com.example.demo.entity.Take;
 import com.example.demo.service.PostService;
+import com.example.demo.service.TakeService;
 import com.example.demo.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/Post")
@@ -19,16 +22,241 @@ import java.util.List;
 public class PostController {
     @Autowired
     private PostService postService;
-
     @Autowired
-    private FileService fileService;
+    private TakeService takeService;
+
+    /**
+     * 获取最新的帖子
+     * @return
+     */
+    @GetMapping("/findLatestPost")
+    public Result findLatestPost() {
+        Result result = new Result();
+        List<Post> postList = postService.findLatestPost();
+        if(postList == null){
+            postList = new ArrayList<>();
+        }
+        result.setObject(postList);
+        return result;
+    }
+
+    /**
+     * 获取最喜欢的帖子
+     * @return
+     */
+    @GetMapping("/findLikestPost")
+    public Result findLikestPost() {
+        Result result = new Result();
+        List<Post> postList = postService.findLikestPost();
+        if(postList == null){
+            postList = new ArrayList<>();
+        }
+        result.setObject(postList);
+        return result;
+    }
+
+    /**
+     * 根据标题查找帖子
+     * @param title  帖子标题
+     * @return
+     */
+    @GetMapping("/findPostByTitle")
+    public Result findPostByTitle(String title) {
+        Result result = new Result();
+        title = "%"+title+"%";
+        List<Post> postList = postService.findPostByTitle(title);
+        if(postList == null){
+            postList = new ArrayList<>();
+        }
+        result.setObject(postList);
+        return result;
+    }
+
+    /**
+     * Get the all posts send by the given userID.
+     *
+     * @param userid the given UID.
+     * @return the REST result with the list of posts from database
+     * */
+    @GetMapping("/findPostById")
+    public Result findPostById(String userid){
+        Result result = new Result();
+        List<Post> posts = postService.findPostByUserId(userid);
+        if(posts == null){
+            posts = new ArrayList<>();
+        }
+        result.setObject(posts);
+        return result;
+    }
+
+
+    /**
+     * 保存用户对帖子的评论
+     * @param userid  用户id
+     * @param username  用户名称
+     * @param postID  帖子id
+     * @param content  评论内容
+     * @return
+     */
+    @RequestMapping("/saveComment")
+    public Result saveComment(String userid,String username,String postID,String content) {
+        Result result = new Result();
+
+        Comment comment = new Comment();
+        comment.setId(UUID.randomUUID().toString());
+        comment.setUserid(userid);
+        comment.setUsername(username);
+        comment.setPostID(postID);
+        comment.setContent(content);
+        comment.setCreatedTime(LocalDateTime.now());
+        int flag = postService.saveComment(comment);
+        if(flag == 0){
+            result.setCode(500);
+            result.setMsg("操作异常");
+        }
+        return result;
+    }
+
+    /**
+     * 查找最近的帖子评论
+     * @return
+     */
+    @GetMapping("/findLatestPostComment")
+    public Result findLatestPostComment() {
+        Result result = new Result();
+        List<Comment> postCommentList = postService.findLatestPostComment();
+        if(postCommentList == null){
+            postCommentList = new ArrayList<>();
+        }
+        result.setObject(postCommentList);
+        return result;
+    }
+
+    /**
+     * 订阅用户
+     * @param userid  当前用户
+     * @param takeuserid  被订阅用户
+     * @return
+     */
+    @RequestMapping("/takeuser")
+    public Result takeuser(String userid,String takeuserid) {
+        Result result = new Result();
+        Take take = new Take();
+        take.setId(UUID.randomUUID().toString());
+        take.setUserid(userid);
+        take.setTakeuserid(takeuserid);
+        int flag = postService.takeuser(take);
+        if(flag == 0){
+            result.setCode(500);
+            result.setMsg("操作异常");
+        }
+        return result;
+    }
+
+    /**
+     * 查询当前用户订阅了哪些用户
+     * @param userid 当前用户id
+     * @return
+     */
+    @RequestMapping("/findTakeuser")
+    public Result findTakeuser(String userid) {
+        Result result = new Result();
+        List<Take> takeList = takeService.findTakeByUserid(userid);
+        if(takeList == null){
+            takeList = new ArrayList<>();
+        }
+        result.setObject(takeList);
+        return result;
+    }
+
+    /**
+     * 查询当前用户订阅了被哪些用户订阅了
+     * @param userid 当前用户id
+     * @return
+     */
+    @RequestMapping("/findUserByTake")
+    public Result findUserByTake(String userid) {
+        Result result = new Result();
+        List<Take> takeList = takeService.findTakeByTakeuserid(userid);
+        if(takeList == null){
+            takeList = new ArrayList<>();
+        }
+        result.setObject(takeList);
+        return result;
+    }
+
+    /**
+     * 保存关注用户发帖通知
+     * @param pubuserid  发帖用户
+     * @param pubusername 发帖用户名称
+     * @param postID  帖子id
+     * @param content 通知内容
+     * @return
+     */
+    @RequestMapping("/saveNotice")
+    public Result saveNotice(String pubuserid,String pubusername,String postID,String content) {
+        Result result = new Result();
+
+        List<Take> takeList = takeService.findTakeByTakeuserid(pubuserid);
+        if(takeList != null && takeList.size()>0 ){
+            for(Take take : takeList){
+                Notice notice = new Notice();
+                notice.setId(UUID.randomUUID().toString());
+                notice.setPubuserid(pubuserid);
+                notice.setPubusername(pubusername);
+                notice.setPostID(postID);
+                notice.setAcpuserid(take.getUserid());
+                notice.setCreatedTime(LocalDateTime.now());
+                notice.setIsread(0);
+                notice.setContent(content);
+                int flag = postService.saveNotice(notice);
+                if(flag == 0){
+                    result.setCode(500);
+                    result.setMsg("操作异常");
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 更新发帖通知为已读
+     * @param id 通知主键id
+     * @return
+     */
+    @RequestMapping("/updateNotice")
+    public Result updateNotice(String id) {
+        Result result = new Result();
+        int flag = postService.updateNotice(id);
+        if(flag == 0){
+            result.setCode(500);
+            result.setMsg("操作异常");
+        }
+        return result;
+    }
+
+
+    /**
+     * 查找关注者发布的帖子的通知信息
+     * @return
+     */
+    @GetMapping("/findNoticeByUserid")
+    public Result findNoticeByUserid(String userid) {
+        Result result = new Result();
+        List<Notice> noticeList = postService.findNoticeByUserid(userid);
+        if(noticeList == null){
+            noticeList = new ArrayList<>();
+        }
+        result.setObject(noticeList);
+        return result;
+    }
 
     @GetMapping("/getAllPostsByType")
     public Result findAllPost(@RequestParam("type") String type) {
         return new Result((List<Post>) postService.getPostsByType(type));
     }
 
-    @GetMapping("/filterByCategory")
+    @GetMapping("filterByCategory")
     public Result getMarketPostsByCategory(@RequestParam("category") String category) {
         return new Result(postService.getPostsByCategory(category));
     }

@@ -13,8 +13,6 @@
 //
 //    @Override
 //    protected void addInterceptors(InterceptorRegistry registry) {
-//        // 配置拦截器的需要 拦截的地址
-//        // 拦截所有 : /**
 //        registry.addInterceptor(getAuthInterceptor())
 //                .addPathPatterns("/**")
 //                .excludePathPatterns("/static/favicon.ico").excludePathPatterns("/static/register.html").excludePathPatterns("/static.login.html")
@@ -22,7 +20,6 @@
 //        super.addInterceptors(registry);
 //    }
 //
-//    // 自己创建的拦截器
 //    @Bean
 //    public AuthInterceptor getAuthInterceptor(){
 //        return new AuthInterceptor();

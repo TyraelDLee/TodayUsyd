@@ -22,7 +22,7 @@ class Item extends React.Component{
 
     render() {
         return(
-            <div className={'post-item-host'}>
+            <div className={'post-item-host'} postID={this.props.postId}>
                 <div className={'post-item-head'}>
                     <div className={'post-owner'}>
                         <div className={'avatar-image'}><img src={this.props.userFace}/></div>
@@ -34,7 +34,7 @@ class Item extends React.Component{
                     <div className={'post-item-title-host'}>
                         <div className={'post-item-title'}>{this.props.postTitle}</div>
                         {/*searched Title*/}
-                        <div className={'post-item-cat'}>{this.props.postCat}</div>
+                        <div className={'post-item-cat'}>Category: {this.props.postCat} {typeof this.props.postDate==='undefined'?'':' Post Date: '+this.props.postDate}</div>
                         {/*category*/}
                     </div>
                     <div className={'post-item-body'}>
@@ -45,14 +45,18 @@ class Item extends React.Component{
 
                     </div>
                 </div>
-                <div className={'post-item-like-host'}>
-                    <div className={'post-like-add'} onClick={this.addLike}>+</div>
-                    <div className={'post-like'}>
-                        {this.props.postLike}
-                    </div>
-                    <div className={'post-like-minus'} onClick={this.minusLike}>-</div>
-                    {/*like num*/}
-                </div>
+                {
+                    !this.props.showLike?
+                        <></>
+                        :<div className={'post-item-like-host'}>
+                            <div className={'post-like-add'} onClick={this.addLike}>+</div>
+                            <div className={'post-like'}>
+                                {this.props.postLike}
+                            </div>
+                            <div className={'post-like-minus'} onClick={this.minusLike}>-</div>
+                            {/*like num*/}
+                        </div>
+                }
             </div>
         )
     }

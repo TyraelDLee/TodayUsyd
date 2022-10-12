@@ -70,6 +70,8 @@ module.exports = {
   appMarketJs: resolveModule(resolveApp, 'src/components/Market/Market'),
   appCourseHtml: resolveApp('public/course.html'),
   appCourseJs: resolveModule(resolveApp, 'src/components/Course/Course'),
+  appCommentHtml: resolveApp('public/comment.html'),
+  appCommentJs: resolveModule(resolveApp, 'src/components/Comment/Comment'),
   appSearchHtml: resolveApp('public/search.html'),
   appSearchJs: resolveModule(resolveApp, 'src/Search'),
   appDynamicHtml: resolveApp('public/dynamic.html'),

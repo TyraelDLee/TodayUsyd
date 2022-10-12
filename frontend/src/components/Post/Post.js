@@ -47,6 +47,7 @@ class Post extends Component {
             }).then(response => {
                 if (response.ok){
                     window.alert("success");
+                    window.location.reload(false)
                 } else {
                     console.log("failed");
                 }

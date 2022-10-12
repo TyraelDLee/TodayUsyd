@@ -30,7 +30,7 @@ class Search extends React.Component{
                        });
                    }else{
                        document.getElementsByClassName('results')[0].innerHTML += `
-                       <div class="no-result">There no result for <b>${new URLSearchParams(window.location["search"]).get("keyword")}</b></div>`;
+                       <div class="no-result">There is no result for <b>${new URLSearchParams(window.location["search"]).get("keyword")}</b></div>`;
                        // no result found here.
                    }
                }

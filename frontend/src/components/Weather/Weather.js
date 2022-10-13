@@ -14,7 +14,7 @@ class Weather extends Component {
     }
 
     componentDidMount(){
-        /*const lat = "-33.8698439";
+        /* lat = "-33.8698439";
         const lon = "151.2082848";
         const api_key = "3c923d8641a87a30697b414cb175cbf7";
         axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}`).then((response) => {

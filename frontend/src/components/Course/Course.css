@@ -6,8 +6,135 @@
     width:60%;
 }
 
-.button {
-    margin-top: 30px;
+.buttonAdd {
+    margin-top: 20px;
+    margin-bottom: 60px;
     height: 50px;
     font-size: 20px;
+}
+
+.buttonCancel{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 50px;
+    font-size: 20px;
+}
+
+.postlist{
+    width: 60%;
+    margin: 60px auto;
+}
+
+.singlePost {
+    clear: both;
+    margin:30px 0;
+    height: 120px;
+    border: 0.3px solid gray;
+    border-radius: 20px;
+}
+
+.singlePost:hover {
+    clear: both;
+    margin:30px 0;
+    height: 120px;
+    border: 2.5px solid gray;
+    border-radius: 20px;
+}
+
+.profileOverview {
+    width: 82%;
+    float: left;
+}
+
+.profileOverview:hover{
+    cursor: pointer;
+}
+
+.profileThumb {
+    width: 18%;
+    float: right;
+}
+
+.profileImage{
+    float: left;
+    margin: 20px;
+    height: 80px;
+    width: 80px;
+    border: 0.8px solid gray;
+    border-radius: 50%;
+}
+
+.profileUserName{
+    border: 0.8px solid gray;
+    float: left;
+    width: 25%;
+    margin: 43px 20px 43px 40px;
+    font-size: 20px;
+}
+
+.profileTitle {
+    border: 0.8px solid gray;
+    float: left;
+    width: 50%;
+    margin: 33px 20px;
+    font-size: 28px;
+}
+
+.profileTime {
+    float: right;
+    width: 13%;
+    text-align: center;
+    margin: 35px 0 0 0;
+    height: 30px;
+    font-size: 14px;
+    color: gray;
+}
+
+.profileDetails{
+    clear: both;
+    display: block;
+    border: 0.8px solid gray;
+    width: 90%;
+    margin: auto;
+}
+
+.thumbUp {
+    float: right;
+    width: 30px;
+    margin-top: 45px;
+    margin-right: 20px;
+}
+
+.thumbUp:hover{
+    cursor: pointer;
+}
+
+.thumbUpNumber{
+    float: right;
+    margin-top: 45px;
+    margin-right: 60px;
+}
+
+.thumbDown {
+    float: right;
+    width: 30px;
+    margin-left: 10px;
+    margin-top: 45px;
+    margin-right: 10px;
+}
+
+.thumbDown:hover{
+    cursor: pointer;
+}
+
+.thumbDownNumber{
+    float: right;
+    margin-top: 45px;
+    margin-right: 20px;
+}
+
+.sortDropDown{
+    float: right;
+    width: 31%;
+    margin-bottom: 80px;
 }

@@ -67,15 +67,15 @@
 .profileUserName{
     border: 0.8px solid gray;
     float: left;
-    width: 22%;
-    margin: 43px 20px 43px 10px;
+    width: 25%;
+    margin: 43px 20px 43px 40px;
     font-size: 20px;
 }
 
 .profileTitle {
     border: 0.8px solid gray;
     float: left;
-    width: 44%;
+    width: 50%;
     margin: 33px 20px;
     font-size: 28px;
 }
@@ -102,7 +102,7 @@
     float: right;
     width: 30px;
     margin-top: 45px;
-    margin-right: 10px;
+    margin-right: 20px;
 }
 
 .thumbUp:hover{
@@ -112,6 +112,7 @@
 .thumbUpNumber{
     float: right;
     margin-top: 45px;
+    margin-right: 60px;
 }
 
 .thumbDown {

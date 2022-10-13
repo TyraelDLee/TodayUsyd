@@ -1,10 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Comment;
-import com.example.demo.entity.Notice;
-import com.example.demo.entity.Post;
+import com.example.demo.entity.*;
 import com.example.demo.service.FileService;
-import com.example.demo.entity.Take;
 import com.example.demo.service.PostService;
 import com.example.demo.service.TakeService;
 import com.example.demo.utils.Result;
@@ -298,13 +295,41 @@ public class PostController {
     }
 
     @PutMapping("/updatePostInvisible")
-    public Result updatePostInvisible(@RequestParam("postID") String postID) {
-        return new Result(postService.updatePostInvisible(postID));
+    public Result updatePostInvisible(@RequestParam("postID") String postID,@ModelAttribute User user) {
+        if (user!=null) {
+            if (user.getUserAuth() == 2) {
+                return new Result(postService.updatePostInvisible(postID));
+            } else return new Result("The user is not admin and does not have right to set the post invisible");
+        }
+        return new Result("The user has not login");
     }
 
+    @PutMapping("/updatePostVisible")
+    public Result updatePostVisible(@RequestParam("postID") String postID,@ModelAttribute User user) {
+        if (user!=null) {
+            if (user.getUserAuth() == 2) {
+                return new Result(postService.updatePostVisible(postID));
+            } else return new Result("The user is not admin and does not have right to set the post visible");
+        }
+        return new Result("The user has not login");
+    }
     @PutMapping("/updatePostIsTop")
-    public Result updateThePostTop(@RequestParam("postID") String postID) {
-        return new Result(postService.updatePostTop(postID));
+    public Result updateThePostTop(@RequestParam("postID") String postID,@ModelAttribute User user) {
+        if (user!=null) {
+            if (user.getUserAuth() == 2) {
+                return new Result(postService.updatePostTop(postID));
+            } else return new Result("The user is not admin and does not have right to set the post top");
+        }
+        return new Result("The user has not login");
+    }
+    @PutMapping("/updatePostIsNotTop")
+    public Result updateThePostNotTop(@RequestParam("postID") String postID,@ModelAttribute User user) {
+        if (user!=null) {
+            if (user.getUserAuth() == 2) {
+                return new Result(postService.updatePostNotTop(postID));
+            } else return new Result("The user is not admin and does not have right to set the post not top");
+        }
+        return new Result("The user has not login");
     }
 
     @PutMapping("/likeThePost")

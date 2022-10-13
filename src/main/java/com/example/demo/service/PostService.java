@@ -13,13 +13,14 @@ public interface PostService {
 
     Iterable<Post> getPostsByCategory(String category);
 
-    Optional<Post> findPostById(String postID);
+    Optional<Post> findPostByPostId(String postID);
 
     Post savePost(Post post);
 
     Post updatePost(String postID, Post newPost);
 
     Post updatePostInvisible(String postID);
+
     Post updatePostTop(String postID);
 
     Post likeThePost(String postID);

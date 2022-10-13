@@ -1,7 +1,12 @@
 .post-item-host{
     display: flex;
     width: 100%;
-    margin: 10px 0;
+    margin: 30px 0;
+    cursor: pointer;
+}
+
+.post-item-host:hover .post-item-title{
+    color: var(--text_link);
 }
 
 .post-item-head{

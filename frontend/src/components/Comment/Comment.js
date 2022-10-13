@@ -12,6 +12,8 @@ class Comment extends Component {
     }
 
     render() {
+        const { text } = this.props;
+        console.log(this.props);
         return(
             <div>
                 <Navbar />

@@ -19,6 +19,8 @@ public class Post {
     private String postID;
     @Column(name = "userid")
     private String userid;
+    @Column(name = "userName")
+    private String userName;
     @Column(name = "type")
     private String type;
     @Column(name = "category")
@@ -32,12 +34,14 @@ public class Post {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "createdTime")
     private LocalDateTime createdTime;
+    @Lob
+    private byte[] data;
     @Column(name = "istop")//是否置顶，默认为1没置顶，2置顶
     private int istop;
     @Column(name = "isvisible")//是否可见，默认为1可见，不可见为2
     private int isvisible;
 
-    public Post(String userid, String type, String category, String title, String details) {
+    public Post(String userid, String userName, String type, String category, String title, String details) {
         this.userid = userid;
         this.type = type;
         this.category = category;
@@ -71,6 +75,14 @@ public class Post {
 
     public void setUserid(String userid) {
         this.userid = userid;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getType() {
@@ -119,6 +131,14 @@ public class Post {
 
     public void setCreatedTime(LocalDateTime createdTime) {
         this.createdTime = createdTime;
+    }
+
+    public byte[] getData() {
+        return data;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
     }
 
     public int getIstop() {

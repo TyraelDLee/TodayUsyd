@@ -12,24 +12,21 @@ class Item extends React.Component{
 
     }
 
-    addLike(){
-
-    }
-
-    minusLike(){
-
+    click(postId){
+        const a = document.createElement("a");
+        a.href = `./comment.html?postID=${postId}`;
+        a.target = '_blank';
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
     }
 
     render() {
         return(
-            <div className={'post-item-host'} postID={this.props.postId}>
-                <div className={'post-item-head'}>
-                    <div className={'post-owner'}>
-                        <div className={'avatar-image'}><img src={this.props.userFace}/></div>
-                        <div className={'avatar-name'}>{this.props.userName}</div>
-                    </div>
-                    {/*user avatar*/}
-                </div>
+            <div className={'post-item-host'} postID={this.props.postId} onClick={()=>{
+                this.click(this.props.postId);
+            }}>
                 <div className={'post-item-body-host'}>
                     <div className={'post-item-title-host'}>
                         <div className={'post-item-title'}>{this.props.postTitle}</div>
@@ -42,7 +39,6 @@ class Item extends React.Component{
                             {this.props.postBody}
                         </div>
                         {/*result body*/}
-
                     </div>
                 </div>
                 {

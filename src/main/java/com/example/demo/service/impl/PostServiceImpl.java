@@ -42,7 +42,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Optional<Post> findPostById(String postID) {
+    public Optional<Post> findPostByPostId(String postID) {
         return postDao.findById(postID);
     }
 

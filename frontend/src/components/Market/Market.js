@@ -31,7 +31,7 @@ class Market extends Component {
     }
 
     componentDidMount(){
-        axios.get('http://localhost:8085/Post/getAllPostsByType?type=market')
+        axios.get('./Post/getAllPostsByType?type=market')
         .then((response) => {
             let post = response.data.object.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
             this.setState({

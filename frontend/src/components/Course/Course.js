@@ -27,7 +27,7 @@ class Course extends Component {
     }
 
     componentDidMount(){
-        axios.get('http://localhost:8085/Post/getAllPostsByType?type=course')
+        axios.get('./Post/getAllPostsByType?type=course')
         .then((response) => {
             let post = response.data.object.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
             this.setState({

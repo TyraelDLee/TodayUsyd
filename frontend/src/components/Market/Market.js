@@ -10,9 +10,8 @@ import Item from './../SearchItem/Item';
 import avatar from './../../avatar.svg';
 import axios from 'axios';
 import { GoThumbsup } from 'react-icons/go'
+import { AiFillTag } from 'react-icons/ai';
 import Cookies from 'js-cookie';
-import Comment from './../Comment/Comment';
-import Sort from './../Sort/Sort';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -27,15 +26,27 @@ class Market extends Component {
             showPost: false,
             posts: null,
             sort: "Time",
+            topposts: null,
         }
     }
 
     componentDidMount(){
         axios.get('./Post/getAllPostsByType?type=market')
         .then((response) => {
-            let post = response.data.object.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
+            let removeInvisiblePost = response.data.object.filter(post => {
+                return post.isVisible === 1;
+            });
+            let toppost = removeInvisiblePost.filter(post => {
+                return post.istop === 2;
+            });
+            let otherpost = removeInvisiblePost.filter(post => {
+                return post.istop === 1;
+            });
+            let toppostsort = toppost.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
+            let otherpostsort = otherpost.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
             this.setState({
-                posts: post,
+                topposts: toppostsort,
+                posts: otherpostsort,
             });
         })
     }
@@ -66,7 +77,6 @@ class Market extends Component {
               "Content-Type": "multipart/form-data",
             },
         }).then((response) => {
-            console.log(response);
             if (response.data.code === 200){
                 let updatePost = this.state.posts.map((post) => {
                     if (post.postID === postID){
@@ -85,20 +95,23 @@ class Market extends Component {
     }
 
     handleClickSortCategory(category) {
-        let sortposts;
+        let sortposts, topsortposts;
         if (category === "Time"){
             sortposts = this.state.posts.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
+            topsortposts = this.state.topposts.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
         } else {
             sortposts = this.state.posts.sort((a, b) => (a.numOfLikes > b.numOfLikes) ? -1 : 1);
+            topsortposts = this.state.topposts.sort((a, b) => (a.numOfLikes > b.numOfLikes) ? -1 : 1);
         }
         this.setState({
             sort: category,
             posts: sortposts,
+            topposts: topsortposts,
         });
     }
 
     render() {
-        const { posts,sort } = this.state;
+        const { posts,sort,topposts } = this.state;
         return(
             <div>
                 <Navbar />
@@ -112,7 +125,6 @@ class Market extends Component {
                         <Button variant="outline-dark" onClick={this.onClickOpenPost} className="buttonAdd">Add Post</Button>
                     }
                 </div>
-                <Comment text="123"/>
                 <div className="sortDropDown">
                     <InputGroup className="mb-3">
                         <DropdownButton
@@ -128,6 +140,25 @@ class Market extends Component {
                     </InputGroup>
                 </div>
                 <div className="postlist">
+                    {
+                        topposts && topposts.map((toppost) => {
+                            return  <div className="singlePost">
+                                        <AiFillTag className="tag" size={30}/>
+                                        <div onClick={() => this.onClickDirectPost(toppost.postID)} className="profileOverview">
+                                            <div className="profileUserName">{toppost.userName}</div>
+                                            <div className="profileTitle">{toppost.title}</div>
+                                            <div className="profileTime">posted at {(toppost.createdTime).substr(11)} on {(toppost.createdTime).substr(0, 10)}</div>
+                                        </div>
+                                        <div className="profileThumb">
+                                            <div>
+                                                <div className="thumbUpNumber">{toppost.numOfLikes}</div>
+                                                <GoThumbsup onClick={() => this.onClickThumbUp(toppost.postID)} className="thumbUp" size={25}/>
+                                            </div>
+                                        </div>
+                                    </div>
+                        })
+                    }
+                    <br/><br/>
                     {
                         posts && posts.map((post) => {
                             return  <div className="singlePost">
@@ -159,4 +190,4 @@ root.render(
     </React.StrictMode>
 );
 
-export default Market
+export default Market;

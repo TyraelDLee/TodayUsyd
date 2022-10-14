@@ -42,7 +42,7 @@
 }
 
 .profileOverview {
-    width: 82%;
+    width: 80%;
     float: left;
 }
 
@@ -51,7 +51,7 @@
 }
 
 .profileThumb {
-    width: 18%;
+    width: 17%;
     float: right;
 }
 
@@ -68,7 +68,7 @@
     border: 0.8px solid gray;
     float: left;
     width: 25%;
-    margin: 43px 20px 43px 40px;
+    margin: 43px 20px 43px 10px;
     font-size: 20px;
 }
 
@@ -137,4 +137,9 @@
     float: right;
     width: 31%;
     margin-bottom: 80px;
+}
+
+.tag {
+    float: left;
+    width: 3%;
 }

@@ -42,7 +42,7 @@
 }
 
 .profileOverview {
-    width: 82%;
+    width: 80%;
     float: left;
 }
 
@@ -51,7 +51,7 @@
 }
 
 .profileThumb {
-    width: 18%;
+    width: 17%;
     float: right;
 }
 
@@ -67,7 +67,7 @@
 .profileUserName{
     border: 0.8px solid gray;
     float: left;
-    width: 22%;
+    width: 25%;
     margin: 43px 20px 43px 10px;
     font-size: 20px;
 }
@@ -75,7 +75,7 @@
 .profileTitle {
     border: 0.8px solid gray;
     float: left;
-    width: 44%;
+    width: 50%;
     margin: 33px 20px;
     font-size: 28px;
 }
@@ -102,7 +102,7 @@
     float: right;
     width: 30px;
     margin-top: 45px;
-    margin-right: 10px;
+    margin-right: 20px;
 }
 
 .thumbUp:hover{
@@ -112,6 +112,7 @@
 .thumbUpNumber{
     float: right;
     margin-top: 45px;
+    margin-right: 60px;
 }
 
 .thumbDown {
@@ -136,4 +137,9 @@
     float: right;
     width: 31%;
     margin-bottom: 80px;
+}
+
+.tag {
+    float: left;
+    width: 3%;
 }

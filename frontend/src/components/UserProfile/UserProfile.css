@@ -84,7 +84,7 @@
 
 .image{
     float: left;
-    margin: 40px;
+    margin: 40px 40px 40px 40px;
     height: 160px;
     width: 160px;
     border: 0.8px solid gray;
@@ -111,6 +111,6 @@
 .postArea {
     border: 0.8px solid gray;
     width: 60%;
-    height: 400px;
-    margin: 40px auto;
+    height: 300px;
+    margin: 10px auto 40px auto;
 }

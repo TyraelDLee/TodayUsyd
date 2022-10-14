@@ -57,10 +57,10 @@ class Dynamic extends React.Component {
 
         async function fillPosts() {
             followingID = await getFollowing();
-            followingID = [1, 9, 21, 14];
+            //followingID = [1, 9, 21, 14]; test used only
             let posts = [];
             for (const id of followingID) {
-                posts.push(await getPostById(id));
+                posts.push(await getPostById(id['takeuserid']));
             }
             return posts.reduce((prev, curr) => (prev.concat(curr)), []).sort(compare("createdTime"));
         }
@@ -84,7 +84,10 @@ class Dynamic extends React.Component {
         return (
             <main className={'dynamic-body'}>
                 <div className={'dynamic-host'}>
-                    {this.state.dynamic.map((post)=> <Item userFace={avatar} userName={post['userId']} postId={post['postID']} postTitle={post['title']} postCat={post['category']} postBody={post['details']} postLike={post['numOfLikes']} postDate={post['createdTime']}></Item>)}
+                    {
+                        this.state.dynamic.length===0?<div>You didn't followed anybody yet.</div>:
+                        this.state.dynamic.map((post)=> <Item postId={post['postID']} postTitle={post['title']} postCat={post['category']} postBody={post['details']} postDate={post['createdTime']}></Item>)
+                    }
                 </div>
             </main>
         );

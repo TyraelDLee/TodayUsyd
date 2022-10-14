@@ -149,6 +149,21 @@ class Navbar extends React.Component {
                                     window.location.reload();
                                 });
                         });
+                        fetch(`/userProfile/home/index?userid=${json['object']['userid']}`,{
+                            method:"GET",
+                            credentials:"include",
+                            body:null
+                        }).then(r=>r.json())
+                            .then(json=>{
+                                if (json['code']===200){
+                                    if (json['object']['imgurl']!==null && typeof json['object']['imgurl'] !== 'undefined'){
+                                        document.getElementsByClassName('nav-bar-right')[0].
+                                        getElementsByClassName('nav-user')[0].
+                                        getElementsByTagName('img')[0].
+                                        setAttribute('src', json['object']['imgurl']);
+                                    }
+                                }
+                            })
                     }
                 });
 

@@ -24,4 +24,9 @@ public class FavController {
         return new Result(favService.getFavByUserid(userid));
     }
 
+    @DeleteMapping("/deleteFav")
+    public Result deleteFav(@RequestParam("favID") String favID) {
+        return new Result(favService.removeFav(favID));
+    }
+
 }

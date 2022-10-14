@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 public interface FileService {
     File storeFile(MultipartFile file, String postID) throws IOException;
 
-    Stream<File> getFilesByPostID(String postID);
+    File getFileByPostID(String postID);
 
     File getFile(String fileID);
 

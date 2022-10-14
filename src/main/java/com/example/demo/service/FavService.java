@@ -7,4 +7,6 @@ public interface FavService {
     Favorite storeFav(Favorite favorite);
 
     Iterable<Post> getFavByUserid(String postID);
+
+    Boolean removeFav(String favID);
 }

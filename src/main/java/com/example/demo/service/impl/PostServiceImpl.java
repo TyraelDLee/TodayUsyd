@@ -61,6 +61,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Post setUrl(String postID, String url) {
+        Post post = postDao.findById(postID).orElseThrow(() -> new EntityNotFoundException(postID));
+        post.setFileUrl(url);
+        return postDao.save(post);
+    }
+
+    @Override
     public Post updatePostInvisible(String postID) {
         Post post = postDao.findById(postID).orElseThrow(() -> new EntityNotFoundException(postID));
         post.setIsVisible(2);//设置为不可见

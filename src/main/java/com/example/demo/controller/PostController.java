@@ -305,30 +305,30 @@ public class PostController {
             userName = user.getUsername();
         }
         Post post = new Post(userID, userName, type, category, title, details);
+        postService.savePost(post);
+        String message = "";
         String url = null;
         if (file != null) {
+            System.out.println(post.getPostID());
             url = ServletUriComponentsBuilder
                     .fromCurrentContextPath()
                     .path("/Post/file/")
                     .path(post.getPostID())
                     .toUriString();
-        }
-        post.setFileUrl(url);
-        postService.savePost(post);
-        String message = "";
-        try {
-            fileService.storeFile(file, post.getPostID());
-        } catch (Exception e) {
-            message = "Fail to store file";
+            try {
+                fileService.storeFile(file, post.getPostID());
+            } catch (Exception e) {
+                message = "Fail to store file";
 
+            }
         }
-
+        postService.setUrl(post.getPostID(),url);
         return new Result(200, message, post);
     }
 
     @GetMapping("/file/{id}")
-    public ResponseEntity<byte[]> getFile(@PathVariable String postID) {
-        File file = fileService.getFileByPostID(postID);
+    public ResponseEntity<byte[]> getFile(@PathVariable String id) {
+        File file = fileService.getFileByPostID(id);
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"")

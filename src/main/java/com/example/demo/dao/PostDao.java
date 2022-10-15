@@ -19,5 +19,4 @@ public interface PostDao extends CrudRepository<Post, String> {
 
     @Query(value = "select postid,category,created_time,details,istop,isvisible,num_of_likes,title,type,userid,data from post where title like ?1 order by created_time desc",nativeQuery = true)
     List<Post> findPostByTitle(String title);
-
 }

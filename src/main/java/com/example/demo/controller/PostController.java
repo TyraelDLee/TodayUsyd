@@ -254,6 +254,22 @@ public class PostController {
         return result;
     }
 
+
+    /**
+     * 按照PostID查找评论
+     * @return
+     */
+    @GetMapping("/findCommentByPostID")
+    public Result findCommentByPostID(String postID) {
+        Result result = new Result();
+        List<Comment> commentList = postService.findCommentByPostID(postID);
+        if(commentList == null) {
+            commentList = new ArrayList<>();
+        }
+        result.setObject(commentList);
+        return result;
+    }
+
     @GetMapping("/getAllPostsByType")
     public Result findAllPost(@RequestParam("type") String type) {
         return new Result((List<Post>) postService.getPostsByType(type));

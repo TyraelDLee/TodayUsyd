@@ -132,11 +132,10 @@ class Navbar extends React.Component {
             }).then(r=>r.json())
                 .then(json=>{
                     if (json['code']===200){
-                        userPortal.innerHTML = `<a href="./userprofile" className="user-name popup-item" style="margin-top: 25px; font-weight: bold">${json['object']['username']}</a>
-                            <a href="./dynamic.html" className="user-home popup-item" style="margin-top: 5px">Dynamic</a>
+                        userPortal.innerHTML = `<a href="./userprofile.html" className="user-name popup-item" style="margin-top: 25px; font-weight: bold">${json['object']['username']}</a>
+                            <a href="./dynamic.html" className="user-home popup-item" style="margin-top: 5px">Followers</a>
                             <a href="./friends.html" className="user-friends popup-item">Friends</a>
-                            <a href="./history.html" className="user-history popup-item">History</a>
-                            <a href="./setting.html" className="user-setting popup-item">Setting</a>
+                            <a href="./setting.html" className="user-history popup-item">Update Profiles</a>
                             <a className="user-setting popup-item" id="log-out">Log out</a>`;
                         const logout = document.getElementById('log-out');
                         logout.addEventListener('click', ()=>{
@@ -214,7 +213,7 @@ class Navbar extends React.Component {
                             {/**/}
                         </div>
                     </div>
-                    <div className="nav-notification">Message</div>
+                    <div className="nav-notification">Notification</div>
                     <div></div>
                 </div>
             </div>

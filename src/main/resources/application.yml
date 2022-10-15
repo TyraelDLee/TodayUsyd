@@ -30,4 +30,4 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
 
 upload:
-  path: Desktop/ELEC5619
+  path: C:\Users\zheta\Desktop\ELEC5619\

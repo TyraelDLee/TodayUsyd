@@ -1,7 +1,7 @@
 package com.example.demo.utils;
+import com.alibaba.fastjson.JSONObject;
 import com.example.demo.dao.UserDao;
 import com.example.demo.entity.User;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.HandlerMethod;

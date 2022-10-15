@@ -19,7 +19,7 @@ public class User {
     @Column(name="labeldesc")
     private int labeldesc;
 
-    @Column(name="userauth")//普通用户或者Admin
+    @Column(name="userauth")//normal user or admin
     private int userauth;
 
     public String getUserid() {

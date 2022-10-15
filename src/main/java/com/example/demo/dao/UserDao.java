@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserDao extends JpaRepository<User,String> {
     /**
-     * 通过邮箱账号查询 用户
+     * Query the user by email account
      * @param userCode
      * @return
      */

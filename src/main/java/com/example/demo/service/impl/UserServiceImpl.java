@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
-import java.util.UUID;
 
 
 @Service
@@ -19,7 +18,7 @@ public class UserServiceImpl implements UserService {
     public User queryUserCode(String userCode, String userPwd) {
 
         User user = userDao.getUserByUsercode(userCode);
-//         使用 MD5加密
+//         Use MD5 encryption
         userPwd = DigestUtils.md5DigestAsHex(userPwd.getBytes());
 
         if (null != user && userPwd.equals(user.getUserpwd())) {

@@ -36,9 +36,9 @@ public class Post {
     private LocalDateTime createdTime;
     @Column(name = "fileUrl")
     private String fileUrl;
-    @Column(name = "istop")//是否置顶，默认为1没置顶，2置顶
+    @Column(name = "istop")//1 means not top by default; 2 means top
     private int istop;
-    @Column(name = "isvisible")//是否可见，默认为1可见，不可见为2
+    @Column(name = "isvisible")//1 means visible by default; 2 means invisible
     private int isvisible;
 
     public Post(String userid, String userName, String type, String category, String title, String details) {
@@ -168,5 +168,23 @@ public class Post {
     @Override
     public int hashCode() {
         return Objects.hash(postID);
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "postID='" + postID + '\'' +
+                ", userid='" + userid + '\'' +
+                ", userName='" + userName + '\'' +
+                ", type='" + type + '\'' +
+                ", category='" + category + '\'' +
+                ", title='" + title + '\'' +
+                ", details='" + details + '\'' +
+                ", numOfLikes=" + numOfLikes +
+                ", createdTime=" + createdTime +
+                ", fileUrl='" + fileUrl + '\'' +
+                ", istop=" + istop +
+                ", isvisible=" + isvisible +
+                '}';
     }
 }

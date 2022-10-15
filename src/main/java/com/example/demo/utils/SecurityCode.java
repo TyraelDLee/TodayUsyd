@@ -7,7 +7,6 @@ public class SecurityCode {
     public static String getCharAndNumr(int length){
 
         Random random = new Random();
-
         StringBuffer valSb = new StringBuffer();
         String charStr = "0123456789abcdefghijklmnopqrstuvwxyz";
         int charLength = charStr.length();

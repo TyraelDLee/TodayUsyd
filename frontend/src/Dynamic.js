@@ -82,12 +82,15 @@ class Dynamic extends React.Component {
 
     render() {
         return (
-            <main className={'dynamic-body'}>
-                <div className={'dynamic-host'}>
-                    {
-                        this.state.dynamic.length===0?<div>You didn't followed anybody yet.</div>:
-                        this.state.dynamic.map((post)=> <Item postId={post['postID']} postTitle={post['title']} postCat={post['category']} postBody={post['details']} postDate={post['createdTime']}></Item>)
-                    }
+            <main >
+                <div className={'title'}>Dynamic</div>
+                <div className={'dynamic-body'}>
+                    <div className={'dynamic-host'}>
+                        {
+                            this.state.dynamic.length===0?<div>You didn't followed anybody yet.</div>:
+                                this.state.dynamic.map((post)=> <Item postId={post['postID']} postTitle={post['title']} postCat={post['category']} postBody={post['details']} postDate={post['createdTime']}></Item>)
+                        }
+                    </div>
                 </div>
             </main>
         );

@@ -1,9 +1,9 @@
 package com.example.demo.utils;
 
 public enum FilterType {
-    anno(0,"开放权限"),
-    normalUser(1,"普通用户"),
-    adminUSer(2,"Admin用户");
+    anno(0,"without restriction"),
+    normalUser(1,"normal user"),
+    adminUSer(2,"Admin user");
 
 
     private final int type;

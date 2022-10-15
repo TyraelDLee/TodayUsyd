@@ -44,27 +44,27 @@ public class UserController {
                     return new Result(200, "", userService.getUserInfo(cookie.getValue()));
                 }
             }
-            return new Result(401,"No user fount");
+            return new Result(401,"No user found");
         }
         return new Result(400,"No user given");
     }
 
     @PostMapping("addUser")
     public Result addUser(@ModelAttribute User user, @RequestParam("securityCode") String securityCode, HttpSession session, HttpServletResponse response) {
-        // 获取验证码
+        // get verification code
         String sc = session.getAttribute("SecurityCode").toString();
         if(sc.equals(securityCode)){
-            // 添加用户到数据库
+            // add the user into database
             int row = userService.addUser(user);
             if(row ==1){
                 setCookie(user, response);
-                return new Result(200,"添加成功");
+                return new Result(200,"Add successfully!");
             } else{
-                return new Result(500,"添加失败,系统错误");
+                return new Result(500,"Add failed, system error!");
 
             }
         }else{
-            return new Result(201,"验证码错误，添加失败");
+            return new Result(201,"The verification code is wrong, the addition failed!");
         }
     }
 
@@ -72,28 +72,28 @@ public class UserController {
     public Result authSecurityCode(@PathVariable("code") String code, HttpServletRequest request, HttpSession session) {
         String myCode = session.getAttribute("SecurityCode").toString();
         if (myCode.equals(code)) {
-            // 被验证的邮箱
+            // the verified email
             String mail = session.getAttribute("SecurityMail").toString();
-            String exPath1 = "uni.sydney.edu.au";// USYD学生
-            String exPath2 = "sydney.edu.au";// USYD员工
-            //  获取用户的ID
+            String exPath1 = "uni.sydney.edu.au";// USYD Student
+            String exPath2 = "sydney.edu.au";// USYD Staffs
+            //  User's id
             String userId = getCookieUserId(request);
             int row = 0;
             if (mail.lastIndexOf(exPath1) != -1) {
-                // 修改  为USYD学生
+                // change to USYD student
                 row = userService.updateLabelUser(userId,1);
 
             } else if (mail.lastIndexOf(exPath2) != -1) {
-                // 修改  为USYD员工
+                // change to USYD staff
                 row = userService.updateLabelUser(userId,2);
             }else{
-                // 不是USYD学生  也不是不是USYD员工
+                // neither USYD student nor USYD staff
                 row = userService.updateLabelUser(userId,3);
             }
-            return new Result(row, "验证码正确");
+            return new Result(row, "The verification code is correct");
 
         } else {
-            return new Result(201, "验证码错误");
+            return new Result(201, "The verification code is wrong");
         }
     }
 
@@ -133,28 +133,28 @@ public class UserController {
 
     @RequestMapping("getSecurityCode/{to}")
     public Result getSecurityCode(@PathVariable("to") String to, HttpSession session) {
-        //验证码有效期为 10s
+        //The verification code is valid within 10 minutes.
         session.setMaxInactiveInterval(60 * 10);
 
         String sc = SecurityCode.getCharAndNumr(6);
-        // 验证码保存在了session中
+        // The verification code is stored in session
         session.setAttribute("SecurityCode", sc);
-        //to 被验证的邮箱
+        //to verified email
         session.setAttribute("SecurityMail", to);
         StringBuffer html = new StringBuffer();
         html.append("<html>");
         html.append("<body>");
-        html.append("<h2 style='color:red;'>您的验证码是: " + sc + "</h2>");
-        html.append("<p> 该验证码10分钟内有效</p>");
+        html.append("<h2 style='color:red;'>Your verification code is: " + sc + "</h2>");
+        html.append("<p> The verification code is valid within 10 minutes.</p>");
         html.append("</body>");
         html.append("</html>");
         try {
-            mailUtil.sendHtmlMail(to, "注册验证码", html.toString());
+            mailUtil.sendHtmlMail(to, "Registration verification code", html.toString());
         } catch (MessagingException e) {
 //            e.printStackTrace();
-            return new Result("发送失败");
+            return new Result("Send failed");
         }
-        return new Result("发送成功");
+        return new Result("Send successfully");
     }
 
 

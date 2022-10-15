@@ -23,6 +23,10 @@ public interface PostService {
 
     Post updatePostTop(String postID);
 
+    Post updatePostVisible(String postID);
+
+    Post updatePostNotTop(String postID);
+
     Post likeThePost(String postID);
 
     Boolean deletePostById(String postID);
@@ -46,4 +50,6 @@ public interface PostService {
     int updateNotice(String noticeId);
 
     List<Notice> findNoticeByUserid(String userid);
+
+    List<Comment> findCommentByPostID(String postID);
 }

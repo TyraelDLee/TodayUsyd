@@ -25,4 +25,6 @@ public interface UserService {
   User queryUserByUserid(String userid);
   
   int updateUser(User user);
+
+  User getUserByID(String userID);
 }

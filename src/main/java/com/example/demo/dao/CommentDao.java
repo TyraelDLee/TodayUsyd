@@ -10,4 +10,7 @@ import java.util.List;
 public interface CommentDao extends JpaRepository<Comment,String> {
     @Query(value = "select id,content,created_time,postid,userid,username from comments order by created_time desc",nativeQuery = true)
     List<Comment> findLatestPostComment();
+
+    @Query(value = "select id,content,created_time,postid,userid,username from comments where postid=?1 order by created_time desc",nativeQuery = true)
+    List<Comment> findCommentByPostID(String postID);
 }

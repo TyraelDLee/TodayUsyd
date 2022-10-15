@@ -34,8 +34,8 @@ public class Post {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "createdTime")
     private LocalDateTime createdTime;
-    @Lob
-    private byte[] data;
+    @Column(name = "fileUrl")
+    private String fileUrl;
     @Column(name = "istop")//是否置顶，默认为1没置顶，2置顶
     private int istop;
     @Column(name = "isvisible")//是否可见，默认为1可见，不可见为2
@@ -133,12 +133,12 @@ public class Post {
         this.createdTime = createdTime;
     }
 
-    public byte[] getData() {
-        return data;
+    public String getFileUrl() {
+        return fileUrl;
     }
 
-    public void setData(byte[] data) {
-        this.data = data;
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
     }
 
     public int getIstop() {

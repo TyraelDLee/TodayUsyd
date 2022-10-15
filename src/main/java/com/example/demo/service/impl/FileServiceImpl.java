@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.util.List;
 import java.util.stream.Stream;
 
 @Service
@@ -29,8 +28,8 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public Stream<File> getFilesByPostID(String postID) {
-        return fileDao.findByPostID(postID).stream();
+    public File getFileByPostID(String postID) {
+        return fileDao.findByPostID(postID);
     }
 
     @Override

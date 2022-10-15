@@ -1,5 +1,12 @@
+.title{
+    font-weight: bold;
+    font-size: 24px;
+    width: 90%;
+    margin: 100px 0 15px 100px;
+}
+
 .dynamic-body{
-    margin-top: 100px;
+    margin-top: 40px;
     display: flex;
     flex-direction: column;
     align-content: center;

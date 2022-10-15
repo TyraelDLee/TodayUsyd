@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -35,5 +36,15 @@ public class FavServiceImpl implements FavService {
             postIDs.add(favorites.get(i).getPostID());
         }
         return postDao.findAllById(postIDs);
+    }
+
+    @Override
+    public Boolean removeFav(String favID) {
+        favDao.deleteById(favID);
+        Optional<Favorite> fav = favDao.findById(favID);
+        if (null == fav) {
+            return true;
+        }
+        return false;
     }
 }

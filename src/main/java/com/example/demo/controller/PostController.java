@@ -1,17 +1,20 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Comment;
-import com.example.demo.entity.Notice;
-import com.example.demo.entity.Post;
+import com.example.demo.entity.*;
 import com.example.demo.service.FileService;
-import com.example.demo.entity.Take;
 import com.example.demo.service.PostService;
 import com.example.demo.service.TakeService;
+import com.example.demo.service.UserService;
 import com.example.demo.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,16 +30,19 @@ public class PostController {
     private FileService fileService;
     @Autowired
     private TakeService takeService;
+    @Autowired
+    private UserService userService;
 
     /**
      * 获取最新的帖子
+     *
      * @return
      */
     @GetMapping("/findLatestPost")
     public Result findLatestPost() {
         Result result = new Result();
         List<Post> postList = postService.findLatestPost();
-        if(postList == null){
+        if (postList == null) {
             postList = new ArrayList<>();
         }
         result.setObject(postList);
@@ -45,13 +51,14 @@ public class PostController {
 
     /**
      * 获取最喜欢的帖子
+     *
      * @return
      */
     @GetMapping("/findLikestPost")
     public Result findLikestPost() {
         Result result = new Result();
         List<Post> postList = postService.findLikestPost();
-        if(postList == null){
+        if (postList == null) {
             postList = new ArrayList<>();
         }
         result.setObject(postList);
@@ -60,15 +67,16 @@ public class PostController {
 
     /**
      * 根据标题查找帖子
-     * @param title  帖子标题
+     *
+     * @param title 帖子标题
      * @return
      */
     @GetMapping("/findPostByTitle")
     public Result findPostByTitle(String title) {
         Result result = new Result();
-        title = "%"+title+"%";
+        title = "%" + title + "%";
         List<Post> postList = postService.findPostByTitle(title);
-        if(postList == null){
+        if (postList == null) {
             postList = new ArrayList<>();
         }
         result.setObject(postList);
@@ -80,12 +88,12 @@ public class PostController {
      *
      * @param userid the given UID.
      * @return the REST result with the list of posts from database
-     * */
+     */
     @GetMapping("/findPostById")
-    public Result findPostById(String userid){
+    public Result findPostById(String userid) {
         Result result = new Result();
         List<Post> posts = postService.findPostByUserId(userid);
-        if(posts == null){
+        if (posts == null) {
             posts = new ArrayList<>();
         }
         result.setObject(posts);
@@ -95,14 +103,15 @@ public class PostController {
 
     /**
      * 保存用户对帖子的评论
-     * @param userid  用户id
-     * @param username  用户名称
-     * @param postID  帖子id
+     *
+     * @param userid   用户id
+     * @param username 用户名称
+     * @param postID   帖子id
      * @param content  评论内容
      * @return
      */
     @RequestMapping("/saveComment")
-    public Result saveComment(String userid,String username,String postID,String content) {
+    public Result saveComment(String userid, String username, String postID, String content) {
         Result result = new Result();
 
         Comment comment = new Comment();
@@ -113,7 +122,7 @@ public class PostController {
         comment.setContent(content);
         comment.setCreatedTime(LocalDateTime.now());
         int flag = postService.saveComment(comment);
-        if(flag == 0){
+        if (flag == 0) {
             result.setCode(500);
             result.setMsg("操作异常");
         }
@@ -122,13 +131,14 @@ public class PostController {
 
     /**
      * 查找最近的帖子评论
+     *
      * @return
      */
     @GetMapping("/findLatestPostComment")
     public Result findLatestPostComment() {
         Result result = new Result();
         List<Comment> postCommentList = postService.findLatestPostComment();
-        if(postCommentList == null){
+        if (postCommentList == null) {
             postCommentList = new ArrayList<>();
         }
         result.setObject(postCommentList);
@@ -137,19 +147,20 @@ public class PostController {
 
     /**
      * 订阅用户
-     * @param userid  当前用户
-     * @param takeuserid  被订阅用户
+     *
+     * @param userid     当前用户
+     * @param takeuserid 被订阅用户
      * @return
      */
     @RequestMapping("/takeuser")
-    public Result takeuser(String userid,String takeuserid) {
+    public Result takeuser(String userid, String takeuserid) {
         Result result = new Result();
         Take take = new Take();
         take.setId(UUID.randomUUID().toString());
         take.setUserid(userid);
         take.setTakeuserid(takeuserid);
         int flag = postService.takeuser(take);
-        if(flag == 0){
+        if (flag == 0) {
             result.setCode(500);
             result.setMsg("操作异常");
         }
@@ -158,6 +169,7 @@ public class PostController {
 
     /**
      * 查询当前用户订阅了哪些用户
+     *
      * @param userid 当前用户id
      * @return
      */
@@ -165,7 +177,7 @@ public class PostController {
     public Result findTakeuser(String userid) {
         Result result = new Result();
         List<Take> takeList = takeService.findTakeByUserid(userid);
-        if(takeList == null){
+        if (takeList == null) {
             takeList = new ArrayList<>();
         }
         result.setObject(takeList);
@@ -174,6 +186,7 @@ public class PostController {
 
     /**
      * 查询当前用户订阅了被哪些用户订阅了
+     *
      * @param userid 当前用户id
      * @return
      */
@@ -181,7 +194,7 @@ public class PostController {
     public Result findUserByTake(String userid) {
         Result result = new Result();
         List<Take> takeList = takeService.findTakeByTakeuserid(userid);
-        if(takeList == null){
+        if (takeList == null) {
             takeList = new ArrayList<>();
         }
         result.setObject(takeList);
@@ -190,19 +203,20 @@ public class PostController {
 
     /**
      * 保存关注用户发帖通知
-     * @param pubuserid  发帖用户
+     *
+     * @param pubuserid   发帖用户
      * @param pubusername 发帖用户名称
-     * @param postID  帖子id
-     * @param content 通知内容
+     * @param postID      帖子id
+     * @param content     通知内容
      * @return
      */
     @RequestMapping("/saveNotice")
-    public Result saveNotice(String pubuserid,String pubusername,String postID,String content) {
+    public Result saveNotice(String pubuserid, String pubusername, String postID, String content) {
         Result result = new Result();
 
         List<Take> takeList = takeService.findTakeByTakeuserid(pubuserid);
-        if(takeList != null && takeList.size()>0 ){
-            for(Take take : takeList){
+        if (takeList != null && takeList.size() > 0) {
+            for (Take take : takeList) {
                 Notice notice = new Notice();
                 notice.setId(UUID.randomUUID().toString());
                 notice.setPubuserid(pubuserid);
@@ -213,7 +227,7 @@ public class PostController {
                 notice.setIsread(0);
                 notice.setContent(content);
                 int flag = postService.saveNotice(notice);
-                if(flag == 0){
+                if (flag == 0) {
                     result.setCode(500);
                     result.setMsg("操作异常");
                 }
@@ -224,6 +238,7 @@ public class PostController {
 
     /**
      * 更新发帖通知为已读
+     *
      * @param id 通知主键id
      * @return
      */
@@ -231,7 +246,7 @@ public class PostController {
     public Result updateNotice(String id) {
         Result result = new Result();
         int flag = postService.updateNotice(id);
-        if(flag == 0){
+        if (flag == 0) {
             result.setCode(500);
             result.setMsg("操作异常");
         }
@@ -241,13 +256,14 @@ public class PostController {
 
     /**
      * 查找关注者发布的帖子的通知信息
+     *
      * @return
      */
     @GetMapping("/findNoticeByUserid")
     public Result findNoticeByUserid(String userid) {
         Result result = new Result();
         List<Notice> noticeList = postService.findNoticeByUserid(userid);
-        if(noticeList == null){
+        if (noticeList == null) {
             noticeList = new ArrayList<>();
         }
         result.setObject(noticeList);
@@ -282,24 +298,45 @@ public class PostController {
 
     @PostMapping("/createPost")
     public Result createPost(@RequestParam("userID") String userID,
-                             @RequestParam("userName") String userName,
                              @RequestParam("type") String type, @RequestParam("category") String category,
                              @RequestParam("title") String title, @RequestParam("details") String details,
-                             @RequestParam("file") MultipartFile file) {
-        Post post = postService.savePost(new Post(userID, userName, type, category, title, details));
-        String postID = post.getPostID();
+                             @RequestParam("file") MultipartFile file) throws IOException {
+        User user = userService.getUserByID(userID);
+        String userName = "undefined";
+        if (user != null) {
+            userName = user.getUsername();
+        }
+        Post post = new Post(userID, userName, type, category, title, details);
+        post.setFileUrl(ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/Post/file/")
+                .path(post.getPostID())
+                .toUriString());
+        postService.savePost(post);
         String message = "";
         try {
-            fileService.storeFile(file, postID);
-            message = "Uploaded the file successfully: " + file.getOriginalFilename();
+
+            fileService.storeFile(file, post.getPostID());
         } catch (Exception e) {
-            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+            message = "Fail to store file";
+
         }
+
         return new Result(200, message, post);
+    }
+
+    @GetMapping("/file/{id}")
+    public ResponseEntity<byte[]> getFile(@PathVariable String postID) {
+        File file = fileService.getFileByPostID(postID);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"")
+                .body(file.getData());
     }
 
     /**
      * find post by post id
+     *
      * @param id postID
      * @return
      */
@@ -314,13 +351,41 @@ public class PostController {
     }
 
     @PutMapping("/updatePostInvisible")
-    public Result updatePostInvisible(@RequestParam("postID") String postID) {
-        return new Result(postService.updatePostInvisible(postID));
+    public Result updatePostInvisible(@RequestParam("postID") String postID,@ModelAttribute User user) {
+        if (user!=null) {
+            if (user.getUserAuth() == 2) {
+                return new Result(postService.updatePostInvisible(postID));
+            } else return new Result("The user is not admin and does not have right to set the post invisible");
+        }
+        return new Result("The user has not login");
     }
 
+    @PutMapping("/updatePostVisible")
+    public Result updatePostVisible(@RequestParam("postID") String postID,@ModelAttribute User user) {
+        if (user!=null) {
+            if (user.getUserAuth() == 2) {
+                return new Result(postService.updatePostVisible(postID));
+            } else return new Result("The user is not admin and does not have right to set the post visible");
+        }
+        return new Result("The user has not login");
+    }
     @PutMapping("/updatePostIsTop")
-    public Result updateThePostTop(@RequestParam("postID") String postID) {
-        return new Result(postService.updatePostTop(postID));
+    public Result updateThePostTop(@RequestParam("postID") String postID,@ModelAttribute User user) {
+        if (user!=null) {
+            if (user.getUserAuth() == 2) {
+                return new Result(postService.updatePostTop(postID));
+            } else return new Result("The user is not admin and does not have right to set the post top");
+        }
+        return new Result("The user has not login");
+    }
+    @PutMapping("/updatePostIsNotTop")
+    public Result updateThePostNotTop(@RequestParam("postID") String postID,@ModelAttribute User user) {
+        if (user!=null) {
+            if (user.getUserAuth() == 2) {
+                return new Result(postService.updatePostNotTop(postID));
+            } else return new Result("The user is not admin and does not have right to set the post not top");
+        }
+        return new Result("The user has not login");
     }
 
     @PutMapping("/likeThePost")

@@ -66,11 +66,24 @@ public class PostServiceImpl implements PostService {
         post.setIsVisible(2);//设置为不可见
         return postDao.save(post);
     }
+    @Override
+    public Post updatePostVisible(String postID) {
+        Post post = postDao.findById(postID).orElseThrow(() -> new EntityNotFoundException(postID));
+        post.setIsVisible(1);//设置为可见
+        return postDao.save(post);
+    }
 
     @Override
     public Post updatePostTop(String postID) {
         Post post = postDao.findById(postID).orElseThrow(() -> new EntityNotFoundException(postID));
         post.setIstop(2);//设置为置顶
+        return postDao.save(post);
+    }
+
+    @Override
+    public Post updatePostNotTop(String postID) {
+        Post post = postDao.findById(postID).orElseThrow(() -> new EntityNotFoundException(postID));
+        post.setIstop(1);//取消置顶
         return postDao.save(post);
     }
 

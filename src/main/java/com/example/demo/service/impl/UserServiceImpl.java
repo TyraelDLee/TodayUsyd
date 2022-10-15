@@ -40,6 +40,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByID(String userID) {
+        return userDao.getUserByUserid(userID);
+    }
+
+    @Override
     public int addUser(User user) {
 
         user.setUserpwd(DigestUtils.md5DigestAsHex(user.getUserpwd().getBytes()));

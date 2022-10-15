@@ -14,6 +14,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
+import { AiFillTag } from 'react-icons/ai';
 
 class Course extends Component {
 
@@ -23,15 +24,27 @@ class Course extends Component {
             showPost: false,
             posts: null,
             sort: "Time",
+            topposts: null,
         }
     }
 
     componentDidMount(){
-        axios.get('./Post/getAllPostsByType?type=course')
+        axios.get('.Post/getAllPostsByType?type=course')
         .then((response) => {
-            let post = response.data.object.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
+            let removeInvisiblePost = response.data.object.filter(post => {
+                return post.isVisible === 1;
+            });
+            let toppost = removeInvisiblePost.filter(post => {
+                return post.istop === 2;
+            });
+            let otherpost = removeInvisiblePost.filter(post => {
+                return post.istop === 1;
+            });
+            let toppostsort = toppost.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
+            let otherpostsort = otherpost.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
             this.setState({
-                posts: post,
+                topposts: toppostsort,
+                posts: otherpostsort,
             });
         })
     }
@@ -81,20 +94,23 @@ class Course extends Component {
     }
 
     handleClickSortCategory(category) {
-        let sortposts;
+        let sortposts, topsortposts;
         if (category === "Time"){
             sortposts = this.state.posts.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
+            topsortposts = this.state.topposts.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
         } else {
             sortposts = this.state.posts.sort((a, b) => (a.numOfLikes > b.numOfLikes) ? -1 : 1);
+            topsortposts = this.state.topposts.sort((a, b) => (a.numOfLikes > b.numOfLikes) ? -1 : 1);
         }
         this.setState({
             sort: category,
             posts: sortposts,
+            topposts: topsortposts,
         });
     }
 
     render() {
-        const { posts,sort } = this.state;
+        const { posts,sort, topposts } = this.state;
         return(
             <div>
                 <Navbar />
@@ -123,6 +139,25 @@ class Course extends Component {
                     </InputGroup>
                 </div>
                 <div className="postlist">
+                    {
+                        topposts && topposts.map((toppost) => {
+                            return  <div className="singlePost">
+                                        <AiFillTag className="tag" size={30}/>
+                                        <div onClick={() => this.onClickDirectPost(toppost.postID)} className="profileOverview">
+                                            <div className="profileUserName">{toppost.userName}</div>
+                                            <div className="profileTitle">{toppost.title}</div>
+                                            <div className="profileTime">posted at {(toppost.createdTime).substr(11)} on {(toppost.createdTime).substr(0, 10)}</div>
+                                        </div>
+                                        <div className="profileThumb">
+                                            <div>
+                                                <div className="thumbUpNumber">{toppost.numOfLikes}</div>
+                                                <GoThumbsup onClick={() => this.onClickThumbUp(toppost.postID)} className="thumbUp" size={25}/>
+                                            </div>
+                                        </div>
+                                    </div>
+                        })
+                    }
+                    <br/><br/>
                     {
                         posts && posts.map((post) => {
                             return  <div className="singlePost">

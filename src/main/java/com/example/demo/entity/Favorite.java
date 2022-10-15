@@ -64,4 +64,15 @@ public class Favorite {
     public int hashCode() {
         return Objects.hash(favID);
     }
+
+    @Override
+    public String toString() {
+        return "Favorite{" +
+                "favID='" + favID + '\'' +
+                ", postID='" + postID + '\'' +
+                ", userid='" + userid + '\'' +
+                ", userName='" + userName + '\'' +
+                ", createdTime=" + createdTime +
+                '}';
+    }
 }

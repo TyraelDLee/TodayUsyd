@@ -41,4 +41,5 @@ public class FileServiceImpl implements FileService {
     public Stream<File> getAllFiles() {
         return fileDao.findAll().stream();
     }
+
 }

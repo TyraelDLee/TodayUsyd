@@ -6,7 +6,7 @@ import com.example.demo.entity.Post;
 public interface FavService {
     Favorite storeFav(Favorite favorite);
 
-    Iterable<Post> getFavByUserid(String postID);
+    Iterable<Post> getFavByUserid(String userid);
 
     Boolean removeFav(String favID);
 }

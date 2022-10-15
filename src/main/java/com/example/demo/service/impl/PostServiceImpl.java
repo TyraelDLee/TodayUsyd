@@ -173,4 +173,8 @@ public class PostServiceImpl implements PostService {
         return 0;
     }
 
+    @Override
+    public List<Comment> findCommentByPostID(String postID) {
+        return commentDao.findCommentByPostID(postID);
+    }
 }

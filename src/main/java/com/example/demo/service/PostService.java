@@ -50,4 +50,6 @@ public interface PostService {
     int updateNotice(String noticeId);
 
     List<Notice> findNoticeByUserid(String userid);
+
+    List<Comment> findCommentByPostID(String postID);
 }

@@ -169,4 +169,22 @@ public class Post {
     public int hashCode() {
         return Objects.hash(postID);
     }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "postID='" + postID + '\'' +
+                ", userid='" + userid + '\'' +
+                ", userName='" + userName + '\'' +
+                ", type='" + type + '\'' +
+                ", category='" + category + '\'' +
+                ", title='" + title + '\'' +
+                ", details='" + details + '\'' +
+                ", numOfLikes=" + numOfLikes +
+                ", createdTime=" + createdTime +
+                ", fileUrl='" + fileUrl + '\'' +
+                ", istop=" + istop +
+                ", isvisible=" + isvisible +
+                '}';
+    }
 }

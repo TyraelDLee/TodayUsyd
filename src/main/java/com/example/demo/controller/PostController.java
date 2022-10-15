@@ -1,14 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.*;
-import com.example.demo.service.FileService;
-import com.example.demo.service.PostService;
-import com.example.demo.service.TakeService;
-import com.example.demo.service.UserService;
+import com.example.demo.service.*;
 import com.example.demo.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +28,8 @@ public class PostController {
     private TakeService takeService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private LikeRecordService likeRecordService;
 
     /**
      * 获取最新的帖子
@@ -291,15 +289,18 @@ public class PostController {
             userName = user.getUsername();
         }
         Post post = new Post(userID, userName, type, category, title, details);
-        post.setFileUrl(ServletUriComponentsBuilder
-                .fromCurrentContextPath()
-                .path("/Post/file/")
-                .path(post.getPostID())
-                .toUriString());
+        String url = null;
+        if (file != null) {
+            url = ServletUriComponentsBuilder
+                    .fromCurrentContextPath()
+                    .path("/Post/file/")
+                    .path(post.getPostID())
+                    .toUriString();
+        }
+        post.setFileUrl(url);
         postService.savePost(post);
         String message = "";
         try {
-
             fileService.storeFile(file, post.getPostID());
         } catch (Exception e) {
             message = "Fail to store file";
@@ -374,10 +375,26 @@ public class PostController {
 
     @PutMapping("/likeThePost")
     public Result likeThePost(@RequestParam("postID") String postID, @RequestParam("userID") String userID) {
-        return new Result(postService.likeThePost(postID));
-        // To-Do
-        // user should be only able to like a post once,
-        // and every time the user log in, the above rule should remain working
+        String message = "";
+
+        List<LikeRecord> likeRecord = likeRecordService.findByPostID(postID);
+        Boolean tag = false;
+        if (likeRecord != null) {
+            for (int i = 0; i < likeRecord.size(); i++) {
+                if (likeRecord.get(i).getUserid().equals(userID)){
+                    tag = true;
+                    break;
+                }
+            }
+        }
+        if (likeRecord == null || !tag) {
+            likeRecordService.saveLikeRecord(new LikeRecord(postID, userID));
+            postService.likeThePost(postID);
+            message = "Like has been saved!";
+        }else{
+            message = "You only can like this post once";
+        }
+        return new Result(message);
     }
 
     @DeleteMapping("/deleteThePost")

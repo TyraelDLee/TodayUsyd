@@ -73,15 +73,21 @@ class Filter extends React.Component{
                 areaNode.classList.add('area-item');
                 areaNode.innerText = area;
                 areaNode.addEventListener('click', (e)=>{
-                    for (let node of document.getElementsByClassName('area-item')){
-                        node.classList.remove('area-item-select');
+                    if (areaNode.classList.contains('area-item-select')){
+                        areaNode.classList.remove('area-item-select');
+                        getFilter('');
+                    }else{
+                        for (let node of document.getElementsByClassName('area-item')){
+                            node.classList.remove('area-item-select');
+                        }
+                        areaNode.classList.add('area-item-select');
+                        window.history.pushState(null,null,window.location['pathname']+`?category=${area}`);
+                        if (type === 'market'){
+                            getFilter(areaNode.innerText);
+                        }
+                        renderCode(courses[area]);
                     }
-                    areaNode.classList.add('area-item-select');
-                    window.history.pushState(null,null,window.location['pathname']+`?category=${area}`);
-                    if (type === 'market'){
-                        getFilter(areaNode.innerText);
-                    }
-                    renderCode(courses[area]);
+
                 });
                 if (areaNode.innerText === selectedCat)
                     areaNode.classList.add('area-item-select');
@@ -100,21 +106,27 @@ class Filter extends React.Component{
                 codeNode.classList.add('code-item');
                 codeNode.innerText = code;
                 codeNode.addEventListener('click', (e)=>{
-                    for (let node of document.getElementsByClassName('code-item')){
-                        node.classList.remove('code-item-select');
-                        window.history.pushState(null,null,window.location.href.replace(`&course=${node.innerText}`,''));
-                    }
-                    if (codeNode.classList.contains('code-item-select')) {
+                    if (codeNode.classList.contains('code-item-select')){
                         codeNode.classList.remove('code-item-select');
-                    }
-                    else {
-                        codeNode.classList.add('code-item-select');
-                        //update here.
-                        window.history.pushState(null,null,window.location.href+`&course=${code}`);
-                        if (type === 'course'){
-                            getFilter(codeNode.innerText);
+                        getFilter('');
+                    }else{
+                        for (let node of document.getElementsByClassName('code-item')){
+                            node.classList.remove('code-item-select');
+                            window.history.pushState(null,null,window.location.href.replace(`&course=${node.innerText}`,''));
+                        }
+                        if (codeNode.classList.contains('code-item-select')) {
+                            codeNode.classList.remove('code-item-select');
+                        }
+                        else {
+                            codeNode.classList.add('code-item-select');
+                            //update here.
+                            window.history.pushState(null,null,window.location.href+`&course=${code}`);
+                            if (type === 'course'){
+                                getFilter(codeNode.innerText);
+                            }
                         }
                     }
+
                 });
                 if (codeNode.innerText===selectedCode)
                     codeNode.classList.add('code-item-select');

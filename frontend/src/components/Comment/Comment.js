@@ -11,6 +11,7 @@ import Row from 'react-bootstrap/Row';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import avatar from "./../../avatar.svg";
 
 const params = new URLSearchParams(window.location.search);
 
@@ -49,35 +50,21 @@ class Comment extends Component {
                 postusername: response.data.object.userName,
             });
         })
-        //TODO: get auth code
 
-        //TODO: parallel
-        /*
-        const userid = Cookies.get('UID');
-        axios.get(`./Fav/getFav?userid=${userid}`)
-        .then ((response) => {
+        axios.get(`./getUserInfo`, { withCredentials: true })
+        .then((response) => {
+            console.log(response.data);
             if (response.data.code === 200){
-                if (response.data.object.length === 0){
-                    this.setState({
-                        favoriate: 1,
-                    });
-                } else {
-                    this.setState({
-                        favoriate: 2,
-                    });
-                }
+                this.setState({
+                    userAuth: response.data.object.userAuth,
+                });
             }
         })
-        */
 
         var formData2 = new FormData();
-        formData2.append("postID", this.state.postid);
-
-        axios.get('./Post/findCommentByPostID', formData2, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-        }).then ((response) => {
+        formData2.append("postID", postid);
+        axios.get(`./Post/findCommentByPostID?postID=${postid}`)
+        .then ((response) => {
             if (response.data.code === 200){
                 let allcomments = response.data.object.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
                 this.setState({
@@ -156,7 +143,6 @@ class Comment extends Component {
         })
     }
 
-    // TODO
     onClickFavorite = () => {
         var formData = new FormData();
         formData.append("postID", this.state.postid);
@@ -169,9 +155,7 @@ class Comment extends Component {
             },
         }).then ((response) => {
             if (response.data.code === 200){
-                this.setState({
-                    favoriate: 2,
-                });
+                window.alert("added to your Favorite");
             }
         })
     }
@@ -223,13 +207,14 @@ class Comment extends Component {
 
     render() {
         const { top, visible, favoriate, postusername, title, detail, likes, createdTime, userAuth, comments, postuserid } = this.state;
+        console.log(comments);
         return(
             <div>
                 <Navbar />
                 {
                     top !== null && visible !== null && favoriate !== null && postusername !== null && title !== null && detail !== null && likes !== null && createdTime !== null &&
                     <div className="poster">
-                        <div className="userCommentPhoto"></div>
+                        <img className="userCommentPhoto" src={avatar}/>
                         <div className="userCommentName">{postusername}</div>
                         <div className="userCommentTime">posted at {createdTime.substr(11)} on {createdTime.substr(0, 10)}</div>
                         <GiShadowFollower onClick={() => this.onClickFollow(postuserid)} className="userCommentFollow" size={25}/>
@@ -239,9 +224,7 @@ class Comment extends Component {
                         {
                             userAuth !== 2 ? <div className="Button"/> : top === 2 ? <AiOutlineVerticalAlignTop className="Button" onClick={this.onClickCancelTop} size={25}/> : <GoListOrdered className="Button" onClick={this.onClickTop} size={25}/>
                         }
-                        {
-                            favoriate === 1 ? <AiOutlineStar className="Button" onClick={this.onClickFavorite} size={25}/> : <AiFillStar className="Button" size={25}/>
-                        }
+                        <AiOutlineStar className="Button" onClick={this.onClickFavorite} size={25}/>
                         <div className="postTitle">{title}</div>
                         <div className="postDescription">{detail}</div>
                         <div className="attachedFile">{/* TODO*/}</div>

@@ -308,8 +308,7 @@ public class PostController {
         postService.savePost(post);
         String message = "";
         String url = null;
-        if (file != null) {
-            System.out.println(post.getPostID());
+        if (!file.isEmpty()) {
             url = ServletUriComponentsBuilder
                     .fromCurrentContextPath()
                     .path("/Post/file/")

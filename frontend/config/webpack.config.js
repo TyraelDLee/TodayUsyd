@@ -211,6 +211,8 @@ module.exports = function (webpackEnv) {
       search : isEnvDevelopment && !shouldUseReactRefresh ? [ webpackDevClientEntry, paths.appIndexJs, ] : paths.appSearchJs,
       dynamic : isEnvDevelopment && !shouldUseReactRefresh ? [ webpackDevClientEntry, paths.appIndexJs, ] : paths.appDynamicJs,
       comment : isEnvDevelopment && !shouldUseReactRefresh ? [ webpackDevClientEntry, paths.appIndexJs, ] : paths.appCommentJs,
+      setting : isEnvDevelopment && !shouldUseReactRefresh ? [ webpackDevClientEntry, paths.appIndexJs, ] : paths.appSettingJs,
+      favorite : isEnvDevelopment && !shouldUseReactRefresh ? [ webpackDevClientEntry, paths.appIndexJs, ] : paths.appFavoriteJs,
     },
     output: {
       // The build folder.
@@ -845,6 +847,60 @@ module.exports = function (webpackEnv) {
                 : undefined
         )
     ),
+    new HtmlWebpackPlugin(
+      Object.assign(
+          {},
+          {
+            inject: true,
+            template: paths.appCommentHtml,
+            filename: 'setting.html',
+            chunks: ['setting']
+          },
+          isEnvProduction
+              ? {
+                minify: {
+                  removeComments: true,
+                  collapseWhitespace: true,
+                  removeRedundantAttributes: true,
+                  useShortDoctype: true,
+                  removeEmptyAttributes: true,
+                  removeStyleLinkTypeAttributes: true,
+                  keepClosingSlash: true,
+                  minifyJS: true,
+                  minifyCSS: true,
+                  minifyURLs: true,
+                },
+              }
+              : undefined
+      )
+  ),
+  new HtmlWebpackPlugin(
+    Object.assign(
+        {},
+        {
+          inject: true,
+          template: paths.appFavoriteHtml,
+          filename: 'favorite.html',
+          chunks: ['favorite']
+        },
+        isEnvProduction
+            ? {
+              minify: {
+                removeComments: true,
+                collapseWhitespace: true,
+                removeRedundantAttributes: true,
+                useShortDoctype: true,
+                removeEmptyAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                keepClosingSlash: true,
+                minifyJS: true,
+                minifyCSS: true,
+                minifyURLs: true,
+              },
+            }
+            : undefined
+    )
+),
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       // https://github.com/facebook/create-react-app/issues/5358

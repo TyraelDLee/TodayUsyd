@@ -5,6 +5,8 @@ import com.example.demo.dao.PostDao;
 import com.example.demo.entity.Favorite;
 import com.example.demo.entity.Post;
 import com.example.demo.service.FavService;
+import com.example.demo.utils.ResponseFav;
+import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,27 +26,42 @@ public class FavServiceImpl implements FavService {
     private PostDao postDao;
 
     @Override
-    public Favorite storeFav(Favorite favorite) {
-        return favDao.save(favorite);
+    public Optional<Favorite> storeFav(Favorite favorite) {
+        favDao.save(favorite);
+        return favDao.findById(favorite.getFavID());
     }
 
     @Override
-    public Iterable<Post> getFavByUserid(String userid) {
+    public List<ResponseFav> getFavPostByUserid(String userid) {
         List<Favorite> favorites = favDao.findByUserid(userid);
         List<String> postIDs = new ArrayList<>();
         for (int i = 0; i < favorites.size(); i++) {
             postIDs.add(favorites.get(i).getPostID());
         }
-        return postDao.findAllById(postIDs);
+
+        Iterable<Post> posts = postDao.findAllById(postIDs);
+        List<Post> postList = Lists.newArrayList(posts);
+        List<ResponseFav> responseFavs = new ArrayList<>();
+        for (int i = 0; i < favorites.size(); i++) {
+            responseFavs.add(new ResponseFav(favorites.get(i).getFavID(), postList.get(i)));
+        }
+        return responseFavs;
     }
 
     @Override
     public Boolean removeFav(String favID) {
-        favDao.deleteById(favID);
+
         Optional<Favorite> fav = favDao.findById(favID);
+        if (fav != null) {favDao.deleteById(favID);}
+        fav = favDao.findById(favID);
         if (null == fav) {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<Favorite> getFavByUserid(String userid) {
+        return favDao.findByUserid(userid);
     }
 }

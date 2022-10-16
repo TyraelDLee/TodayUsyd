@@ -2,71 +2,58 @@ import React, { Component } from "react";
 import './UserProfile.css'
 import Navbar from '../../Navbar'
 import ReactDOM from "react-dom/client";
-import Favorite from "../Favorite/Favorite";
-import Setting from "../Setting/Setting";
+import avatar from "./../../avatar.svg";
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 class UserProfile extends Component {
     constructor(props){
         super(props);
         this.state = {
-            userHome: true,
-            favorite: false,
-            setting: false,
+            username: null,
+            userdescription: "",
+            useraddress: "",
         }
     }
-    
-    handleClickUserHome = () => {
-        this.setState({
-            userHome: true,
-            favorite: false,
-            setting: false,
-        });
-    }
 
-    handleClickFavorite = () => {
-        this.setState({
-            userHome: false,
-            favorite: true,
-            setting: false,
-        });
-    }
+    componentDidMount(){
+        axios.get(`./getUserInfo`, { withCredentials: true })
+        .then((response) => {
+            if (response.data.code === 200){
+                this.setState({
+                    username: response.data.object.username,
+                });
+            }
+        })
 
-    handleClickSetting = () => {
-        this.setState({
-            userHome: false,
-            favorite: false,
-            setting: true,
-        });
+        axios.get(`/userProfile/home/index?userid=${Cookies.get('UID')}`)
+        .then((response) => {
+            console.log(response.data);
+            if (response.data.code === 200){
+                this.setState({
+                    userdescription: response.data.object.description,
+                    useraddress: response.data.object.address,
+                });
+            }
+        })
     }
 
     render() {
-        const {userHome, favorite, setting} = this.state;
-        let contents;
-        if (userHome && !favorite && !setting){
-            contents = 
-            <div>
-                <div className="Person">
-                    <div className="image"></div>
-                    <div className="username">UserName</div>
-                </div>
-                <div className="postArea">This is a sample description</div>
-            </div>
-        } else if (!userHome && favorite && !setting){
-            contents = <Favorite/>
-        }  else {
-            contents = <Setting/>
+        const { username, userdescription, useraddress } = this.state;
+        let description;
+        if (userdescription === null){
+            description = "";
         }
         return(
             <div>
                 <Navbar />
                 <div>
-                    <div className="verticalBar">
-                        <div onClick={this.handleClickUserHome} className="userHome">My Profile</div>
-                        <div onClick={this.handleClickFavorite} className="friends">Favouites</div>
-                        <div onClick={this.handleClickSetting} className="setting">Update Profile</div>
+                    <div className="Person">
+                        <img className="image" src={avatar}/>
+                        <div className="username">{username}</div>
                     </div>
-                    <div className="contents">{contents}
-                    </div>
+                    <div className="postArea">{description}</div>
+                    <div className="address">Address: {useraddress}</div>
                 </div>
             </div>
         );

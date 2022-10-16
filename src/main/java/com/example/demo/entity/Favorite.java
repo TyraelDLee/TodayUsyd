@@ -39,6 +39,22 @@ public class Favorite {
 
     }
 
+    public String getFavID() {
+        return favID;
+    }
+
+    public void setFavID(String favID) {
+        this.favID = favID;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public String getPostID() {
         return postID;
     }
@@ -63,5 +79,16 @@ public class Favorite {
     @Override
     public int hashCode() {
         return Objects.hash(favID);
+    }
+
+    @Override
+    public String toString() {
+        return "Favorite{" +
+                "favID='" + favID + '\'' +
+                ", postID='" + postID + '\'' +
+                ", userid='" + userid + '\'' +
+                ", userName='" + userName + '\'' +
+                ", createdTime=" + createdTime +
+                '}';
     }
 }

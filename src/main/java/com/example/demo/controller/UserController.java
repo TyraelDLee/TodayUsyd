@@ -49,6 +49,13 @@ public class UserController {
         return new Result(400,"No user given");
     }
 
+    @GetMapping("getUserInfoByID")
+    public Result getUserInfoByID(String uid){
+        if (uid!=null&&uid.length()>0)
+            return new Result(200, "Success", userService.getUserInfo(uid));
+        return new Result(400,"No user given");
+    }
+
     @PostMapping("addUser")
     public Result addUser(@ModelAttribute User user, @RequestParam("securityCode") String securityCode, HttpSession session, HttpServletResponse response) {
         // get verification code

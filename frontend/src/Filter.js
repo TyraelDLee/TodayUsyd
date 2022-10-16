@@ -10,8 +10,10 @@ class Filter extends React.Component{
     componentDidMount() {
         const marketCat = {'Book Market':[],'Cars':[],'Careers':[],'Rental':[],'Services':[]};
         const type = this.props.type;
-        let selectedCat = '', selectedCode='';
-
+        const getFilter = this.props.getFilterResult;
+        let selectedCat = new URLSearchParams(window.location["search"]).get("category"), selectedCode='';
+        if (type === 'market')
+            getFilter(selectedCat);
         new MutationObserver(()=>{
             selectedCat = new URLSearchParams(window.location["search"]).get("category");
             if (typeof selectedCat === 'undefined' || selectedCat === null)
@@ -26,7 +28,6 @@ class Filter extends React.Component{
 
         async function loadClassList(){
             let size = await getCourseList(1,12);
-            console.log( size['resultsSummary']['fullyMatching']);
             let courseList = await getCourseList(1, size['resultsSummary']['fullyMatching']);
             getCourseCode(courseList);
         }
@@ -77,6 +78,9 @@ class Filter extends React.Component{
                     }
                     areaNode.classList.add('area-item-select');
                     window.history.pushState(null,null,window.location['pathname']+`?category=${area}`);
+                    if (type === 'market'){
+                        getFilter(areaNode.innerText);
+                    }
                     renderCode(courses[area]);
                 });
                 if (areaNode.innerText === selectedCat)
@@ -107,6 +111,9 @@ class Filter extends React.Component{
                         codeNode.classList.add('code-item-select');
                         //update here.
                         window.history.pushState(null,null,window.location.href+`&course=${code}`);
+                        if (type === 'course'){
+                            getFilter(codeNode.innerText);
+                        }
                     }
                 });
                 if (codeNode.innerText===selectedCode)

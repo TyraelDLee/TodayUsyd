@@ -43,6 +43,7 @@ public class Post {
 
     public Post(String userid, String userName, String type, String category, String title, String details) {
         this.userid = userid;
+        this.userName = userName;
         this.type = type;
         this.category = category;
         this.title = title;

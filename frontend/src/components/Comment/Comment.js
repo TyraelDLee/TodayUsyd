@@ -2,14 +2,16 @@ import React, { Component } from "react";
 import './Comment.css'
 import Navbar from '../../Navbar'
 import ReactDOM from "react-dom/client";
-import { AiFillEye, AiFillEyeInvisible, AiOutlineVerticalAlignTop, AiOutlineStar, AiFillStar } from 'react-icons/ai'
-import { GoListOrdered, GoThumbsup } from 'react-icons/go'
+import { AiFillEye, AiFillEyeInvisible, AiOutlineVerticalAlignTop, AiOutlineStar, AiFillStar } from 'react-icons/ai';
+import { GoListOrdered } from 'react-icons/go';
+import { GiShadowFollower } from 'react-icons/gi';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import avatar from "./../../avatar.svg";
 
 const params = new URLSearchParams(window.location.search);
 
@@ -21,12 +23,13 @@ class Comment extends Component {
             top: null,
             visible: null,
             favoriate: 1,
-            username: null,
+            postusername: null,
+            verifylabel:null,
             title: null,
             detail: null,
             likes: null,
             createdTime: null,
-            userid: null,
+            postuserid: null,
             submitcomment: null,
             comments: null,
             userAuth: null,
@@ -44,49 +47,52 @@ class Comment extends Component {
                 detail: response.data.object.details,
                 likes: response.data.object.numOfLikes,
                 createdTime: response.data.object.createdTime,
-                userid: response.data.object.userid,
-                username: response.data.object.userName,
+                postuserid: response.data.object.userid,
+                postusername: response.data.object.userName,
             });
+            getVerifyStatus(response.data.object.userid);
         })
-        //TODO: get auth code
 
-        //TODO: parallel
-        /*
-        const userid = Cookies.get('UID');
-        axios.get(`./Fav/getFav?userid=${userid}`)
-        .then ((response) => {
+        function getVerifyStatus(uid){
+            fetch(`./getUserInfoByID?uid=${uid}`, {
+                method:'GET',
+                credentials:'include',
+                body:null
+            }).then(r=>r.json())
+                .then(json=>{
+                    const verLabel = document.getElementsByClassName('userCommentLabel')[0];
+                    if (json['code']===200){
+                        console.log(json['object']['labeldesc']);
+                        if (json['object']['labeldesc'] === 1){
+                            verLabel.innerHTML='Verified Usyd Student';
+                        }
+                        if (json['object']['labeldesc'] === 2){
+                            verLabel.innerHTML='Verified Usyd Staff';
+                        }
+                    }
+                });
+        }
+
+        axios.get(`./getUserInfo`, { withCredentials: true })
+        .then((response) => {
             if (response.data.code === 200){
-                if (response.data.object.length === 0){
-                    this.setState({
-                        favoriate: 1,
-                    });
-                } else {
-                    this.setState({
-                        favoriate: 2,
-                    });
-                }
+                this.setState({
+                    userAuth: response.data.object.userAuth,
+                });
             }
         })
-        */
 
         var formData2 = new FormData();
-        formData2.append("postid", this.state.postid);
-
-        //TODO
-        /*
-        axios.get('./', formData2, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-        }).then ((response) => {
-            if (response.ok){
+        formData2.append("postID", postid);
+        axios.get(`./Post/findCommentByPostID?postID=${postid}`)
+        .then ((response) => {
+            if (response.data.code === 200){
                 let allcomments = response.data.object.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
                 this.setState({
                     comments: allcomments,
                 });
             }
         })
-        */
     }
 
     onClickVisivle = () => {
@@ -101,6 +107,24 @@ class Comment extends Component {
             if (response.data.code === 200){
                 this.setState({
                     visible: 2,
+                });
+            }
+        })
+    }
+
+
+    onClickInVisivle = () => {
+        var formData = new FormData();
+        formData.append("postID", this.state.postid);
+
+        axios.put('./Post/updatePostVisible', formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+        }).then ((response) => {
+            if (response.data.code === 200){
+                this.setState({
+                    visible: 1,
                 });
             }
         })
@@ -123,11 +147,28 @@ class Comment extends Component {
         })
     }
 
+    onClickCancelTop = () => {
+        var formData = new FormData();
+        formData.append("postID", this.state.postid);
+
+        axios.put('./Post/updatePostIsNotTop', formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+        }).then ((response) => {
+            if (response.data.code === 200){
+                this.setState({
+                    top: 1,
+                });
+            }
+        })
+    }
+
     onClickFavorite = () => {
         var formData = new FormData();
         formData.append("postID", this.state.postid);
-        formData.append("userid", this.state.userid);
-        formData.append("userName", this.state.username);
+        formData.append("userid", Cookies.get('UID'));
+        formData.append("userName", this.state.postusername);
 
         axios.post('./Fav/addFav', formData, {
             headers: {
@@ -135,9 +176,7 @@ class Comment extends Component {
             },
         }).then ((response) => {
             if (response.data.code === 200){
-                this.setState({
-                    favoriate: 2,
-                });
+                window.alert("added to your Favorite");
             }
         })
     }
@@ -150,8 +189,8 @@ class Comment extends Component {
 
     handleCommentButton = () => {
         var formData = new FormData();
-        formData.append("userid", this.state.userid);
-        formData.append("username", this.state.username);
+        formData.append("userid", Cookies.get('UID'));
+        formData.append("username", this.state.postusername);
         formData.append("postID", this.state.postid);
         formData.append("content", this.state.submitcomment);
 
@@ -168,52 +207,69 @@ class Comment extends Component {
             }
         })
     }
-    // TODO: update star location
+
+    onClickFollow(postuserid){
+        var formData = new FormData();
+        formData.append("userid", Cookies.get('UID'));
+        formData.append("takeuserid", postuserid);
+
+        axios.post('./Post/takeuser', formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+        }).then ((response) => {
+            if (response.data.code === 200){
+                window.alert("followed successfully");
+            } else {
+
+            }
+        })
+    }
+
     render() {
-        const { top, visible, favoriate, username, title, detail, likes, createdTime, userAuth } = this.state;
+        const { top, visible, favoriate, postusername, title, detail, likes, createdTime, userAuth, comments, postuserid } = this.state;
+        console.log(comments);
         return(
             <div>
                 <Navbar />
                 {
-                    top !== null && visible !== null && favoriate !== null && username !== null && title !== null && detail !== null && likes !== null && createdTime !== null &&
+                    top !== null && visible !== null && favoriate !== null && postusername !== null && title !== null && detail !== null && likes !== null && createdTime !== null &&
                     <div className="poster">
-                        <div className="userCommentPhoto"></div>
-                        <div className="userCommentName">{username}</div>
+                        <img className="userCommentPhoto" src={avatar}/>
+                        <div className="userCommentName"><span>{postusername}</span><span className={'userCommentLabel'}></span></div>
                         <div className="userCommentTime">posted at {createdTime.substr(11)} on {createdTime.substr(0, 10)}</div>
-                        <GoThumbsup className="userCommentThumb" size={25}/>
-                        <div className="userCommentLikes">{likes}</div>
+                        <GiShadowFollower onClick={() => this.onClickFollow(postuserid)} className="userCommentFollow" size={25}/>
                         {
-                            userAuth !== 2 ? <div/> : visible === 1 ? <AiFillEye className="Button" onClick={this.onClickVisivle} size={25}/> : <AiFillEyeInvisible className="Button" size={25}/>
+                            userAuth !== 2 ? <div className="Button"/> : visible === 2 ? <AiFillEyeInvisible className="Button" onClick={this.onClickInVisivle} size={25}/> : <AiFillEye className="Button" onClick={this.onClickVisivle} size={25}/>
                         }
                         {
-                            userAuth !== 2 ? <div/> : top === 1 ? <GoListOrdered className="Button" onClick={this.onClickTop} size={25}/> : <AiOutlineVerticalAlignTop className="Button" size={25}/>
+                            userAuth !== 2 ? <div className="Button"/> : top === 2 ? <AiOutlineVerticalAlignTop className="Button" onClick={this.onClickCancelTop} size={25}/> : <GoListOrdered className="Button" onClick={this.onClickTop} size={25}/>
                         }
-                        {
-                            favoriate === 1 ? <AiOutlineStar className="Button" onClick={this.onClickFavorite} size={25}/> : <AiFillStar className="Button" size={25}/>
-                        }
+                        <AiOutlineStar className="Button" onClick={this.onClickFavorite} size={25}/>
                         <div className="postTitle">{title}</div>
                         <div className="postDescription">{detail}</div>
+                        <div className="attachedFile">{/* TODO*/}</div>
                     </div>
                 }
+                <div className="commentList">
                 {
-                    /*
-                    <div className="commentList">
-                        <div className="singlecomment">
-                            <div className="commentUserName">
-
-                            </div>
-                            <div className="commentTime">
-
-                            </div>
-                            <div className="commentContent">
-
-                            </div>
-                        </div>
-                    </div>
-                    */
+                    comments && comments.map((comment) => {
+                        return <div className="singlecomment">
+                                    <div className="commentUserName">
+                                        {comment.username}
+                                    </div>
+                                    <div className="commentTime">
+                                        posted at {(comment.createdTime).substr(11)} on {(comment.createdTime).substr(0, 10)}
+                                    </div>
+                                    <div className="commentContent">
+                                        {comment.content}
+                                    </div>
+                                </div>
+                    })
                 }
+                </div>
                 {
-                    top !== null && visible !== null && favoriate !== null && username !== null && title !== null && detail !== null && likes !== null && createdTime !== null &&
+                    top !== null && visible !== null && favoriate !== null && postusername !== null && title !== null && detail !== null && likes !== null && createdTime !== null &&
                     <div className="commentEditor">
                         <Form.Group as={Row} className="mb-3">
                             <Col sm="15">

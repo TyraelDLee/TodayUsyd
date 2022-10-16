@@ -19,6 +19,8 @@ public interface PostService {
 
     Post updatePost(String postID, Post newPost);
 
+    Post setUrl(String postID, String url);
+
     Post updatePostInvisible(String postID);
 
     Post updatePostTop(String postID);

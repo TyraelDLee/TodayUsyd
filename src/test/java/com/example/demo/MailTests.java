@@ -1,4 +1,5 @@
 package com.example.demo;
+
 import com.example.demo.utils.MailUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,19 +10,17 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.mail.MessagingException;
 
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration(classes = DemoApplication.class)
 public class MailTests {
     @Autowired
     private MailUtil mailUtil;
+
     @Test
     public void testTextMail() throws MessagingException {
-        mailUtil.sendHtmlMail("kryanchang1997@gmail.com", "注册验证码", new StringBuffer().toString());
-    }
-    @Test
-    public void testHello(){
-        System.out.println("hello-----------------------------");
+        mailUtil.sendHtmlMail("269929756@qq.com", "Verification code", new StringBuffer().toString());
+        System.out.println("Send successfully!");
     }
 }
+

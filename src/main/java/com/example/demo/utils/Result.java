@@ -1,7 +1,7 @@
 package com.example.demo.utils;
 
 public class Result {
-    private  String msg = "操作成功";
+    private  String msg = "Do successfully";
     private int code=200;
     private Object object;
 

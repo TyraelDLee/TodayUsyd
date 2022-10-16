@@ -72,6 +72,8 @@ module.exports = {
   appCourseJs: resolveModule(resolveApp, 'src/components/Course/Course'),
   appCommentHtml: resolveApp('public/comment.html'),
   appCommentJs: resolveModule(resolveApp, 'src/components/Comment/Comment'),
+  appSettingHtml: resolveApp('public/setting.html'),
+  appSettingJs: resolveModule(resolveApp, 'src/components/Setting/Setting'),
   appSearchHtml: resolveApp('public/search.html'),
   appSearchJs: resolveModule(resolveApp, 'src/Search'),
   appDynamicHtml: resolveApp('public/dynamic.html'),

@@ -20,10 +20,10 @@ public class MailUtil {
 
 
     /**
-     * 文本邮件的发送
-     * @param to  接收邮件者
-     * @param subject  主题
-     * @param content   内容
+     * Email sending by text
+     * @param to  recipient
+     * @param subject  title
+     * @param content  text content
      */
     public void  sendSimpleMail(String to,String subject,String  content){
         SimpleMailMessage message = new SimpleMailMessage();
@@ -31,38 +31,25 @@ public class MailUtil {
         message.setSubject(subject);
         message.setText(content);
         message.setFrom(from);
-
-        // 发送
         mailSender.send(message);
     }
 
     /**
-     * HTML 文本邮件
-     * @param to  接收邮件者
-     * @param subject  主题
-     * @param content   HTML内容
+     * Email sending by HTML
+     * @param to  recipient
+     * @param subject  title
+     * @param content  HTML content
      */
     public void sendHtmlMail(String to,String subject,String content) throws MessagingException {
 
         MimeMessage message = mailSender.createMimeMessage();
-
         MimeMessageHelper helper = new MimeMessageHelper(message,true);
         helper.setTo(to);
         helper.setSubject(subject);
-        /* setText(内容,true:是HTML内容);   */
+        /* setText(true means HTML content);   */
         helper.setText(content,true);
-
         helper.setFrom(from);
         mailSender.send(message);
 
     }
-
-
-
-
-
-
-
-
-
 }

@@ -78,16 +78,21 @@ class Market extends Component {
             },
         }).then((response) => {
             if (response.data.code === 200){
-                let updatePost = this.state.posts.map((post) => {
-                    if (post.postID === postID){
-                        let likes = post.numOfLikes + 1;
-                        return {...post, numOfLikes: likes}
-                    }
-                    return post;
-                })
-                this.setState({
-                    posts: updatePost,
-                });
+                console.log("Like has been saved!");
+                if (response.data.object === "Like has been saved!"){
+                    let updatePost = this.state.posts.map((post) => {
+                        if (post.postID === postID){
+                            let likes = post.numOfLikes + 1;
+                            return {...post, numOfLikes: likes}
+                        }
+                        return post;
+                    })
+                    this.setState({
+                        posts: updatePost,
+                    });
+                } else {
+                    window.alert("You have already liked the post");
+                }
             } else {
                 console.log("failed");
             }

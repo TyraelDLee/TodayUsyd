@@ -3,10 +3,12 @@ package com.example.demo.service;
 import com.example.demo.entity.Favorite;
 import com.example.demo.entity.Post;
 
-public interface FavService {
-    Favorite storeFav(Favorite favorite);
+import java.util.Optional;
 
-    Iterable<Post> getFavByUserid(String postID);
+public interface FavService {
+    Optional<Favorite> storeFav(Favorite favorite);
+
+    Iterable<Post> getFavByUserid(String userid);
 
     Boolean removeFav(String favID);
 }

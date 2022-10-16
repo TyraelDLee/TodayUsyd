@@ -114,6 +114,59 @@ class Course extends Component {
     }
 
     getFilterResult=(filter)=>{
+        console.log(filter);
+        if (filter===''){
+            fetch(`./Post/getAllPostsByType?type=course`, {
+                method:'GET',
+                credentials:'include',
+                body:null
+            }).then(r=>r.json())
+                .then(json=>{
+                    if (json['code']===200){
+                        let removeInvisiblePost = json.object.filter(post => {
+                            return post.isVisible !== 2;
+                        });
+                        let toppost = removeInvisiblePost.filter(post => {
+                            return post.istop === 2;
+                        });
+                        let otherpost = removeInvisiblePost.filter(post => {
+                            return post.istop !== 2;
+                        });
+                        let toppostsort = toppost.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
+                        let otherpostsort = otherpost.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
+                        this.setState({
+                            topposts: toppostsort,
+                            posts: otherpostsort,
+                        });
+                    }
+                });
+        }
+        else{
+            fetch(`./Post/filterByCategory?category=${filter}`, {
+                method:'GET',
+                credentials:'include',
+                body:null
+            }).then(r=>r.json())
+                .then(json=>{
+                    if (json['code']===200){
+                        let removeInvisiblePost = json.object.filter(post => {
+                            return post.isVisible !== 2;
+                        });
+                        let toppost = removeInvisiblePost.filter(post => {
+                            return post.istop === 2;
+                        });
+                        let otherpost = removeInvisiblePost.filter(post => {
+                            return post.istop !== 2;
+                        });
+                        let toppostsort = toppost.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
+                        let otherpostsort = otherpost.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
+                        this.setState({
+                            topposts: toppostsort,
+                            posts: otherpostsort,
+                        });
+                    }
+                });
+        }
         this.setState({
             selectedCategory: filter,
         });

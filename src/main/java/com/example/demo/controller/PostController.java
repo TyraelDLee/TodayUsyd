@@ -325,6 +325,23 @@ public class PostController {
         return new Result(200, message, post);
     }
 
+    public Result createPost1(@RequestParam("userID") String userID,
+                             @RequestParam("type") String type, @RequestParam("category") String category,
+                             @RequestParam("title") String title, @RequestParam("details") String details
+                            ) throws IOException {
+        User user = userService.getUserByID(userID);
+        String userName = "undefined";
+        if (user != null) {
+            userName = user.getUsername();
+        }
+        Post post = new Post(userID, userName, type, category, title, details);
+        postService.savePost(post);
+        String message = "";
+        String url = null;
+        postService.setUrl(post.getPostID(),url);
+        return new Result(200, message, post);
+    }
+
     @GetMapping("/file/{id}")
     public ResponseEntity<byte[]> getFile(@PathVariable String id) {
         File file = fileService.getFileByPostID(id);

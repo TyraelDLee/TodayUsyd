@@ -343,8 +343,8 @@ public class PostController {
         postService.setUrl(post.getPostID(),url);
         return new Result(200, message, post);
     }
-
-    public Result createPost1(@RequestParam("userID") String userID,
+    @PostMapping("/createPostWithoutFile")
+    public Result createPost(@RequestParam("userID") String userID,
                              @RequestParam("type") String type, @RequestParam("category") String category,
                              @RequestParam("title") String title, @RequestParam("details") String details
                             ) throws IOException {

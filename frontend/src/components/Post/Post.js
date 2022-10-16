@@ -31,7 +31,7 @@ class Post extends Component {
     }
 
     handleClickSave = () => {
-        const { category, title, details } = this.state;
+        const { category, title, details, selectedFile } = this.state;
         const { type } = this.props;
         if (category.length !== 0 && title.length !== 0 && details.length !== 0){
             var formData = new FormData();
@@ -40,12 +40,13 @@ class Post extends Component {
             formData.append("category", category);
             formData.append("title", title);
             formData.append("details", details);
-
+            formData.append("selectedFile", selectedFile);
+            
             fetch('./Post/createPost', {
                 method: 'POST',
                 body: formData
             }).then(response => {
-                if (response.ok){
+                if (response.data.code === 200){
                     window.alert("success");
                     window.location.reload(false)
                 } else {
@@ -108,14 +109,14 @@ class Post extends Component {
         return(
             <div className="postEditor">
                 <InputGroup className="mb-3">
-                    <DropdownButton
+                    {<DropdownButton
                     variant="outline-secondary"
                     title={title}
                     >
                         {
                             catrgories.map((name) => <Dropdown.Item onClick={()=>this.handleClickCategory(name)} as="button">{name}</Dropdown.Item>)
                         }
-                    </DropdownButton>
+                    </DropdownButton>}
                     <Form.Control placeholder={category} disabled readOnly />
                 </InputGroup>
                 <div className="space"></div>

@@ -76,6 +76,8 @@ module.exports = {
   appSettingJs: resolveModule(resolveApp, 'src/components/Setting/Setting'),
   appSearchHtml: resolveApp('public/search.html'),
   appSearchJs: resolveModule(resolveApp, 'src/Search'),
+  appFavoriteHtml: resolveApp('public/favorite.html'),
+  appFavoriteJs: resolveModule(resolveApp, 'src/components/Favorite/Favorite'),
   appDynamicHtml: resolveApp('public/dynamic.html'),
   appDynamicJs: resolveModule(resolveApp, 'src/Dynamic'),
   appPackageJson: resolveApp('package.json'),

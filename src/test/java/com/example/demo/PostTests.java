@@ -2,6 +2,7 @@ package com.example.demo;
 
 import com.example.demo.entity.Post;
 import com.example.demo.service.PostService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,23 +19,19 @@ public class PostTests {
 
     Post post = new Post("777", "testzhetao", "market", "Careers", "ddd", "zzz");
     Post post1 = new Post("777", "testzhetao", "market", "Rental", "ccc", "www");
+
     private String postID = "";
 
     @Test
+    @Before
     public void TestAddPost() {
         postService.savePost(post);
         postID = post.getPostID();
-
-        System.out.println(post.getPostID());
-        System.out.println(postID);
     }
 
     @Test
     public void deletePost() {
-        System.out.println(postID);
-
         System.out.println(!postService.deletePostById(postID));
-        System.out.println(postID);
     }
 
     @Test

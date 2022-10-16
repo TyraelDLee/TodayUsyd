@@ -109,12 +109,16 @@ class Course extends Component {
         });
     }
 
+    getFilterResult=(filter)=>{
+        console.log(filter);
+    }
+
     render() {
         const { posts,sort, topposts } = this.state;
         return(
             <div>
                 <Navbar />
-                <Filter type={'course'}/>
+                <Filter type={'course'} getFilterResult={this.getFilterResult}/>
                 <div className="CoursePost">
                     {this.state.showPost ?
                         <div>

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState} from "react";
 import './Market.css'
 import './../../colour.css'
 import Navbar from '../../Navbar'
@@ -48,7 +48,7 @@ class Market extends Component {
                 topposts: toppostsort,
                 posts: otherpostsort,
             });
-        })
+        });
     }
 
     onClickOpenPost = () => {
@@ -110,12 +110,16 @@ class Market extends Component {
         });
     }
 
+    getFilterResult=(filter)=>{
+        console.log(filter);
+    }
+
     render() {
         const { posts,sort,topposts } = this.state;
         return(
             <div>
                 <Navbar />
-                <Filter type={'market'}/>
+                <Filter type={'market'} getFilterResult={this.getFilterResult}/>
                 <div className="MarketPost">
                     {this.state.showPost ?
                         <div>

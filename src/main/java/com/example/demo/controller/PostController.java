@@ -289,7 +289,7 @@ public class PostController {
         return new Result((List<Post>) postService.getPostsByType(type));
     }
 
-    @GetMapping("filterByCategory")
+    @GetMapping("/filterByCategory")
     public Result getMarketPostsByCategory(@RequestParam("category") String category) {
         return new Result(postService.getPostsByCategory(category));
     }

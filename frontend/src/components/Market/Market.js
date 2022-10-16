@@ -24,6 +24,7 @@ class Market extends Component {
             posts: null,
             sort: "Time",
             topposts: null,
+            selectedCategory: null,
         }
     }
 
@@ -115,11 +116,13 @@ class Market extends Component {
     }
 
     getFilterResult=(filter)=>{
-        console.log(filter);
+        this.setState({
+            selectedCategory: filter,
+        });
     }
 
     render() {
-        const { posts,sort,topposts } = this.state;
+        const { posts,sort,topposts, selectedCategory } = this.state;
         return(
             <div>
                 <Navbar />
@@ -128,7 +131,7 @@ class Market extends Component {
                     {this.state.showPost ?
                         <div>
                             <Button variant="outline-dark" onClick={this.onClickCancelPost} className="buttonCancel">Cancel Post</Button>
-                            <Post catrgories={["Rental", "Services", "Book Market", "Cars", "Careers"]} type="market"/>
+                            <Post categories={selectedCategory} type="market"/>
                         </div> :
                         <Button variant="outline-dark" onClick={this.onClickOpenPost} className="buttonAdd">Add Post</Button>
                     }

@@ -9,12 +9,12 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Alert from 'react-bootstrap/Alert';
+import axios from 'axios';
 
 class Post extends Component {
     constructor(props){
         super(props);
         this.state = {
-            category: "",
             title: "",
             details: "",
             selectedFile: null,
@@ -31,30 +31,46 @@ class Post extends Component {
     }
 
     handleClickSave = () => {
-        const { category, title, details, selectedFile } = this.state;
-        const { type } = this.props;
-        if (category.length !== 0 && title.length !== 0 && details.length !== 0){
+        const { title, details, selectedFile } = this.state;
+        const { type, categories } = this.props;
+        if (categories.length !== 0 && title.length !== 0 && details.length !== 0){
             var formData = new FormData();
             formData.append("userID", Cookies.get('UID'));
             formData.append("type", type);
-            formData.append("category", category);
+            formData.append("category", categories);
             formData.append("title", title);
             formData.append("details", details);
-            formData.append("selectedFile", selectedFile);
-            
-            fetch('./Post/createPost', {
-                method: 'POST',
-                body: formData
-            }).then(response => {
-                if (response.data.code === 200){
-                    window.alert("success");
-                    window.location.reload(false)
-                } else {
-                    console.log("failed");
-                }
-            })
+
+            if (selectedFile === null){
+                axios.post('./Post/createPostWithoutFile', formData, {
+                    headers: {
+                      "Content-Type": "multipart/form-data",
+                    },
+                }).then ((response) => {
+                    if (response.data.code === 200){
+                        window.alert("success");
+                        window.location.reload(false)
+                    } else {
+                        console.log("failed");
+                    }
+                })
+            } else {
+                formData.append("file", selectedFile);
+                axios.post('./Post/createPost', formData, {
+                    headers: {
+                      "Content-Type": "multipart/form-data",
+                    },
+                }).then ((response) => {
+                    if (response.data.code === 200){
+                        window.alert("success");
+                        window.location.reload(false)
+                    } else {
+                        console.log("failed");
+                    }
+                })
+            }
         } else {
-            if (category.length === 0){
+            if (categories.length === 0){
                 this.setState({
                     categoryWarning: "Please select a category"
                 }); 
@@ -103,21 +119,15 @@ class Post extends Component {
     };
 
     render() {
-        const { category, categoryWarning, titleWarning, detailsWarning} = this.state;
-        const { catrgories, type } = this.props;
-        const title = type.substring(0, 1).toUpperCase()  + type.substring(1) + " Category";
+        const { categoryWarning, titleWarning, detailsWarning} = this.state;
+        const { categories } = this.props;
         return(
             <div className="postEditor">
                 <InputGroup className="mb-3">
-                    {<DropdownButton
-                    variant="outline-secondary"
-                    title={title}
-                    >
-                        {
-                            catrgories.map((name) => <Dropdown.Item onClick={()=>this.handleClickCategory(name)} as="button">{name}</Dropdown.Item>)
-                        }
-                    </DropdownButton>}
-                    <Form.Control placeholder={category} disabled readOnly />
+                    <InputGroup.Text id="basic-addon3">
+                        Category
+                    </InputGroup.Text>
+                    <Form.Control placeholder={categories} disabled readOnly />
                 </InputGroup>
                 <div className="space"></div>
                 <Form.Group as={Row} className="mb-3">
@@ -143,7 +153,7 @@ class Post extends Component {
                         Upload Files (Optional)
                     </Form.Label>
                     <Col sm="10">
-                        <Form.Control type="file" onChange={this.onFileChange}/>
+                        <Form.Control name="file" type="file" onChange={this.onFileChange}/>
                     </Col>
                 </Form.Group>
                 <div className="spacePost"></div>

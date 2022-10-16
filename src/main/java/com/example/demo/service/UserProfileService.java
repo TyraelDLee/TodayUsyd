@@ -5,7 +5,7 @@ import com.example.demo.entity.UserProfile;
 
 public interface UserProfileService {
     /**
-     * 通过用户id获取用户详细信息
+     * Get user's profile details according to userid
      * @param userId
      * @return
      */

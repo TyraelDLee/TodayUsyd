@@ -32,8 +32,8 @@ public class PostController {
     private LikeRecordService likeRecordService;
 
     /**
-     * 获取最新的帖子
-     *
+     * Find the latest post
+     * Return the post with descending order on the post creation time
      * @return
      */
     @GetMapping("/findLatestPost")
@@ -48,8 +48,8 @@ public class PostController {
     }
 
     /**
-     * 获取最喜欢的帖子
-     *
+     * Find the likest post
+     * Return the post with descending order on the number of like received
      * @return
      */
     @GetMapping("/findLikestPost")
@@ -64,9 +64,8 @@ public class PostController {
     }
 
     /**
-     * 根据标题查找帖子
-     *
-     * @param title 帖子标题
+     * Find the post by title (support fuzzy query)
+     * @param title
      * @return
      */
     @GetMapping("/findPostByTitle")
@@ -100,12 +99,12 @@ public class PostController {
 
 
     /**
-     * 保存用户对帖子的评论
+     * Save the comment from a particular user for a particular post
      *
-     * @param userid   用户id
-     * @param username 用户名称
-     * @param postID   帖子id
-     * @param content  评论内容
+     * @param userid
+     * @param username
+     * @param postID   the ID of the post
+     * @param content  the content of the comment/review
      * @return
      */
     @RequestMapping("/saveComment")
@@ -122,13 +121,13 @@ public class PostController {
         int flag = postService.saveComment(comment);
         if (flag == 0) {
             result.setCode(500);
-            result.setMsg("操作异常");
+            result.setMsg("Abnormal operation");
         }
         return result;
     }
 
     /**
-     * 查找最近的帖子评论
+     * Find the latest comment
      *
      * @return
      */
@@ -144,10 +143,10 @@ public class PostController {
     }
 
     /**
-     * 订阅用户
+     * Follower
      *
-     * @param userid     当前用户
-     * @param takeuserid 被订阅用户
+     * @param userid     Current user
+     * @param takeuserid Subscribed user
      * @return
      */
     @RequestMapping("/takeuser")
@@ -160,15 +159,35 @@ public class PostController {
         int flag = postService.takeuser(take);
         if (flag == 0) {
             result.setCode(500);
-            result.setMsg("操作异常");
+            result.setMsg("Abnormal operation");
         }
         return result;
     }
 
     /**
-     * 查询当前用户订阅了哪些用户
+     * Unfollow
      *
-     * @param userid 当前用户id
+     * @param userid     the userid of the current user
+     * @param takeuserid the userid that current user would like to follow/unfollow
+     * @return
+     */
+    @RequestMapping("/cancelTakeuser")
+    public Result cancelTakeuser(String userid, String takeuserid) {
+        Result result = new Result();
+
+        int flag = postService.cancelTakeuser(userid,takeuserid);
+        if (flag == 0) {
+            result.setCode(500);
+            result.setMsg("Abnormal operation");
+        }
+        return result;
+    }
+
+
+    /**
+     * Find the users that have been subscribed by the current user
+     *
+     * @param userid the userid of the current user
      * @return
      */
     @RequestMapping("/findTakeuser")
@@ -183,9 +202,9 @@ public class PostController {
     }
 
     /**
-     * 查询当前用户订阅了被哪些用户订阅了
+     * Find the users that has subscribed to the current user
      *
-     * @param userid 当前用户id
+     * @param userid the userid of the current user
      * @return
      */
     @RequestMapping("/findUserByTake")
@@ -200,12 +219,12 @@ public class PostController {
     }
 
     /**
-     * 保存关注用户发帖通知
+     * Save the notifications posted by the following users
      *
-     * @param pubuserid   发帖用户
-     * @param pubusername 发帖用户名称
-     * @param postID      帖子id
-     * @param content     通知内容
+     * @param pubuserid   The poster's userid
+     * @param pubusername The username of the poster
+     * @param postID
+     * @param content     Post content
      * @return
      */
     @RequestMapping("/saveNotice")
@@ -227,7 +246,7 @@ public class PostController {
                 int flag = postService.saveNotice(notice);
                 if (flag == 0) {
                     result.setCode(500);
-                    result.setMsg("操作异常");
+                    result.setMsg("Abnormal operation");
                 }
             }
         }
@@ -235,9 +254,9 @@ public class PostController {
     }
 
     /**
-     * 更新发帖通知为已读
+     * Update post notification that the post has been read
      *
-     * @param id 通知主键id
+     * @param id the primary key
      * @return
      */
     @RequestMapping("/updateNotice")
@@ -246,14 +265,14 @@ public class PostController {
         int flag = postService.updateNotice(id);
         if (flag == 0) {
             result.setCode(500);
-            result.setMsg("操作异常");
+            result.setMsg("Abnormal operation");
         }
         return result;
     }
 
 
     /**
-     * 查找关注者发布的帖子的通知信息
+     * Find notifications for posts made by followed
      *
      * @return
      */
@@ -270,7 +289,7 @@ public class PostController {
 
 
     /**
-     * 按照PostID查找评论
+     * Find comment by postID
      * @return
      */
     @GetMapping("/findCommentByPostID")

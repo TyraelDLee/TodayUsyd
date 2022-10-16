@@ -9,7 +9,7 @@ public class User {
     //@Column(name="userid")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String userid;
-    @Column(name="username",updatable = false)
+    @Column(name="username",updatable = true)
     private String username;
     @Column(name="usercode",updatable = false)
     private String usercode;
@@ -66,7 +66,19 @@ public class User {
         return userauth;
     }
 
-    public void setUserAuth(int userauth) {
+    public void setUserauth(int userauth) {
         this.userauth = userauth;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userid='" + userid + '\'' +
+                ", username='" + username + '\'' +
+                ", usercode='" + usercode + '\'' +
+                ", userpwd='" + userpwd + '\'' +
+                ", labeldesc=" + labeldesc +
+                ", userauth=" + userauth +
+                '}';
     }
 }

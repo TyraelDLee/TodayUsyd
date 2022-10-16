@@ -164,6 +164,8 @@ public class UserController {
         return new Result("Send successfully");
     }
 
-
-
+    @PutMapping("/updateUserName")
+    public Result updateUserName(@RequestParam("userid") String userid, @RequestParam("username") String username) {
+        return new Result(userService.updateUserName(userid,username));
+    }
 }

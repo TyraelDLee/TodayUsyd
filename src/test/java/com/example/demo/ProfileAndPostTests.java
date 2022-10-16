@@ -25,15 +25,17 @@ public class ProfileAndPostTests{
     @Autowired
     PostService postService;
 
+    Post post1 = new Post("777", "testzhetao", "market", "Rental", "ccc", "www");
+
     @Test
     public void testUserProfile(){
-        UserProfile userProfile = userProfileService.findUserProfileByUserid("id123");
+        UserProfile userProfile = userProfileService.findUserProfileByUserid("777");
         System.out.println(userProfile);
     }
 
     @Test
     public void testPostService(){
-        List<Post> post = postService.findPostByUserId("1");
+        List<Post> post = postService.findPostByUserId("777");
         System.out.println(post);
     }
 }

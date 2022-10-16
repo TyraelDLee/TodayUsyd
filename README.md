@@ -1,5 +1,9 @@
 # TodayUsyd
-intro
+This project aims to provide a web platform for all stakeholders that have interested in the University of Sydney. 
+
+This web service allows user to communicate regards their life experiences, study experiences, job information, etc. In particular, users can publish posts, make comments, and send messages between different users. 
+
+Below is the functionalities that our web service project will be provided in this phase.
 
 ## Features
 - Registration
@@ -9,11 +13,14 @@ intro
   - When user register with them uni email, they will be registered as verified student or staff automatically.
 - Navigation bar
 - Groups
+  - Normal users
+  - Admin   
 - Post
   - User can make posts in course and market page to talk about courses they have taken or items they wish to trade.
 - Like
   - User can give "Likes" to a post if they think the post is helpful.
 - Sort
+  - Posts can sorted by number of likes and time.
 - Search
 - Filter
 - Comment and review
@@ -23,7 +30,7 @@ intro
 - Dynamic
   - User can view all posts made by users he/she followed in the dynamic page.
 - Post status
-  - System admin can move posts to the most top of pages or set posts invisible.
+  - System admin can move posts to the most top of pages, set posts invisible and cancel to set them top and invisible.
 
 ## How to run
 Our app is a webapp based on SpringBoot, React and Google cloud.

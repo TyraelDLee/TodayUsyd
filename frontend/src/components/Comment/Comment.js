@@ -33,6 +33,7 @@ class Comment extends Component {
             submitcomment: null,
             comments: null,
             userAuth: null,
+            postImage: null,
         }
     }
 
@@ -49,6 +50,7 @@ class Comment extends Component {
                 createdTime: response.data.object.createdTime,
                 postuserid: response.data.object.userid,
                 postusername: response.data.object.userName,
+                postImage: response.data.object.fileUrl,
             });
             getVerifyStatus(response.data.object.userid);
         })
@@ -96,70 +98,90 @@ class Comment extends Component {
     }
 
     onClickVisivle = () => {
-        var formData = new FormData();
-        formData.append("postID", this.state.postid);
-
-        axios.put('./Post/updatePostInvisible', formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-        }).then ((response) => {
+        axios.get(`./getUserInfo`, { withCredentials: true })
+        .then ((response) => {
             if (response.data.code === 200){
-                this.setState({
-                    visible: 2,
-                });
+                let labeldesc = response.data.object.labeldesc;
+                let userAuth = response.data.object.userAuth;
+                let usercode = response.data.object.usercode;
+                let userid = response.data.object.userid;
+                let username = response.data.object.username;
+                let userpwd = response.data.object.userpwd;
+                axios.put(`./Post/updatePostInvisible?postID=${this.state.postid}&&labeldesc=${labeldesc}&&userAuth=${userAuth}&&usercode=${usercode}&&userid=${userid}&&username=${username}&&userpwd=${userpwd}`)
+                .then ((response) => {
+                    if (response.data.code === 200){
+                        this.setState({
+                            visible: 2,
+                        });
+                    }
+                })
             }
         })
     }
 
 
     onClickInVisivle = () => {
-        var formData = new FormData();
-        formData.append("postID", this.state.postid);
-
-        axios.put('./Post/updatePostVisible', formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-        }).then ((response) => {
+        axios.get(`./getUserInfo`, { withCredentials: true })
+        .then ((response) => {
             if (response.data.code === 200){
-                this.setState({
-                    visible: 1,
-                });
+                let labeldesc = response.data.object.labeldesc;
+                let userAuth = response.data.object.userAuth;
+                let usercode = response.data.object.usercode;
+                let userid = response.data.object.userid;
+                let username = response.data.object.username;
+                let userpwd = response.data.object.userpwd;
+                axios.put(`./Post/updatePostVisible?postID=${this.state.postid}&&labeldesc=${labeldesc}&&userAuth=${userAuth}&&usercode=${usercode}&&userid=${userid}&&username=${username}&&userpwd=${userpwd}`)
+                .then ((response) => {
+                    if (response.data.code === 200){
+                        this.setState({
+                            visible: 1,
+                        });
+                    }
+                })
             }
         })
     }
 
     onClickTop = () => {
-        var formData = new FormData();
-        formData.append("postID", this.state.postid);
-
-        axios.put('./Post/updatePostIsTop', formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-        }).then ((response) => {
+        axios.get(`./getUserInfo`, { withCredentials: true })
+        .then ((response) => {
             if (response.data.code === 200){
-                this.setState({
-                    top: 2,
-                });
+                let labeldesc = response.data.object.labeldesc;
+                let userAuth = response.data.object.userAuth;
+                let usercode = response.data.object.usercode;
+                let userid = response.data.object.userid;
+                let username = response.data.object.username;
+                let userpwd = response.data.object.userpwd;
+                axios.put(`./Post/updatePostIsTop?postID=${this.state.postid}&&labeldesc=${labeldesc}&&userAuth=${userAuth}&&usercode=${usercode}&&userid=${userid}&&username=${username}&&userpwd=${userpwd}`)
+                .then ((response) => {
+                    if (response.data.code === 200){
+                        this.setState({
+                            top: 2,
+                        });
+                    }
+                })
             }
         })
     }
 
     onClickCancelTop = () => {
-        var formData = new FormData();
-        formData.append("postID", this.state.postid);
-
-        axios.put('./Post/updatePostIsNotTop', formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-        }).then ((response) => {
+        axios.get(`./getUserInfo`, { withCredentials: true })
+        .then ((response) => {
             if (response.data.code === 200){
-                this.setState({
-                    top: 1,
-                });
+                let labeldesc = response.data.object.labeldesc;
+                let userAuth = response.data.object.userAuth;
+                let usercode = response.data.object.usercode;
+                let userid = response.data.object.userid;
+                let username = response.data.object.username;
+                let userpwd = response.data.object.userpwd;
+                axios.put(`./Post/updatePostIsNotTop?postID=${this.state.postid}&&labeldesc=${labeldesc}&&userAuth=${userAuth}&&usercode=${usercode}&&userid=${userid}&&username=${username}&&userpwd=${userpwd}`)
+                .then ((response) => {
+                    if (response.data.code === 200){
+                        this.setState({
+                            top: 1,
+                        });
+                    }
+                })
             }
         })
     }
@@ -227,8 +249,7 @@ class Comment extends Component {
     }
 
     render() {
-        const { top, visible, favoriate, postusername, title, detail, likes, createdTime, userAuth, comments, postuserid } = this.state;
-        console.log(comments);
+        const { top, visible, favoriate, postusername, title, detail, likes, createdTime, userAuth, comments, postuserid, postImage } = this.state;
         return(
             <div>
                 <Navbar />
@@ -248,7 +269,7 @@ class Comment extends Component {
                         <AiOutlineStar className="Button" onClick={this.onClickFavorite} size={25}/>
                         <div className="postTitle">{title}</div>
                         <div className="postDescription">{detail}</div>
-                        <div className="attachedFile">{/* TODO*/}</div>
+                        {postImage && <img className="imageSize" src={postImage} alt="Post Image"/> }
                     </div>
                 }
                 <div className="commentList">

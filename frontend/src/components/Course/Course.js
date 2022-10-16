@@ -24,6 +24,7 @@ class Course extends Component {
             posts: null,
             sort: "Time",
             topposts: null,
+            selectedCategory: null,
         }
     }
 
@@ -108,11 +109,12 @@ class Course extends Component {
         this.setState({
             sort: category,
             posts: sortposts,
-            topposts: topsortposts,
+            topposts: topsortposts, 
         });
     }
 
     getFilterResult=(filter)=>{
+<<<<<<< HEAD
         console.log(filter);
         fetch(`./Post/filterByCategory?category=${filter}`, {
             method:'GET',
@@ -138,10 +140,15 @@ class Course extends Component {
                    });
                }
             });
+=======
+        this.setState({
+            selectedCategory: filter,
+        });
+>>>>>>> origin/main
     }
 
     render() {
-        const { posts,sort, topposts } = this.state;
+        const { posts,sort, topposts, selectedCategory } = this.state;
         return(
             <div>
                 <Navbar />
@@ -150,7 +157,7 @@ class Course extends Component {
                     {this.state.showPost ?
                         <div>
                             <Button variant="outline-dark" onClick={this.onClickCancelPost} className="buttonCancel">Cancel Post</Button>
-                            <Post catrgories={["ELEC5619"]} type="course"/>
+                            <Post categories={selectedCategory} type="course"/>
                         </div> :
                         <Button variant="outline-dark" onClick={this.onClickOpenPost} className="buttonAdd">Add Post</Button>
                     }

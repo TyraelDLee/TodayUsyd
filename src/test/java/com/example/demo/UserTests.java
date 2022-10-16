@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import com.example.demo.controller.UserController;
 import com.example.demo.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +9,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.mail.MessagingException;
+
+import static org.junit.Assert.assertEquals;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration(classes = DemoApplication.class)
@@ -17,8 +19,6 @@ public class UserTests {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UserController userController;
     @Test
     public void testUpdateLabelUser() throws MessagingException {
         userService.updateLabelUser("18",2);
@@ -26,5 +26,6 @@ public class UserTests {
         System.out.println(labelDesc);
         if (labelDesc==2) System.out.println("true");
         else System.out.println("false");
+        assertEquals(labelDesc, 2);
     }
 }

@@ -1,0 +1,1 @@
+cloud_sql_proxy_x64.exe -credential_file=c.json -instances=pristine-bonito-362806:australia-southeast1:myusyd:test-database-instance=tcp:3306

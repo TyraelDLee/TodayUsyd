@@ -47,6 +47,8 @@ public interface PostService {
 
     int takeuser(Take take);
 
+    int cancelTakeuser(String userid, String takeuserid);
+
     int saveNotice(Notice notice);
 
     int updateNotice(String noticeId);

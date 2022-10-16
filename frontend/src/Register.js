@@ -146,7 +146,7 @@ class Register extends React.Component{
 
 
         function postUserInfo(email, uname, upass, verify){
-            return  fetch(`http://localhost:8085/addUser?username=${uname}&usercode=${email}&userpwd=${upass}&securityCode=${verify}`, {
+            return  fetch(`./addUser?username=${uname}&usercode=${email}&userpwd=${upass}&securityCode=${verify}`, {
                 method:"POST",
                 credentials:"include",
                 body:null

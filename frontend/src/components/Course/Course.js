@@ -114,7 +114,6 @@ class Course extends Component {
     }
 
     getFilterResult=(filter)=>{
-<<<<<<< HEAD
         console.log(filter);
         fetch(`./Post/filterByCategory?category=${filter}`, {
             method:'GET',
@@ -140,11 +139,9 @@ class Course extends Component {
                    });
                }
             });
-=======
         this.setState({
             selectedCategory: filter,
         });
->>>>>>> origin/main
     }
 
     render() {

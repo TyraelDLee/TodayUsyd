@@ -116,7 +116,6 @@ class Market extends Component {
     }
 
     getFilterResult=(filter)=>{
-<<<<<<< HEAD
         console.log(filter);
         fetch(`./Post/filterByCategory?category=${filter}`, {
             method:'GET',
@@ -142,11 +141,9 @@ class Market extends Component {
                     });
                 }
             });
-=======
         this.setState({
             selectedCategory: filter,
         });
->>>>>>> origin/main
     }
 
     render() {

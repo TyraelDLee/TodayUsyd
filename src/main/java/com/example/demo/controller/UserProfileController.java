@@ -41,13 +41,14 @@ public class UserProfileController {
     private ChatRecordService chatRecordService;
 
     @Value("${upload.path}")
-    private String uploadPath;//此路径为文件上传路径，可根据实际部署路径进行更换
+    private String uploadPath;//This is the file upload path, can be modified according to the actual implement
 
-    //-----------------home模块start---------------------------------
+    //-----------------home module start---------------------------------
 
     /**
-     * 根据用户id返回用户的详细信息（用户名，照片地址，个人描述，地址）
-     * @param userid 用户id
+     * Return the profile details based on user id
+     * details includes username, photo address, description, location/address
+     * @param userid
      * @return
      */
     @RequestMapping("/userProfile/home/index")
@@ -62,14 +63,15 @@ public class UserProfileController {
         return result;
     }
 
-    //-----------------home模块end---------------------------------
+    //-----------------home module end---------------------------------
 
-    //-----------------friend模块start---------------------------------
+    //-----------------friend module start---------------------------------
 
     /**
-     * 获取聊天记录列表（根据创建时间倒叙）
-     * @param fromuser 发送者用户id
-     * @param touser 接收者用户id
+     * Return the record/chat history list
+     * The list is in descending ordered based on created time
+     * @param fromuser the userid of the sender
+     * @param touser the userid of the receiver
      * @return
      */
     @RequestMapping("/userProfile/friend/recordList")
@@ -86,10 +88,10 @@ public class UserProfileController {
     }
 
     /**
-     * 保存聊天记录
-     * @param fromuser 发送者用户id
-     * @param touser 接收者用户id
-     * @param content 内容
+     * Save the record/chat/message
+     * @param fromuser the userid of the sender
+     * @param touser the userid of the receiver
+     * @param content the content of the message
      * @return
      */
     @RequestMapping("/userProfile/friend/saveRecord")
@@ -107,19 +109,19 @@ public class UserProfileController {
         int rows = chatRecordService.saveInfo(record);
         if(rows != 1){
             result.setCode(500);
-            result.setMsg("操作失败，保存聊天记录失败");
+            result.setMsg("Failed to save chat history");
         }
 
         return result;
     }
 
-    //-----------------friend模块end---------------------------------
+    //-----------------friend module end---------------------------------
 
-    //-----------------History模块start---------------------------------
+    //-----------------History module start---------------------------------
 
     /**
-     * 查看帖子观看记录
-     * @param userid 用户id
+     * Return the post viewing history
+     * @param userid
      * @return
      */
     @RequestMapping("/userProfile/history/historyList")
@@ -135,10 +137,10 @@ public class UserProfileController {
     }
 
     /**
-     * 保存帖子观看记录
-     * @param userid 用户id
-     * @param postsname 帖子名称
-     * @param createtime 观看时间
+     * Save the post viewing history
+     * @param userid
+     * @param postsname the title of the post
+     * @param createtime the datetime of viewing a particular post
      * @return
      */
     @RequestMapping("/userProfile/history/saveHistory")
@@ -153,23 +155,23 @@ public class UserProfileController {
         int rows = postsHistoryService.saveInfo(postsHistory);
         if(rows != 1){
             result.setCode(500);
-            result.setMsg("操作失败，保存历史记录失败");
+            result.setMsg("Fail to save the post viewing history");
         }
         return result;
     }
 
-    //-----------------History模块end---------------------------------
+    //-----------------History module end---------------------------------
 
-    //-----------------Setting模块start---------------------------------
+    //-----------------Setting module start---------------------------------
 
     /**
-     * 更新用户信息
-     * @param userid 用户id
-     * @param username 用户名
-     * @param userpwd  密码
-     * @param description  个人描述
-     * @param address  地址
-     * @param imgurl 照片地址
+     * Update user profile
+     * @param userid
+     * @param username
+     * @param userpwd  password
+     * @param description  self-describtion from the user
+     * @param address location of the user
+     * @param imgurl the url of user's photo
      * @return
      */
     @RequestMapping("/userProfile/setting/updateInfo")
@@ -179,7 +181,7 @@ public class UserProfileController {
         User user = userService.queryUserByUserid(userid);
         if(user == null){
             result.setCode(500);
-            result.setObject("操作失败，获取用户信息失败");
+            result.setObject("Failed to get user information");
             return result;
         }
 
@@ -196,7 +198,7 @@ public class UserProfileController {
 
         if(r1 != 1){
             result.setCode(500);
-            result.setObject("操作失败，更新用户信息失败");
+            result.setObject("Failed to update user information");
             return result;
         }
         userProfile.setName(username);
@@ -207,16 +209,16 @@ public class UserProfileController {
 
         if(r2 != 1){
             result.setCode(500);
-            result.setObject("操作失败，更新用户详细信息失败");
+            result.setObject("Failed to update user profile");
             return result;
         }
         return result;
     }
 
     /**
-     * 上传个人照片（目前支持JPG,PNG格式）
-     * 上传成功会返回照片文件所在的绝对路径
-     * @param file 照片文件流
+     * Upload photo (supported for JPG and PNG document)
+     * Once the update is success, the absolute path of the photo shall be returned
+     * @param file file for photo
      * @return
      */
     @RequestMapping("/userProfile/setting/upload")
@@ -232,19 +234,19 @@ public class UserProfileController {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             result.setCode(500);
-            result.setMsg("上传失败，"+e.getMessage());
+            result.setMsg("Failed to upload，"+e.getMessage());
         } catch (IOException e) {
             e.printStackTrace();
             result.setCode(500);
-            result.setMsg("上传失败，"+e.getMessage());
+            result.setMsg("Failed to upload，"+e.getMessage());
         }
 
         return result;
     }
 
     /**
-     * 查看个人照片（目前支持JPG,PNG格式）
-     * @param userid 用户id
+     * Return photo (supported for JPG and PNG document)
+     * @param userid
      * @return
      * @throws Exception
      */
@@ -264,5 +266,5 @@ public class UserProfileController {
         return bytes;
     }
 
-    //-----------------Setting模块end---------------------------------
+    //-----------------Setting module end---------------------------------
 }

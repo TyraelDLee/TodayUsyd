@@ -1,5 +1,9 @@
 # TodayUsyd
-This project aims to provide a web platform for all stakeholders that have interested in the University of Sydney. This web service allows user to communicate regards their life experiences, study experiences, job information, etc. In particular, users can publish posts, make comments, and send messages between different users. Below is the functionality that our web service project will be provided in this phase.
+This project aims to provide a web platform for all stakeholders that have interested in the University of Sydney. 
+
+This web service allows user to communicate regards their life experiences, study experiences, job information, etc. In particular, users can publish posts, make comments, and send messages between different users. 
+
+Below is the functionality that our web service project will be provided in this phase.
 
 ## Features
 - Registration

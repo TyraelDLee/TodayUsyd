@@ -28,6 +28,10 @@ Below is the functionalities that our web service project will be provided in th
   - User can view all posts made by users he/she followed in the dynamic page.
 - Post status
   - System admin can move posts to the most top of pages or set posts invisible.
+- Favourite
+  - User can save the posts they like and watch them in the "Favourite" page.
+- Weather
+  - Our home page will show the weather based on 3rd party API and current location.
 
 ## How to run
 Our app is a webapp based on SpringBoot, React and Google cloud.

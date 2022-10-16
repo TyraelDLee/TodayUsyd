@@ -151,6 +151,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public int cancelTakeuser(String userid, String takeuserid) {
+        return takeDao.deleteTakeByUseridAndTakeuserid(userid,takeuserid);
+    }
+
+    @Override
     public int saveNotice(Notice notice){
         Notice entity = noticeDao.save(notice);
         if(entity != null){

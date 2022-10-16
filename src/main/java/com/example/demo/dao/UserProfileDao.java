@@ -5,7 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserProfileDao extends JpaRepository<UserProfile,String> {
     /**
-     * 通过用户id获取用户详细信息
+     * Find user profile by userid
+     *
      * @param userId
      * @return
      */

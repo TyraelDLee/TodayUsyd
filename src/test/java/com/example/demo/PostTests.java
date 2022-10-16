@@ -16,27 +16,34 @@ public class PostTests {
     @Autowired
     private PostService postService;
 
-    Post post = new Post("14", "testzhetao", "market", "Careers", "ddd", "zzz");
-    Post post1 = new Post("14", "testzhetao", "market", "Rental", "ccc", "www");
-
+    Post post = new Post("777", "testzhetao", "market", "Careers", "ddd", "zzz");
+    Post post1 = new Post("777", "testzhetao", "market", "Rental", "ccc", "www");
+    private String postID = "";
 
     @Test
     public void TestAddPost() {
-        System.out.println(postService.savePost(post).toString());
+        postService.savePost(post);
+        postID = post.getPostID();
+
+        System.out.println(post.getPostID());
+        System.out.println(postID);
     }
 
     @Test
     public void deletePost() {
-        System.out.println(postService.deletePostById(post.getPostID()).toString());
+        System.out.println(postID);
+
+        System.out.println(!postService.deletePostById(postID));
+        System.out.println(postID);
     }
 
     @Test
     public void updatePost() {
-        System.out.println(postService.updatePost(post.getPostID(), post1).toString());
+        System.out.println(postService.updatePost(postID, post1).toString());
     }
 
     @Test
     public void findPost() {
-        System.out.println(postService.findPostByPostId(post.getPostID()).toString());
+        System.out.println(postService.findPostByPostId(postID).toString());
     }
 }

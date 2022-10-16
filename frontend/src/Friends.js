@@ -45,7 +45,7 @@ class Friends extends React.Component{
         })
     }
 
-    renderListItem(name, verify){
+    renderListItem(name){
         return `
         <div class="user-info-host">
                 <div class="user-info">

@@ -17,7 +17,6 @@ import Col from 'react-bootstrap/Col';
 import { AiFillTag } from 'react-icons/ai';
 
 class Course extends Component {
-
     constructor(props){
         super(props);
         this.state = {
@@ -29,16 +28,16 @@ class Course extends Component {
     }
 
     componentDidMount(){
-        axios.get('.Post/getAllPostsByType?type=course')
+        axios.get('./Post/getAllPostsByType?type=course')
         .then((response) => {
             let removeInvisiblePost = response.data.object.filter(post => {
-                return post.isVisible === 1;
+                return post.isVisible !== 2;
             });
             let toppost = removeInvisiblePost.filter(post => {
                 return post.istop === 2;
             });
             let otherpost = removeInvisiblePost.filter(post => {
-                return post.istop === 1;
+                return post.istop !== 2;
             });
             let toppostsort = toppost.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
             let otherpostsort = otherpost.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
@@ -113,12 +112,16 @@ class Course extends Component {
         });
     }
 
+    getFilterResult=(filter)=>{
+        console.log(filter);
+    }
+
     render() {
         const { posts,sort, topposts } = this.state;
         return(
             <div>
                 <Navbar />
-                <Filter type={'course'}/>
+                <Filter type={'course'} getFilterResult={this.getFilterResult}/>
                 <div className="CoursePost">
                     {this.state.showPost ?
                         <div>

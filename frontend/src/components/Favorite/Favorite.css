@@ -1,0 +1,16 @@
+.favorite-host {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    margin-top: 40px;
+    width: 100%;
+}
+
+.results{
+    width: 65%;
+}
+
+.topspace{
+    margin-top: 100px;
+}

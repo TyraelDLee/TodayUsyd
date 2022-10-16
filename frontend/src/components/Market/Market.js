@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState} from "react";
 import './Market.css'
 import './../../colour.css'
 import Navbar from '../../Navbar'
@@ -6,8 +6,6 @@ import Filter from "../../Filter";
 import ReactDOM from "react-dom/client";
 import Button from 'react-bootstrap/Button';
 import Post from './../Post/Post';
-import Item from './../SearchItem/Item';
-import avatar from './../../avatar.svg';
 import axios from 'axios';
 import { GoThumbsup } from 'react-icons/go'
 import { AiFillTag } from 'react-icons/ai';
@@ -18,7 +16,6 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 
-//TODO: 点赞之能点一次
 class Market extends Component {
     constructor(props){
         super(props);
@@ -33,22 +30,24 @@ class Market extends Component {
     componentDidMount(){
         axios.get('./Post/getAllPostsByType?type=market')
         .then((response) => {
-            let removeInvisiblePost = response.data.object.filter(post => {
-                return post.isVisible === 1;
-            });
-            let toppost = removeInvisiblePost.filter(post => {
-                return post.istop === 2;
-            });
-            let otherpost = removeInvisiblePost.filter(post => {
-                return post.istop === 1;
-            });
-            let toppostsort = toppost.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
-            let otherpostsort = otherpost.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
-            this.setState({
-                topposts: toppostsort,
-                posts: otherpostsort,
-            });
-        })
+            if (response.data.code === 200){
+                let removeInvisiblePost = response.data.object.filter(post => {
+                    return post.isVisible !== 2;
+                });
+                let toppost = removeInvisiblePost.filter(post => {
+                    return post.istop === 2;
+                });
+                let otherpost = removeInvisiblePost.filter(post => {
+                    return post.istop !== 2;
+                });
+                let toppostsort = toppost.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
+                let otherpostsort = otherpost.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
+                this.setState({
+                    topposts: toppostsort,
+                    posts: otherpostsort,
+                });
+            }
+        });
     }
 
     onClickOpenPost = () => {
@@ -115,12 +114,16 @@ class Market extends Component {
         });
     }
 
+    getFilterResult=(filter)=>{
+        console.log(filter);
+    }
+
     render() {
         const { posts,sort,topposts } = this.state;
         return(
             <div>
                 <Navbar />
-                <Filter type={'market'}/>
+                <Filter type={'market'} getFilterResult={this.getFilterResult}/>
                 <div className="MarketPost">
                     {this.state.showPost ?
                         <div>

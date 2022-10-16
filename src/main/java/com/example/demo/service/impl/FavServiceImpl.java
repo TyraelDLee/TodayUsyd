@@ -24,8 +24,9 @@ public class FavServiceImpl implements FavService {
     private PostDao postDao;
 
     @Override
-    public Favorite storeFav(Favorite favorite) {
-        return favDao.save(favorite);
+    public Optional<Favorite> storeFav(Favorite favorite) {
+        favDao.save(favorite);
+        return favDao.findById(favorite.getFavID());
     }
 
     @Override

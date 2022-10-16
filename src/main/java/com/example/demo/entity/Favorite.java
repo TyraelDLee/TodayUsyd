@@ -39,6 +39,22 @@ public class Favorite {
 
     }
 
+    public String getFavID() {
+        return favID;
+    }
+
+    public void setFavID(String favID) {
+        this.favID = favID;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public String getPostID() {
         return postID;
     }

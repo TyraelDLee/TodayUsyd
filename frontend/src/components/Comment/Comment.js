@@ -210,24 +210,34 @@ class Comment extends Component {
     }
 
     handleCommentButton = () => {
-        var formData = new FormData();
-        formData.append("userid", Cookies.get('UID'));
-        formData.append("username", this.state.postusername);
-        formData.append("postID", this.state.postid);
-        formData.append("content", this.state.submitcomment);
+        fetch(`./getUserInfo`, {
+            method:'GET',
+            credentials:'include',
+            body:null
+        }).then(r=>r.json())
+            .then(json=>{
+                if (json['code']===200){
+                    var formData = new FormData();
+                    formData.append("userid", Cookies.get('UID'));
+                    formData.append("username", json['object']['username']);
+                    formData.append("postID", this.state.postid);
+                    formData.append("content", this.state.submitcomment);
 
-        axios.post('./Post/saveComment', formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-        }).then ((response) => {
-            if (response.data.code === 200){
-                window.alert("success");
-                window.location.reload(false)
-            } else {
-                console.log("failed");
-            }
-        })
+                    axios.post('./Post/saveComment', formData, {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        },
+                    }).then ((response) => {
+                        if (response.data.code === 200){
+                            window.alert("success");
+                            window.location.reload(false)
+                        } else {
+                            console.log("failed");
+                        }
+                    })
+                }
+            })
+
     }
 
     onClickFollow(postuserid){

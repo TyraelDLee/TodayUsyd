@@ -115,7 +115,7 @@ class Course extends Component {
 
     getFilterResult=(filter)=>{
         console.log(filter);
-        if (filter===''){
+        if (filter==='' || typeof filter !== 'undefined'){
             fetch(`./Post/getAllPostsByType?type=course`, {
                 method:'GET',
                 credentials:'include',

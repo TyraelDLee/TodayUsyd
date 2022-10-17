@@ -6,6 +6,8 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import Item from "./../SearchItem/Item";
 import avatar from './../../avatar.svg';
+import { GoThumbsup } from 'react-icons/go';
+import { Button } from 'react-bootstrap';
 
 class Favorite extends Component {
     constructor(props){
@@ -26,9 +28,22 @@ class Favorite extends Component {
         })
     }
 
+    onClickDirectPost(postID){
+        window.location.href = `./comment.html?postID=${postID}`;
+    }
+
+    handleDeleteFavorite = (favid) => {
+        axios.delete(`./Fav/deleteFav?favID=${favid}`)
+        .then ((response) => {
+            if (response.data.code === 200){
+                window.alert("delete successfully");
+                window.location.reload(false);
+            }
+        })
+    }
+
     render() {
         const {favposts} = this.state;
-        console.log(favposts);
         return(
             <div>
                 <Navbar />
@@ -36,11 +51,19 @@ class Favorite extends Component {
                     <div className="topspace"></div>
                     <div className={'results'}>
                         {
-                            favposts && favposts.map((post)=> 
-                                <Item userFace={avatar} userName={post.userName} postId={post.postID} postTitle={post.title} postCat={post.category} postLike={post.numOfLikes} postDate={post.createdTime}>
-
-                                </Item>
-                            )
+                            favposts && favposts.map((post) => {
+                                return  <div>
+                                            <div onClick={() => this.onClickDirectPost(post.post.postID)} className="single-results">
+                                                <div className="FavUserName">{post.post.userName}</div>
+                                                <div className="FavTitle">{post.post.title}</div>
+                                                <div className="FavLikes">{post.post.numOfLikes}</div>
+                                                <GoThumbsup className="FavthumbUp" size={25}/>
+                                            </div>
+                                            <div className="deletebotton">
+                                                <Button className="buttonlocation" size="lg" onClick={() => this.handleDeleteFavorite(post.favID)} variant="outline-dark">Delete This Favorite</Button>
+                                            </div>
+                                        </div>
+                            })
                         }
                     </div>
                 </div>

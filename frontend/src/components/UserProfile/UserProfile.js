@@ -30,9 +30,20 @@ class UserProfile extends Component {
         .then((response) => {
             console.log(response.data);
             if (response.data.code === 200){
+                let description, address;
+                if (response.data.object.description === "null"){
+                    description = "";
+                } else {
+                    description = response.data.object.description;
+                }
+                if (response.data.object.address === "null"){
+                    address = "";
+                } else {
+                    address = response.data.object.address;
+                }
                 this.setState({
-                    userdescription: response.data.object.description,
-                    useraddress: response.data.object.address,
+                    userdescription: description,
+                    useraddress: address,
                 });
             }
         })
@@ -40,10 +51,6 @@ class UserProfile extends Component {
 
     render() {
         const { username, userdescription, useraddress } = this.state;
-        let description;
-        if (userdescription === null){
-            description = "";
-        }
         return(
             <div>
                 <Navbar />
@@ -52,7 +59,7 @@ class UserProfile extends Component {
                         <img className="image" src={avatar}/>
                         <div className="username">{username}</div>
                     </div>
-                    <div className="postArea">{description}</div>
+                    <div className="postArea">{userdescription}</div>
                     <div className="address">Address: {useraddress}</div>
                 </div>
             </div>

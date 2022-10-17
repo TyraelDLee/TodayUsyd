@@ -34,6 +34,11 @@ class Comment extends Component {
             comments: null,
             userAuth: null,
             postImage: null,
+            postCategory: null,
+            userid: Cookies.get('UID'),
+            edit: false,
+            editTitle: "",
+            editDetail: "",
         }
     }
 
@@ -51,6 +56,7 @@ class Comment extends Component {
                 postuserid: response.data.object.userid,
                 postusername: response.data.object.userName,
                 postImage: response.data.object.fileUrl,
+                postCategory: response.data.object.category,
             });
             getVerifyStatus(response.data.object.userid);
         })
@@ -230,7 +236,7 @@ class Comment extends Component {
                     }).then ((response) => {
                         if (response.data.code === 200){
                             window.alert("success");
-                            window.location.reload(false)
+                            window.location.reload(false);
                         } else {
                             console.log("failed");
                         }
@@ -258,8 +264,57 @@ class Comment extends Component {
         })
     }
 
+    handleEditPostButton = (edit) => {
+        this.setState({
+            edit: !edit,
+        });
+    }
+
+    handleDeletePostButton = (postid) => {
+        axios.delete(`./Post/deleteThePost?postID=${postid}`)
+        .then ((response) => {
+            if (response.data.code === 200){
+                window.alert("delete successfully");
+                const {postCategory} = this.state;
+                if (postCategory === "market"){
+                    window.location.href = "./market.html"
+                } else if (postCategory === "course"){
+                    window.location.href = "./course.html"
+                }
+            }
+        })
+    }
+
+    handleChange = (event) =>{
+        this.setState({
+            [event.target.name]: event.target.value,
+        }); 
+    }
+
+    onClickUpdatePost = () => {
+        const { postid, postCategory, editTitle, editDetail} = this.state;
+        var formData = new FormData();
+        formData.append("postID", postid);
+        formData.append("category", postCategory);
+        formData.append("title", editTitle);
+        formData.append("details", editDetail);
+
+        axios.put('./Post/updatePost', formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+        }).then ((response) => {
+            if (response.data.code === 200){
+                window.alert("update successfully");
+                window.location.reload(false)
+            } else {
+
+            }
+        })
+    }
+
     render() {
-        const { top, visible, favoriate, postusername, title, detail, likes, createdTime, userAuth, comments, postuserid, postImage } = this.state;
+        const { top, visible, favoriate, postusername, title, detail, likes, createdTime, userAuth, comments, postuserid, postImage, userid, edit, postid} = this.state;
         return(
             <div>
                 <Navbar />
@@ -269,23 +324,54 @@ class Comment extends Component {
                         <img className="userCommentPhoto" src={avatar}/>
                         <div className="userCommentName"><span>{postusername}</span><span className={'userCommentLabel'}></span></div>
                         <div className="userCommentTime">posted at {createdTime.substr(11)} on {createdTime.substr(0, 10)}</div>
-                        <GiShadowFollower onClick={() => this.onClickFollow(postuserid)} className="userCommentFollow" size={25}/>
+                        <GiShadowFollower onClick={() => this.onClickFollow(postuserid)} className="userCommentFollow" size={20}/>
                         {
-                            userAuth !== 2 ? <div className="Button"/> : visible === 2 ? <AiFillEyeInvisible className="Button" onClick={this.onClickInVisivle} size={25}/> : <AiFillEye className="Button" onClick={this.onClickVisivle} size={25}/>
+                            userAuth !== 2 ? <div className="Button"/> : visible === 2 ? <AiFillEyeInvisible className="Button" onClick={this.onClickInVisivle} size={20}/> : <AiFillEye className="Button" onClick={this.onClickVisivle} size={20}/>
                         }
                         {
-                            userAuth !== 2 ? <div className="Button"/> : top === 2 ? <AiOutlineVerticalAlignTop className="Button" onClick={this.onClickCancelTop} size={25}/> : <GoListOrdered className="Button" onClick={this.onClickTop} size={25}/>
+                            userAuth !== 2 ? <div className="Button"/> : top === 2 ? <AiOutlineVerticalAlignTop className="Button" onClick={this.onClickCancelTop} size={20}/> : <GoListOrdered className="Button" onClick={this.onClickTop} size={20}/>
                         }
-                        <AiOutlineStar className="Button" onClick={this.onClickFavorite} size={25}/>
+                        <AiOutlineStar className="Button" onClick={this.onClickFavorite} size={20}/>
                         <div className="postTitle">{title}</div>
                         <div className="postDescription">{detail}</div>
                         {postImage && <img className="imageSize" src={postImage} alt="Post Image"/> }
+                        {
+                            postuserid === userid ? 
+                            <div className="editdelete">
+                                <Button className="editbutton" onClick={() =>this.handleEditPostButton(edit)} variant="outline-dark">Update</Button>
+                                <Button className="deletebutton" onClick={() =>this.handleDeletePostButton(postid)} variant="outline-dark">Delete</Button>
+                            </div> :
+                            <div></div>
+                        }
+                        {
+                            edit === true ?
+                            <div className="edit">
+                                <Form.Group as={Row} className="mb-3">
+                                    <Form.Label column sm="2" >
+                                        Title
+                                    </Form.Label>
+                                    <Col sm="10">
+                                        <Form.Control placeholder="Title" name="editTitle" onChange={this.handleChange}/>
+                                    </Col>
+                                </Form.Group>
+                                <div className="space"></div>
+                                <Form.Group as={Row} className="mb-3">
+                                    <Form.Label column sm="2">
+                                        Details
+                                    </Form.Label>
+                                    <Col sm="10">
+                                    <   Form.Control as="textarea" rows={3} name="editDetail" onChange={this.handleChange}/>
+                                    </Col>
+                                </Form.Group>
+                                <Button variant="outline-dark" onClick={this.onClickUpdatePost} className="buttonUpdate">Update Post</Button>
+                            </div> : <div></div>
+                        }
                     </div>
                 }
                 <div className="commentList">
                 {
                     comments && comments.map((comment) => {
-                        return <div className="singlecomment">
+                        return  <div className="singlecomment">
                                     <div className="commentUserName">
                                         {comment.username}
                                     </div>

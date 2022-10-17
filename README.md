@@ -31,6 +31,8 @@ Below is the functionalities that our web service project will be provided in th
   - User can view all posts made by users he/she followed in the dynamic page.
 - Post status
   - System admin can move posts to the most top of pages, set posts invisible and cancel to set them top and invisible.
+- Weather
+  - Our app can show the weather based on 3rd party and user IP location
 
 ## How to run
 Our app is a webapp based on SpringBoot, React and Google cloud.
@@ -51,7 +53,23 @@ Once connected that cloud database, you can build and run our SpringBoot project
 Our default port for fronted is 8085, you can change it in 'src/main/resources/application.yml' file.
 
 ## Libraries
-
+- spring-boot-starter-web
+- spring-boot-starter-test
+- fastjson from com.alibaba ver 2.0.10
+- spring-boot-starter-data-jpa
+- spring-boot-devtools
+- mysql-connector-java ver 8.0.30
+- druid from com.alibaba ver 1.1.2
+- spring-boot-starter-mail ver 2.6.3
+- commons-lang ver 2.6
+- spring-boot-starter-websocket ver 2.7.4
+- junit 
+- assertj-core
+- maven-compiler-plugin ver 3.8.1
+- spring-boot-maven-plugin ver 2.3.7.RELEASE
+- frontend-maven-plugin ver 1.6
+- npm 8.15.0
+- node.js v16.17.0
 
 ## 开源组件许可
 ### FFmpeg.wasm

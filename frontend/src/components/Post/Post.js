@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { Button } from 'react-bootstrap';
 import './Post.css'
 import Cookies from 'js-cookie';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Col from 'react-bootstrap/Col';

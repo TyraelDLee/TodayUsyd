@@ -1,7 +1,6 @@
 .poster {
     width: 60%;
     margin: 100px auto 40px auto;
-    height: 580px;
     border: 0.8px solid gray;
 }
 
@@ -55,8 +54,8 @@
 
 .Button{
     float: left;
-    height: 4%;
-    width: 4%;
+    height: 3%;
+    width: 3%;
     margin: 20px 20px 10px 20px;
 }
 
@@ -76,8 +75,6 @@
     clear: left;
     width: 90%;
     margin: 10px auto;
-    border: 0.8px solid gray;
-    height: 200px;
     font: 30px;
 }
 
@@ -119,6 +116,7 @@
 .imageSize {
     margin-top: 20px;
     margin-left: 60px;
+    margin-bottom: 20px;
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 5px;
@@ -127,4 +125,27 @@
 
 .imageSize:hover {
     box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+.editdelete{
+    margin-left: 50px;
+}
+
+.edit{
+    clear: both;
+}
+
+.deletebutton{
+    margin-top:30px;
+    margin-left: 60px;
+}
+
+.editbutton{
+    margin-top:30px;
+}
+
+.edit{
+    width: 80%;
+    margin: 20px auto;
+    font-size: 20px;
 }

@@ -10,6 +10,7 @@ class UserProfile extends Component {
     constructor(props){
         super(props);
         this.state = {
+            login: null,
             username: null,
             userdescription: "",
             useraddress: "",
@@ -23,6 +24,11 @@ class UserProfile extends Component {
             if (response.data.code === 200){
                 this.setState({
                     username: response.data.object.username,
+                    login: true,
+                });
+            } else {
+                this.setState({
+                    login: false,
                 });
             }
         })
@@ -51,18 +57,22 @@ class UserProfile extends Component {
     }
 
     render() {
-        const { username, userdescription, useraddress, userPhoto } = this.state;
+        const { username, userdescription, useraddress, userPhoto, login } = this.state;
         return(
             <div>
                 <Navbar />
-                <div>
-                    <div className="Person">
-                        {userPhoto === null? <img className="image" src={avatar}/> :<img className="image" src={`./userProfile/setting/showImg?userid=${Cookies.get('UID')}`}/> }
-                        <div className="username">{username}</div>
-                    </div>
-                    <div className="postArea">{userdescription}</div>
-                    <div className="address">Address: {useraddress}</div>
-                </div>
+                {
+                    login ? 
+                    <div>
+                        <div className="Person">
+                            {userPhoto === null? <img className="image" src={avatar}/> :<img className="image" src={`./userProfile/setting/showImg?userid=${Cookies.get('UID')}`}/> }
+                            <div className="username">{username}</div>
+                        </div>
+                        <div className="postArea">{userdescription}</div>
+                        <div className="address">Address: {useraddress}</div>
+                    </div> :
+                    <div className="login">You have not logged in</div>
+                }
             </div>
         );
     }

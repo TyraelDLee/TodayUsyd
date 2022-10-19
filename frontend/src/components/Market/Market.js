@@ -20,6 +20,7 @@ class Market extends Component {
     constructor(props){
         super(props);
         this.state = {
+            login: null,
             showPost: false,
             posts: null,
             sort: "Time",
@@ -29,6 +30,19 @@ class Market extends Component {
     }
 
     componentDidMount(){
+        axios.get(`./getUserInfo`, { withCredentials: true })
+        .then((response) => {
+            if (response.data.code === 200){
+                this.setState({
+                    login: true,
+                });
+            } else {
+                this.setState({
+                    login: false,
+                });
+            }
+        })
+
         axios.get('./Post/getAllPostsByType?type=market')
         .then((response) => {
             if (response.data.code === 200){
@@ -68,35 +82,39 @@ class Market extends Component {
     }
 
     onClickThumbUp(postID) {
-        var formData = new FormData();
-        formData.append("postID", postID);
-        formData.append("userID", Cookies.get('UID'));
-
-        axios.put('./Post/likeThePost', formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-        }).then((response) => {
-            if (response.data.code === 200){
-                console.log("Like has been saved!");
-                if (response.data.object === "Like has been saved!"){
-                    let updatePost = this.state.posts.map((post) => {
-                        if (post.postID === postID){
-                            let likes = post.numOfLikes + 1;
-                            return {...post, numOfLikes: likes}
-                        }
-                        return post;
-                    })
-                    this.setState({
-                        posts: updatePost,
-                    });
+        if (!this.state.login){
+            window.alert("You have not logged in");
+        } else {
+            var formData = new FormData();
+            formData.append("postID", postID);
+            formData.append("userID", Cookies.get('UID'));
+    
+            axios.put('./Post/likeThePost', formData, {
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                },
+            }).then((response) => {
+                if (response.data.code === 200){
+                    console.log("Like has been saved!");
+                    if (response.data.object === "Like has been saved!"){
+                        let updatePost = this.state.posts.map((post) => {
+                            if (post.postID === postID){
+                                let likes = post.numOfLikes + 1;
+                                return {...post, numOfLikes: likes}
+                            }
+                            return post;
+                        })
+                        this.setState({
+                            posts: updatePost,
+                        });
+                    } else {
+                        window.alert("You have already liked the post");
+                    }
                 } else {
-                    window.alert("You have already liked the post");
+                    console.log("failed");
                 }
-            } else {
-                console.log("failed");
-            }
-        })
+            })
+        }
     }
 
     handleClickSortCategory(category) {
@@ -176,7 +194,7 @@ class Market extends Component {
     }
 
     render() {
-        const { posts,sort,topposts, selectedCategory } = this.state;
+        const { posts,sort,topposts, selectedCategory, login } = this.state;
         return(
             <div>
                 <Navbar />
@@ -185,7 +203,7 @@ class Market extends Component {
                     {this.state.showPost ?
                         <div>
                             <Button variant="outline-dark" onClick={this.onClickCancelPost} className="buttonCancel">Cancel Post</Button>
-                            <Post categories={selectedCategory} type="market"/>
+                            <Post categories={selectedCategory} type="market" login={login}/>
                         </div> :
                         <Button variant="outline-dark" onClick={this.onClickOpenPost} className="buttonAdd">Add Post</Button>
                     }

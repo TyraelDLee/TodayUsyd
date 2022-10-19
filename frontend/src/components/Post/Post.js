@@ -30,76 +30,80 @@ class Post extends Component {
 
     handleClickSave = () => {
         const { title, details, selectedFile } = this.state;
-        const { type, categories } = this.props;
-        if (categories.length !== 0 && title.length !== 0 && details.length !== 0){
-            var formData = new FormData();
-            formData.append("userID", Cookies.get('UID'));
-            formData.append("type", type);
-            formData.append("category", categories);
-            formData.append("title", title);
-            formData.append("details", details);
+        const { type, categories, login } = this.props;
+        if (!login){
+            window.alert("You have not loggin in");
+        } else { 
+            if (categories.length !== 0 && title.length !== 0 && details.length !== 0){
+                var formData = new FormData();
+                formData.append("userID", Cookies.get('UID'));
+                formData.append("type", type);
+                formData.append("category", categories);
+                formData.append("title", title);
+                formData.append("details", details);
 
-            if (selectedFile === null){
-                axios.post('./Post/createPostWithoutFile', formData, {
-                    headers: {
-                      "Content-Type": "multipart/form-data",
-                    },
-                }).then ((response) => {
-                    if (response.data.code === 200){
-                        window.alert("success");
-                        window.location.reload(false)
-                    } else {
-                        console.log("failed");
-                    }
-                })
-            } else {
-                formData.append("file", selectedFile);
-                axios.post('./Post/createPost', formData, {
-                    headers: {
-                      "Content-Type": "multipart/form-data",
-                    },
-                }).then ((response) => {
-                    if (response.data.code === 200){
-                        window.alert("success");
-                        if (type === "course"){
-                            window.location.href = "./course.html"
+                if (selectedFile === null){
+                    axios.post('./Post/createPostWithoutFile', formData, {
+                        headers: {
+                        "Content-Type": "multipart/form-data",
+                        },
+                    }).then ((response) => {
+                        if (response.data.code === 200){
+                            window.alert("success");
+                            window.location.reload(false)
                         } else {
-                            window.location.href = "./market.html"
+                            console.log("failed");
                         }
-                    } else {
-                        console.log("failed");
-                    }
-                })
-            }
-        } else {
-            if (categories.length === 0){
-                this.setState({
-                    categoryWarning: "Please select a category"
-                }); 
+                    })
+                } else {
+                    formData.append("file", selectedFile);
+                    axios.post('./Post/createPost', formData, {
+                        headers: {
+                        "Content-Type": "multipart/form-data",
+                        },
+                    }).then ((response) => {
+                        if (response.data.code === 200){
+                            window.alert("success");
+                            if (type === "course"){
+                                window.location.href = "./course.html"
+                            } else {
+                                window.location.href = "./market.html"
+                            }
+                        } else {
+                            console.log("failed");
+                        }
+                    })
+                }
             } else {
-                this.setState({
-                    categoryWarning: null
-                });     
-            }
-    
-            if (title.length === 0){
-                this.setState({
-                    titleWarning: "Title is required"
-                }); 
-            } else {
-                this.setState({
-                    titleWarning: null
-                });     
-            }
-    
-            if (details.length === 0){
-                this.setState({
-                    detailsWarning: "Details is required"
-                }); 
-            } else {
-                this.setState({
-                    detailsWarning: null
-                }); 
+                if (categories.length === 0){
+                    this.setState({
+                        categoryWarning: "Please select a category"
+                    }); 
+                } else {
+                    this.setState({
+                        categoryWarning: null
+                    });     
+                }
+        
+                if (title.length === 0){
+                    this.setState({
+                        titleWarning: "Title is required"
+                    }); 
+                } else {
+                    this.setState({
+                        titleWarning: null
+                    });     
+                }
+        
+                if (details.length === 0){
+                    this.setState({
+                        detailsWarning: "Details is required"
+                    }); 
+                } else {
+                    this.setState({
+                        detailsWarning: null
+                    }); 
+                }
             }
         }
     }

@@ -19,6 +19,7 @@ class Comment extends Component {
     constructor(props){
         super(props);
         this.state = {
+            login: null,
             postid: params.get('postID'),
             top: null,
             visible: null,
@@ -44,6 +45,19 @@ class Comment extends Component {
     }
 
     componentDidMount(){
+        axios.get(`./getUserInfo`, { withCredentials: true })
+        .then((response) => {
+            if (response.data.code === 200){
+                this.setState({
+                    login: true,
+                });
+            } else {
+                this.setState({
+                    login: false,
+                });
+            }
+        })
+
         const { postid } = this.state;
         axios.get(`./Post/getPostByID?postID=${postid}`)
         .then((response) => {
@@ -125,109 +139,129 @@ class Comment extends Component {
     }
 
     onClickVisivle = () => {
-        axios.get(`./getUserInfo`, { withCredentials: true })
-        .then ((response) => {
-            if (response.data.code === 200){
-                let labeldesc = response.data.object.labeldesc;
-                let userAuth = response.data.object.userAuth;
-                let usercode = response.data.object.usercode;
-                let userid = response.data.object.userid;
-                let username = response.data.object.username;
-                let userpwd = response.data.object.userpwd;
-                axios.put(`./Post/updatePostInvisible?postID=${this.state.postid}&&labeldesc=${labeldesc}&&userAuth=${userAuth}&&usercode=${usercode}&&userid=${userid}&&username=${username}&&userpwd=${userpwd}`)
-                .then ((response) => {
-                    if (response.data.code === 200){
-                        this.setState({
-                            visible: 2,
-                        });
-                    }
-                })
-            }
-        })
+        if (!this.state.login){
+            window.alert("You have not loggin in");
+        } else {
+            axios.get(`./getUserInfo`, { withCredentials: true })
+            .then ((response) => {
+                if (response.data.code === 200){
+                    let labeldesc = response.data.object.labeldesc;
+                    let userAuth = response.data.object.userAuth;
+                    let usercode = response.data.object.usercode;
+                    let userid = response.data.object.userid;
+                    let username = response.data.object.username;
+                    let userpwd = response.data.object.userpwd;
+                    axios.put(`./Post/updatePostInvisible?postID=${this.state.postid}&&labeldesc=${labeldesc}&&userAuth=${userAuth}&&usercode=${usercode}&&userid=${userid}&&username=${username}&&userpwd=${userpwd}`)
+                    .then ((response) => {
+                        if (response.data.code === 200){
+                            this.setState({
+                                visible: 2,
+                            });
+                        }
+                    })
+                }
+            })
+        }
     }
 
 
     onClickInVisivle = () => {
-        axios.get(`./getUserInfo`, { withCredentials: true })
-        .then ((response) => {
-            if (response.data.code === 200){
-                let labeldesc = response.data.object.labeldesc;
-                let userAuth = response.data.object.userAuth;
-                let usercode = response.data.object.usercode;
-                let userid = response.data.object.userid;
-                let username = response.data.object.username;
-                let userpwd = response.data.object.userpwd;
-                axios.put(`./Post/updatePostVisible?postID=${this.state.postid}&&labeldesc=${labeldesc}&&userAuth=${userAuth}&&usercode=${usercode}&&userid=${userid}&&username=${username}&&userpwd=${userpwd}`)
-                .then ((response) => {
-                    if (response.data.code === 200){
-                        this.setState({
-                            visible: 1,
-                        });
-                    }
-                })
-            }
-        })
+        if (!this.state.login){
+            window.alert("You have not loggin in");
+        } else {
+            axios.get(`./getUserInfo`, { withCredentials: true })
+            .then ((response) => {
+                if (response.data.code === 200){
+                    let labeldesc = response.data.object.labeldesc;
+                    let userAuth = response.data.object.userAuth;
+                    let usercode = response.data.object.usercode;
+                    let userid = response.data.object.userid;
+                    let username = response.data.object.username;
+                    let userpwd = response.data.object.userpwd;
+                    axios.put(`./Post/updatePostVisible?postID=${this.state.postid}&&labeldesc=${labeldesc}&&userAuth=${userAuth}&&usercode=${usercode}&&userid=${userid}&&username=${username}&&userpwd=${userpwd}`)
+                    .then ((response) => {
+                        if (response.data.code === 200){
+                            this.setState({
+                                visible: 1,
+                            });
+                        }
+                    })
+                }
+            })
+        }
     }
 
     onClickTop = () => {
-        axios.get(`./getUserInfo`, { withCredentials: true })
-        .then ((response) => {
-            if (response.data.code === 200){
-                let labeldesc = response.data.object.labeldesc;
-                let userAuth = response.data.object.userAuth;
-                let usercode = response.data.object.usercode;
-                let userid = response.data.object.userid;
-                let username = response.data.object.username;
-                let userpwd = response.data.object.userpwd;
-                axios.put(`./Post/updatePostIsTop?postID=${this.state.postid}&&labeldesc=${labeldesc}&&userAuth=${userAuth}&&usercode=${usercode}&&userid=${userid}&&username=${username}&&userpwd=${userpwd}`)
-                .then ((response) => {
-                    if (response.data.code === 200){
-                        this.setState({
-                            top: 2,
-                        });
-                    }
-                })
-            }
-        })
+        if (!this.state.login){
+            window.alert("You have not loggin in");
+        } else {
+            axios.get(`./getUserInfo`, { withCredentials: true })
+            .then ((response) => {
+                if (response.data.code === 200){
+                    let labeldesc = response.data.object.labeldesc;
+                    let userAuth = response.data.object.userAuth;
+                    let usercode = response.data.object.usercode;
+                    let userid = response.data.object.userid;
+                    let username = response.data.object.username;
+                    let userpwd = response.data.object.userpwd;
+                    axios.put(`./Post/updatePostIsTop?postID=${this.state.postid}&&labeldesc=${labeldesc}&&userAuth=${userAuth}&&usercode=${usercode}&&userid=${userid}&&username=${username}&&userpwd=${userpwd}`)
+                    .then ((response) => {
+                        if (response.data.code === 200){
+                            this.setState({
+                                top: 2,
+                            });
+                        }
+                    })
+                }
+            })
+        }
     }
 
     onClickCancelTop = () => {
-        axios.get(`./getUserInfo`, { withCredentials: true })
-        .then ((response) => {
-            if (response.data.code === 200){
-                let labeldesc = response.data.object.labeldesc;
-                let userAuth = response.data.object.userAuth;
-                let usercode = response.data.object.usercode;
-                let userid = response.data.object.userid;
-                let username = response.data.object.username;
-                let userpwd = response.data.object.userpwd;
-                axios.put(`./Post/updatePostIsNotTop?postID=${this.state.postid}&&labeldesc=${labeldesc}&&userAuth=${userAuth}&&usercode=${usercode}&&userid=${userid}&&username=${username}&&userpwd=${userpwd}`)
-                .then ((response) => {
-                    if (response.data.code === 200){
-                        this.setState({
-                            top: 1,
-                        });
-                    }
-                })
-            }
-        })
+        if (!this.state.login){
+            window.alert("You have not loggin in");
+        } else {
+            axios.get(`./getUserInfo`, { withCredentials: true })
+            .then ((response) => {
+                if (response.data.code === 200){
+                    let labeldesc = response.data.object.labeldesc;
+                    let userAuth = response.data.object.userAuth;
+                    let usercode = response.data.object.usercode;
+                    let userid = response.data.object.userid;
+                    let username = response.data.object.username;
+                    let userpwd = response.data.object.userpwd;
+                    axios.put(`./Post/updatePostIsNotTop?postID=${this.state.postid}&&labeldesc=${labeldesc}&&userAuth=${userAuth}&&usercode=${usercode}&&userid=${userid}&&username=${username}&&userpwd=${userpwd}`)
+                    .then ((response) => {
+                        if (response.data.code === 200){
+                            this.setState({
+                                top: 1,
+                            });
+                        }
+                    })
+                }
+            })
+        }
     }
 
     onClickFavorite = () => {
-        var formData = new FormData();
-        formData.append("postID", this.state.postid);
-        formData.append("userid", Cookies.get('UID'));
-        formData.append("userName", this.state.postusername);
+        if (!this.state.login){
+            window.alert("You have not loggin in");
+        } else {
+            var formData = new FormData();
+            formData.append("postID", this.state.postid);
+            formData.append("userid", Cookies.get('UID'));
+            formData.append("userName", this.state.postusername);
 
-        axios.post('./Fav/addFav', formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-        }).then ((response) => {
-            if (response.data.code === 200){
-                window.alert("added to your Favorite");
-            }
-        })
+            axios.post('./Fav/addFav', formData, {
+                headers: {
+                "Content-Type": "multipart/form-data",
+                },
+            }).then ((response) => {
+                if (response.data.code === 200){
+                    window.alert("added to your Favorite");
+                }
+            })
+        }
     }
 
     handleComment = (event) => {
@@ -237,73 +271,88 @@ class Comment extends Component {
     }
 
     handleCommentButton = () => {
-        fetch(`./getUserInfo`, {
-            method:'GET',
-            credentials:'include',
-            body:null
-        }).then(r=>r.json())
-            .then(json=>{
-                if (json['code']===200){
-                    var formData = new FormData();
-                    formData.append("userid", Cookies.get('UID'));
-                    formData.append("username", json['object']['username']);
-                    formData.append("postID", this.state.postid);
-                    formData.append("content", this.state.submitcomment);
+        if (!this.state.login){
+            window.alert("You have not loggin in");
+        } else {
+            fetch(`./getUserInfo`, {
+                method:'GET',
+                credentials:'include',
+                body:null
+            }).then(r=>r.json())
+                .then(json=>{
+                    if (json['code']===200){
+                        var formData = new FormData();
+                        formData.append("userid", Cookies.get('UID'));
+                        formData.append("username", json['object']['username']);
+                        formData.append("postID", this.state.postid);
+                        formData.append("content", this.state.submitcomment);
 
-                    axios.post('./Post/saveComment', formData, {
-                        headers: {
-                            "Content-Type": "multipart/form-data",
-                        },
-                    }).then ((response) => {
-                        if (response.data.code === 200){
-                            window.alert("success");
-                            window.location.reload(false);
-                        } else {
-                            console.log("failed");
-                        }
-                    })
-                }
-            })
-
+                        axios.post('./Post/saveComment', formData, {
+                            headers: {
+                                "Content-Type": "multipart/form-data",
+                            },
+                        }).then ((response) => {
+                            if (response.data.code === 200){
+                                window.alert("success");
+                                window.location.reload(false);
+                            } else {
+                                console.log("failed");
+                            }
+                        })
+                    }
+                })
+            }
     }
 
     onClickFollow(postuserid){
-        var formData = new FormData();
-        formData.append("userid", Cookies.get('UID'));
-        formData.append("takeuserid", postuserid);
+        if (!this.state.login){
+            window.alert("You have not loggin in");
+        } else {
+            var formData = new FormData();
+            formData.append("userid", Cookies.get('UID'));
+            formData.append("takeuserid", postuserid);
 
-        axios.post('./Post/takeuser', formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-        }).then ((response) => {
-            if (response.data.code === 200){
-                window.alert("followed successfully");
-            } else {
+            axios.post('./Post/takeuser', formData, {
+                headers: {
+                "Content-Type": "multipart/form-data",
+                },
+            }).then ((response) => {
+                if (response.data.code === 200){
+                    window.alert("followed successfully");
+                } else {
 
-            }
-        })
+                }
+            })
+        }
     }
 
     handleEditPostButton = (edit) => {
-        this.setState({
-            edit: !edit,
-        });
+        if (!this.state.login){
+            window.alert("You have not loggin in");
+        } else {
+            this.setState({
+                edit: !edit,
+            });
+        }
     }
 
     handleDeletePostButton = (postid) => {
-        axios.delete(`./Post/deleteThePost?postID=${postid}`)
-        .then ((response) => {
-            if (response.data.code === 200){
-                window.alert("delete successfully");
-                const {postCategory} = this.state;
-                if (postCategory === "Book Market" || postCategory === "Cars" || postCategory === "Careers" || postCategory === "Rental" || postCategory === "Services"){
-                    window.location.href = "./market.html"
-                } else {
-                    window.location.href = "./course.html"
+        if (!this.state.login){
+            window.alert("You have not loggin in");
+        } else {
+            axios.delete(`./Post/deleteThePost?postID=${postid}`)
+            .then ((response) => {
+                if (response.data.code === 200){
+                    window.alert("delete successfully");
+                    const {postCategory} = this.state;
+                    if (postCategory === "Book Market" || postCategory === "Cars" || postCategory === "Careers" || postCategory === "Rental" || postCategory === "Services"){
+                        window.location.href = "./market.html"
+                    } else {
+                        window.location.href = "./course.html"
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 
     handleChange = (event) =>{
@@ -313,25 +362,29 @@ class Comment extends Component {
     }
 
     onClickUpdatePost = () => {
-        const { postid, postCategory, editTitle, editDetail} = this.state;
-        var formData = new FormData();
-        formData.append("postID", postid);
-        formData.append("category", postCategory);
-        formData.append("title", editTitle);
-        formData.append("details", editDetail);
-
-        axios.put('./Post/updatePost', formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-        }).then ((response) => {
-            if (response.data.code === 200){
-                window.alert("update successfully");
-                window.location.reload(false)
+        if (!this.state.login){
+            window.alert("You have not loggin in");
             } else {
+            const { postid, postCategory, editTitle, editDetail} = this.state;
+            var formData = new FormData();
+            formData.append("postID", postid);
+            formData.append("category", postCategory);
+            formData.append("title", editTitle);
+            formData.append("details", editDetail);
 
-            }
-        })
+            axios.put('./Post/updatePost', formData, {
+                headers: {
+                "Content-Type": "multipart/form-data",
+                },
+            }).then ((response) => {
+                if (response.data.code === 200){
+                    window.alert("update successfully");
+                    window.location.reload(false)
+                } else {
+
+                }
+            })
+        }
     }
 
     render() {

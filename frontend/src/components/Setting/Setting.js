@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import ReactDOM from "react-dom/client";
 import Navbar from '../../Navbar'
+import Row from 'react-bootstrap/Row';
 
 class Setting extends Component {
     constructor(props){
@@ -15,6 +16,7 @@ class Setting extends Component {
             updateDesciption: null,
             updateadress: null,
             username: null,
+            image: null,
         }
     }
 
@@ -38,25 +40,71 @@ class Setting extends Component {
     }
     
     handleClickChangeProfile = () => {
-        const {username, updateadress, updateDesciption} = this.state;
+        const {image} = this.state;
 
-        var formData = new FormData();
-        formData.append("userid", Cookies.get('UID'));
-        formData.append("username", username);
-        formData.append("description", updateDesciption);
-        formData.append("address", updateadress);
+        if (image === null){
+            const {username, updateadress, updateDesciption} = this.state;
+    
+            var formData = new FormData();
+            formData.append("userid", Cookies.get('UID'));
+            formData.append("username", username);
+            formData.append("description", updateDesciption);
+            formData.append("address", updateadress);
 
-        axios.post('./userProfile/setting/updateInfo', formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-        }).then((response) => {
-            if (response.data.code === 200){
-                window.alert("profile update successfully");
-            } else {
-                console.log("failed");
-            }
-        })
+            axios.post('./userProfile/setting/updateInfo', formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            }).then((response) => {
+                if (response.data.code === 200){
+                    window.alert("Update Successfully");
+                } else {
+                    console.log("failed");
+                }
+            })
+        } else {
+            var formData = new FormData();
+            formData.append("file", image);
+    
+            axios.post('./userProfile/setting/upload', formData, {
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                },
+            }).then((response) => {
+                console.log(response);
+                if (response.data.code === 200){
+                    console.log(response.data.object);
+                    const {username, updateadress, updateDesciption} = this.state;
+    
+                    var formData2 = new FormData();
+                    formData2.append("userid", Cookies.get('UID'));
+                    formData2.append("username", username);
+                    formData2.append("description", updateDesciption);
+                    formData2.append("address", updateadress);
+                    formData2.append("imgurl", response.data.object);
+    
+                    axios.post('./userProfile/setting/updateInfo', formData2, {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        },
+                    }).then((response) => {
+                        console.log(response);
+                        if (response.data.code === 200){
+                            window.alert("Update Successfully");
+                            window.location.reload(false);
+                        } else {
+                            console.log("failed");
+                        }
+                    })
+                } else {
+                    console.log("failed");
+                }
+            })
+        }
+    }
+
+    onFileUpload = (event) => {
+        this.setState({ image: event.target.files[0] });
     }
 
     render() {
@@ -66,6 +114,15 @@ class Setting extends Component {
                 <div className="settingTopSpace"></div>
                 <div className="update">
                     <div>
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label className="photoDescription" column sm="3">
+                                Update Your Profile Photo
+                            </Form.Label>
+                            <Col sm="3">
+                                <Form.Control name="file" accept="image/png, image/jpeg, image/jpg" type="file" onChange={this.onFileUpload}/>
+                            </Col>
+                        </Form.Group>
+                        <div className="settingTopSpace"></div>
                         <div className="updateImageSize">Update Your Address</div>
                         <div className="uploadImage">
                             <Col sm="100">
@@ -74,6 +131,7 @@ class Setting extends Component {
                         </div>
                     </div>
                 </div>
+                <div className="settingTopSpace"></div>
                 <div className="updateDescription">
                     <div className="updateDescriptionSize">Update Your Description</div>
                     <Col sm="15">

@@ -61,7 +61,11 @@ class Post extends Component {
                 }).then ((response) => {
                     if (response.data.code === 200){
                         window.alert("success");
-                        window.location.reload(false)
+                        if (type === "course"){
+                            window.location.href = "./course.html"
+                        } else {
+                            window.location.href = "./market.html"
+                        }
                     } else {
                         console.log("failed");
                     }

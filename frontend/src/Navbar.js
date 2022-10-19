@@ -2,7 +2,7 @@ import './navbar.css';
 import testAvatar from './avatar.svg';
 import './colour.css';
 import React from "react";
-
+import Cookies from 'js-cookie';
 
 class Navbar extends React.Component {
 
@@ -137,6 +137,7 @@ class Navbar extends React.Component {
                             <a href="./friends.html" className="user-friends popup-item">Friends</a>
                             <a href="./setting.html" className="user-history popup-item">Update Profiles</a>
                             <a href="./favorite.html" className="user-favorite popup-item">Favorites</a>
+                            <a href="./history.html" className="user-favorite popup-item">Viewed History</a>
                             <a className="user-setting popup-item" id="log-out">Log out</a>`;
                         const logout = document.getElementById('log-out');
                         logout.addEventListener('click', ()=>{
@@ -160,7 +161,7 @@ class Navbar extends React.Component {
                                         document.getElementsByClassName('nav-bar-right')[0].
                                         getElementsByClassName('nav-user')[0].
                                         getElementsByTagName('img')[0].
-                                        setAttribute('src', json['object']['imgurl']);
+                                        setAttribute('src', `./userProfile/setting/showImg?userid=${Cookies.get('UID')}`);
                                     }
                                 }
                             })

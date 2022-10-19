@@ -39,6 +39,7 @@ class Comment extends Component {
             edit: false,
             editTitle: "",
             editDetail: "",
+            postimageurl: null,
         }
     }
 
@@ -59,6 +60,26 @@ class Comment extends Component {
                 postCategory: response.data.object.category,
             });
             getVerifyStatus(response.data.object.userid);
+
+            var formData3 = new FormData();
+            formData3.append("userid", Cookies.get('UID'));
+            formData3.append("postsname", response.data.object.title);
+            formData3.append("createtime", response.data.object.createdTime);
+
+            axios.post('./userProfile/history/saveHistory', formData3, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+
+            axios.get(`/userProfile/home/index?userid=${response.data.object.userid}`)
+            .then((response) => {
+                if (response.data.code === 200){
+                    this.setState({
+                        postimageurl: response.data.object.imgurl,
+                    });
+                }
+            })
         })
 
         function getVerifyStatus(uid){
@@ -276,9 +297,9 @@ class Comment extends Component {
             if (response.data.code === 200){
                 window.alert("delete successfully");
                 const {postCategory} = this.state;
-                if (postCategory === "market"){
+                if (postCategory === "Book Market" || postCategory === "Cars" || postCategory === "Careers" || postCategory === "Rental" || postCategory === "Services"){
                     window.location.href = "./market.html"
-                } else if (postCategory === "course"){
+                } else {
                     window.location.href = "./course.html"
                 }
             }
@@ -314,24 +335,24 @@ class Comment extends Component {
     }
 
     render() {
-        const { top, visible, favoriate, postusername, title, detail, likes, createdTime, userAuth, comments, postuserid, postImage, userid, edit, postid} = this.state;
+        const { top, visible, favoriate, postusername, title, detail, likes, createdTime, userAuth, comments, postuserid, postImage, userid, edit, postid, postimageurl} = this.state;
         return(
             <div>
                 <Navbar />
                 {
                     top !== null && visible !== null && favoriate !== null && postusername !== null && title !== null && detail !== null && likes !== null && createdTime !== null &&
                     <div className="poster">
-                        <img className="userCommentPhoto" src={avatar}/>
+                        {postimageurl === null? <img className="userCommentPhoto" src={avatar}/> : <img className="userCommentPhoto" src={`./userProfile/setting/showImg?userid=${postuserid}`}/>}
                         <div className="userCommentName"><span>{postusername}</span><span className={'userCommentLabel'}></span></div>
                         <div className="userCommentTime">posted at {createdTime.substr(11)} on {createdTime.substr(0, 10)}</div>
-                        <GiShadowFollower onClick={() => this.onClickFollow(postuserid)} className="userCommentFollow" size={20}/>
+                        <GiShadowFollower onClick={() => this.onClickFollow(postuserid)} className="userCommentFollow" size={30}/>
                         {
-                            userAuth !== 2 ? <div className="Button"/> : visible === 2 ? <AiFillEyeInvisible className="Button" onClick={this.onClickInVisivle} size={20}/> : <AiFillEye className="Button" onClick={this.onClickVisivle} size={20}/>
+                            userAuth !== 2 ? <div className="Button"/> : visible === 2 ? <AiFillEyeInvisible className="Button" onClick={this.onClickInVisivle} size={30}/> : <AiFillEye className="Button" onClick={this.onClickVisivle} size={30}/>
                         }
                         {
-                            userAuth !== 2 ? <div className="Button"/> : top === 2 ? <AiOutlineVerticalAlignTop className="Button" onClick={this.onClickCancelTop} size={20}/> : <GoListOrdered className="Button" onClick={this.onClickTop} size={20}/>
+                            userAuth !== 2 ? <div className="Button"/> : top === 2 ? <AiOutlineVerticalAlignTop className="Button" onClick={this.onClickCancelTop} size={30}/> : <GoListOrdered className="Button" onClick={this.onClickTop} size={30}/>
                         }
-                        <AiOutlineStar className="Button" onClick={this.onClickFavorite} size={20}/>
+                        <AiOutlineStar className="Button" onClick={this.onClickFavorite} size={30}/>
                         <div className="postTitle">{title}</div>
                         <div className="postDescription">{detail}</div>
                         {postImage && <img className="imageSize" src={postImage} alt="Post Image"/> }

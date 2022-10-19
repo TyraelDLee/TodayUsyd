@@ -1,0 +1,35 @@
+.favorite-host {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    margin-top: 40px;
+    width: 100%;
+}
+
+.results{
+    width: 60%;
+    margin: auto;
+}
+
+.single-results{
+    height: 100px;
+    margin-bottom:50px;
+    border-bottom: 0.8px solid gray;
+}
+
+.postname{
+    float: left;
+    font-size: 26px;
+}
+
+.posttime{
+    float: right;
+    margin-right: 100px;
+    font-size: 20px;
+    color: gray;
+}
+
+.topspace{
+    margin-top: 100px;
+}

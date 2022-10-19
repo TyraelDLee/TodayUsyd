@@ -13,6 +13,7 @@ class UserProfile extends Component {
             username: null,
             userdescription: "",
             useraddress: "",
+            userPhoto: null,
         }
     }
 
@@ -28,7 +29,6 @@ class UserProfile extends Component {
 
         axios.get(`/userProfile/home/index?userid=${Cookies.get('UID')}`)
         .then((response) => {
-            console.log(response.data);
             if (response.data.code === 200){
                 let description, address;
                 if (response.data.object.description === "null"){
@@ -44,19 +44,20 @@ class UserProfile extends Component {
                 this.setState({
                     userdescription: description,
                     useraddress: address,
+                    userPhoto: response.data.object.imgurl,
                 });
             }
         })
     }
 
     render() {
-        const { username, userdescription, useraddress } = this.state;
+        const { username, userdescription, useraddress, userPhoto } = this.state;
         return(
             <div>
                 <Navbar />
                 <div>
                     <div className="Person">
-                        <img className="image" src={avatar}/>
+                        {userPhoto === null? <img className="image" src={avatar}/> :<img className="image" src={`./userProfile/setting/showImg?userid=${Cookies.get('UID')}`}/> }
                         <div className="username">{username}</div>
                     </div>
                     <div className="postArea">{userdescription}</div>

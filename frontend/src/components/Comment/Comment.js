@@ -151,7 +151,7 @@ class Comment extends Component {
                     let userid = response.data.object.userid;
                     let username = response.data.object.username;
                     let userpwd = response.data.object.userpwd;
-                    axios.put(`./Post/updatePostInvisible?postID=${this.state.postid}&&labeldesc=${labeldesc}&&userAuth=${userAuth}&&usercode=${usercode}&&userid=${userid}&&username=${username}&&userpwd=${userpwd}`)
+                    axios.put(`./Post/updatePostInvisible?postID=${this.state.postid}&&labeldesc=${labeldesc}&&userauth=${userAuth}&&usercode=${usercode}&&userid=${userid}&&username=${username}&&userpwd=${userpwd}`)
                     .then ((response) => {
                         if (response.data.code === 200){
                             this.setState({
@@ -178,7 +178,7 @@ class Comment extends Component {
                     let userid = response.data.object.userid;
                     let username = response.data.object.username;
                     let userpwd = response.data.object.userpwd;
-                    axios.put(`./Post/updatePostVisible?postID=${this.state.postid}&&labeldesc=${labeldesc}&&userAuth=${userAuth}&&usercode=${usercode}&&userid=${userid}&&username=${username}&&userpwd=${userpwd}`)
+                    axios.put(`./Post/updatePostVisible?postID=${this.state.postid}&&labeldesc=${labeldesc}&&userauth=${userAuth}&&usercode=${usercode}&&userid=${userid}&&username=${username}&&userpwd=${userpwd}`)
                     .then ((response) => {
                         if (response.data.code === 200){
                             this.setState({
@@ -204,7 +204,7 @@ class Comment extends Component {
                     let userid = response.data.object.userid;
                     let username = response.data.object.username;
                     let userpwd = response.data.object.userpwd;
-                    axios.put(`./Post/updatePostIsTop?postID=${this.state.postid}&&labeldesc=${labeldesc}&&userAuth=${userAuth}&&usercode=${usercode}&&userid=${userid}&&username=${username}&&userpwd=${userpwd}`)
+                    axios.put(`./Post/updatePostIsTop?postID=${this.state.postid}&&labeldesc=${labeldesc}&&userauth=${userAuth}&&usercode=${usercode}&&userid=${userid}&&username=${username}&&userpwd=${userpwd}`)
                     .then ((response) => {
                         if (response.data.code === 200){
                             this.setState({
@@ -230,7 +230,7 @@ class Comment extends Component {
                     let userid = response.data.object.userid;
                     let username = response.data.object.username;
                     let userpwd = response.data.object.userpwd;
-                    axios.put(`./Post/updatePostIsNotTop?postID=${this.state.postid}&&labeldesc=${labeldesc}&&userAuth=${userAuth}&&usercode=${usercode}&&userid=${userid}&&username=${username}&&userpwd=${userpwd}`)
+                    axios.put(`./Post/updatePostIsNotTop?postID=${this.state.postid}&&labeldesc=${labeldesc}&&userauth=${userAuth}&&usercode=${usercode}&&userid=${userid}&&username=${username}&&userpwd=${userpwd}`)
                     .then ((response) => {
                         if (response.data.code === 200){
                             this.setState({

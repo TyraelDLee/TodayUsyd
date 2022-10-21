@@ -41,28 +41,48 @@ class Market extends Component {
                     login: false,
                 });
             }
-        })
 
-        axios.get('./Post/getAllPostsByType?type=market')
-        .then((response) => {
-            if (response.data.code === 200){
-                let removeInvisiblePost = response.data.object.filter(post => {
-                    return post.isVisible !== 2;
+            if (response.data.object.userAuth === 2){
+                axios.get('./Post/getAllPostsByType?type=market')
+                .then((response) => {
+                    if (response.data.code === 200){
+                        let toppost = response.data.object.filter(post => {
+                            return post.istop === 2;
+                        });
+                        let otherpost = response.data.object.filter(post => {
+                            return post.istop !== 2;
+                        });
+                        let toppostsort = toppost.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
+                        let otherpostsort = otherpost.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
+                        this.setState({
+                            topposts: toppostsort,
+                            posts: otherpostsort,
+                        });
+                    }
                 });
-                let toppost = removeInvisiblePost.filter(post => {
-                    return post.istop === 2;
-                });
-                let otherpost = removeInvisiblePost.filter(post => {
-                    return post.istop !== 2;
-                });
-                let toppostsort = toppost.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
-                let otherpostsort = otherpost.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
-                this.setState({
-                    topposts: toppostsort,
-                    posts: otherpostsort,
+            } else {
+                axios.get('./Post/getAllPostsByType?type=market')
+                .then((response) => {
+                    if (response.data.code === 200){
+                        let removeInvisiblePost = response.data.object.filter(post => {
+                            return post.isVisible !== 2;
+                        });
+                        let toppost = removeInvisiblePost.filter(post => {
+                            return post.istop === 2;
+                        });
+                        let otherpost = removeInvisiblePost.filter(post => {
+                            return post.istop !== 2;
+                        });
+                        let toppostsort = toppost.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
+                        let otherpostsort = otherpost.sort((a, b) => b.createdTime.localeCompare(a.createdTime));
+                        this.setState({
+                            topposts: toppostsort,
+                            posts: otherpostsort,
+                        });
+                    }
                 });
             }
-        });
+        })
     }
 
     onClickOpenPost = () => {

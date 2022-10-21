@@ -13,10 +13,12 @@ class Setting extends Component {
     constructor(props){
         super(props);
         this.state = {
-            updateDesciption: null,
-            updateadress: null,
+            updateDesciption: "",
+            updateadress: "",
             username: null,
             image: null,
+            userdescription: null,
+            useraddress: null,
         }
     }
 
@@ -27,6 +29,28 @@ class Setting extends Component {
                 this.setState({
                     username: response.data.object.username,
                 });
+
+                axios.get(`/userProfile/home/index?userid=${Cookies.get('UID')}`)
+                .then((response) => {
+                    console.log(response.data);
+                    if (response.data.code === 200){
+                        let description, address;
+                        if (response.data.object.description === "null"){
+                            description = "";
+                        } else {
+                            description = response.data.object.description;
+                        }
+                        if (response.data.object.address === "null"){
+                            address = "";
+                        } else {
+                            address = response.data.object.address;
+                        }
+                        this.setState({
+                            userdescription: description,
+                            useraddress: address,
+                        });
+                    }
+                })
             }
         })
     }
@@ -40,26 +64,81 @@ class Setting extends Component {
     }
     
     handleClickChangeProfile = () => {
-        const {image} = this.state;
+        let desciption, adress;
+        const {image, userdescription, useraddress} = this.state;
+        const {username, updateadress, updateDesciption} = this.state;
+
+        if (userdescription === ""){
+            if (updateDesciption !== ""){
+                desciption = updateDesciption;
+            } else {
+                desciption = userdescription;
+            }
+        } else {
+            if (updateDesciption === ""){
+                desciption = userdescription
+            } else {
+                desciption = updateDesciption;
+            }
+        }
+        if (useraddress === ""){
+            if (updateadress !== ""){
+                adress = updateadress;
+            } else {
+                adress = useraddress;
+            }
+        } else {
+            if (updateadress === ""){
+                adress = useraddress
+            } else {
+                adress = updateadress;
+            }
+        }
 
         if (image === null){
-            const {username, updateadress, updateDesciption} = this.state;
-    
-            var formData = new FormData();
-            formData.append("userid", Cookies.get('UID'));
-            formData.append("username", username);
-            formData.append("description", updateDesciption);
-            formData.append("address", updateadress);
-
-            axios.post('./userProfile/setting/updateInfo', formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            }).then((response) => {
+            axios.get(`/userProfile/home/index?userid=${Cookies.get('UID')}`)
+            .then((response) => {
                 if (response.data.code === 200){
-                    window.alert("Update Successfully");
-                } else {
-                    console.log("failed");
+                    if (response.data.object.imgurl === null){
+                        var formData = new FormData();
+                        formData.append("userid", Cookies.get('UID'));
+                        formData.append("username", username);
+                        formData.append("description", desciption);
+                        formData.append("address", adress);
+            
+                        axios.post('./userProfile/setting/updateInfo', formData, {
+                            headers: {
+                                "Content-Type": "multipart/form-data",
+                            },
+                        }).then((response) => {
+                            if (response.data.code === 200){
+                                window.alert("Update Successfully");
+                            } else {
+                                console.log("failed");
+                            }
+                        })
+                    } else {
+                        var formData2 = new FormData();
+                        formData2.append("userid", Cookies.get('UID'));
+                        formData2.append("username", username);
+                        formData2.append("description", desciption);
+                        formData2.append("address", adress);
+                        formData2.append("imgurl", response.data.object.imgurl);
+        
+                        axios.post('./userProfile/setting/updateInfo', formData2, {
+                            headers: {
+                                "Content-Type": "multipart/form-data",
+                            },
+                        }).then((response) => {
+                            console.log(response);
+                            if (response.data.code === 200){
+                                window.alert("Update Successfully");
+                                window.location.reload(false);
+                            } else {
+                                console.log("failed");
+                            }
+                        })
+                    }
                 }
             })
         } else {
@@ -73,14 +152,11 @@ class Setting extends Component {
             }).then((response) => {
                 console.log(response);
                 if (response.data.code === 200){
-                    console.log(response.data.object);
-                    const {username, updateadress, updateDesciption} = this.state;
-    
                     var formData2 = new FormData();
                     formData2.append("userid", Cookies.get('UID'));
                     formData2.append("username", username);
-                    formData2.append("description", updateDesciption);
-                    formData2.append("address", updateadress);
+                    formData2.append("description", desciption);
+                    formData2.append("address", adress);
                     formData2.append("imgurl", response.data.object);
     
                     axios.post('./userProfile/setting/updateInfo', formData2, {
@@ -108,6 +184,7 @@ class Setting extends Component {
     }
 
     render() {
+        const {userdescription, useraddress } = this.state;
         return(
             <div>
                 <Navbar />
@@ -119,14 +196,14 @@ class Setting extends Component {
                                 Update Your Profile Photo
                             </Form.Label>
                             <Col sm="3">
-                                <Form.Control name="file" accept="image/png, image/jpeg, image/jpg" type="file" onChange={this.onFileUpload}/>
+                                <Form.Control name="file" accept="image/png, image/jpg" type="file" onChange={this.onFileUpload}/>
                             </Col>
                         </Form.Group>
                         <div className="settingTopSpace"></div>
                         <div className="updateImageSize">Update Your Address</div>
                         <div className="uploadImage">
                             <Col sm="100">
-                                <Form.Control onChange={this.handleChangeAddress}/>
+                                <Form.Control placeholder={useraddress} onChange={this.handleChangeAddress}/>
                             </Col>
                         </div>
                     </div>
@@ -135,7 +212,7 @@ class Setting extends Component {
                 <div className="updateDescription">
                     <div className="updateDescriptionSize">Update Your Description</div>
                     <Col sm="15">
-                        <Form.Control className="descriptionInput" as="textarea" rows={8} onChange={this.handleChangeDescription}/>
+                        <Form.Control placeholder={userdescription} className="descriptionInput" as="textarea" rows={8} onChange={this.handleChangeDescription}/>
                     </Col>
                     <div className="uploadDescription">
                         <Button onClick={this.handleClickChangeProfile} variant="outline-dark">Update User Profile</Button>

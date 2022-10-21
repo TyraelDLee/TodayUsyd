@@ -62,7 +62,7 @@ class UserProfile extends Component {
             <div>
                 <Navbar />
                 {
-                    login ? 
+                    login === null ? <div></div> : login ?
                     <div>
                         <div className="Person">
                             {userPhoto === null? <img className="image" src={avatar}/> :<img className="image" src={`./userProfile/setting/showImg?userid=${Cookies.get('UID')}`}/> }

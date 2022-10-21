@@ -34,7 +34,7 @@ class Post extends Component {
         if (!login){
             window.alert("You have not loggin in");
         } else { 
-            if (categories.length !== 0 && title.length !== 0 && details.length !== 0){
+            if (categories !== null && title.length !== 0 && details.length !== 0){
                 var formData = new FormData();
                 formData.append("userID", Cookies.get('UID'));
                 formData.append("type", type);
@@ -79,7 +79,7 @@ class Post extends Component {
                     })
                 }
             } else {
-                if (categories.length === 0){
+                if (categories === null){
                     this.setState({
                         categoryWarning: "Please select a category"
                     }); 
@@ -154,7 +154,7 @@ class Post extends Component {
                         Details
                     </Form.Label>
                     <Col sm="10">
-                    <   Form.Control as="textarea" rows={3} name="details" onChange={this.handleChange}/>
+                        <Form.Control as="textarea" rows={3} name="details" onChange={this.handleChange}/>
                     </Col>
                 </Form.Group>
                 <div className="space"></div>
@@ -163,7 +163,7 @@ class Post extends Component {
                         Upload Files (Optional)
                     </Form.Label>
                     <Col sm="10">
-                        <Form.Control name="file" type="file" onChange={this.onFileChange}/>
+                        <Form.Control name="file" type="file" accept="image/*" onChange={this.onFileChange}/>
                     </Col>
                 </Form.Group>
                 <div className="spacePost"></div>
